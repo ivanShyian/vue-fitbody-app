@@ -1,24 +1,5 @@
-# vue-thesis-project-bachelor
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+color: #ffffe3; // white
+color: #fecb30 // orange
+color: #d1273f // red
+color: #7c2b40 // bord
+color: #2d203a // darkblue
