@@ -3,10 +3,10 @@
     <form action="">
       <span>Sign in to your account</span>
       <div>
-        <input type="text" placeholder="Login">
-        <input type="password" placeholder="Password">
+        <input type="text" :value="user" @input="updateUserName" placeholder="Login">
+        <input type="password" :value="password" @input="updateUserPassword" placeholder="Password">
       </div>
-      <button @click.prevent>Log in</button>
+      <button @click.prevent="$emit('submit-user')">Log in</button>
     </form>
     <div>
       <span>Or if you don't have an account</span>
@@ -17,9 +17,26 @@
 
 <script>
 export default {
+  props: {
+    user: {
+      type: String,
+      required: true
+    },
+    password: {
+      type: String,
+      required: true
+    }
+  },
+  emits: ['update:user', 'update:password', 'submit-user'],
   data () {
-    return {
-      name: ''
+    return {}
+  },
+  methods: {
+    updateUserName (e) {
+      this.$emit('update:user', e.target.value)
+    },
+    updateUserPassword (e) {
+      this.$emit('update:password', e.target.value)
     }
   }
 }
