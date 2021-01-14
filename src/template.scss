@@ -28,3 +28,27 @@ body {
   margin: 0;
   padding: 0;
 }
+@mixin buttonStyling {
+  button {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    letter-spacing: .1rem;
+    border-radius: 2rem;
+    padding: .3rem 1rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all ease-in .3s;
+    background-color: #fecb30;
+    color: black;
+    width: 33%;
+  }
+  button:hover {
+    background-color: darkorange;
+    color: darkblue;
+  }
+}
+@mixin registerTitle {
+  font-family: "Quicksand", sans-serif;
+  color: #000063;
+  font-size: 1.5rem;
+}

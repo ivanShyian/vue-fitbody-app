@@ -2,7 +2,7 @@
   <div class="main__remaining-calculator remaining-calculator">
     <div class="remaining-calculator__mode">
       <span>Choose mode</span>
-      <div class="btn-group btn-group-lg remaining-calculator__group-mode">
+      <div class="btn-group remaining-calculator__group-mode">
         <button type="button"
                 :class="['btn', {'active-btn': idx === currentMode}]"
                 @click="modeButton(idx, 'mode')"
@@ -23,15 +23,11 @@
               <input type="text" v-model="weight">
             </div>
           </div>
-          <div class="remaining-calculator__form-second-group">
-            <span>Your age</span>
-            <input type="text" v-model="age">
-          </div>
         </form>
       </div>
       <div>
         <span class="remaining-calculator__daily-activity">Choose your daily activity</span>
-        <div class="btn-group btn-group-lg remaining-calculator__daily-activity-group">
+        <div class="btn-group remaining-calculator__daily-activity-group">
           <button type="button"
                   :class="['btn', {'active-btn': idx === currentDaily}]"
                   @click="modeButton(idx)"
@@ -130,21 +126,24 @@ export default {
   }
 }
 </script>
-<style>
-.remaining-calculator__mode {
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  border-radius: 1rem;
-  overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, .2);
-  box-shadow: -1px 7px 39px -16px rgba(0, 0, 0, 0.75);
-}
+<style scoped lang="scss">
+.remaining-calculator {
+  width: 50%;
+  margin: 0 auto;
+  &__mode {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 1rem;
+    box-shadow: -1px 7px 39px -16px rgba(0, 0, 0, 0.75);
+    span {
+      text-align: center;
+      margin: 0 0 1rem 0;
+    }
+  }
 
-.remaining-calculator__mode span {
-  margin: 0 0 1rem 0;
 }
-
 .remaining-calculator__group-mode,
 .remaining-calculator__daily-activity-group {
   border-radius: 1rem;
@@ -159,7 +158,6 @@ export default {
   padding: .7rem 2rem;
   font-family: 'Quicksand', sans-serif;
   font-weight: 400;
-  background-color: rgba(255, 255, 227, .7);
   color: #2d203a;
 }
 
@@ -233,10 +231,12 @@ export default {
   border: 1px solid rgba(0, 0, 0, .2);
   transition: all ease 0.5s;
 }
+
 .remaining-calculator__button:hover {
   background-color: #03ffaf;
   transition: all ease 0.5s;
 }
+
 .btn.active-btn {
   background-color: #d1273f;
   color: rgba(255, 255, 227, 1);

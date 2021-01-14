@@ -2,10 +2,9 @@
   <app-header></app-header>
   <main class="main">
     <div class="main__wrapper">
-      <app-login-form v-model:user.trim="userName"
-                      v-model:password="userPassword"
-                      @submit-user="submitUser"
-                      v-if="!access"></app-login-form>
+      <app-login-form @submit-user="submitUser"
+                      v-if="!access && unregistered"></app-login-form>
+      <app-register-form v-else-if="!access && !unregistered"></app-register-form>
       <app-remaining-calc v-else></app-remaining-calc>
       <div>
       </div>
@@ -15,57 +14,45 @@
 </template>
 <script>
 import axios from 'axios'
-import AppLoginForm from './components/AppLoginForm'
+import AppLoginForm from './components/AppAuthorization/AppLoginForm'
 import AppRemainingCalc from './components/AppRemainingCalc'
 import AppHeader from './components/AppHeader'
 import AppFooter from './components/AppFooter'
+import AppRegisterForm from '@/components/AppAuthorization/AppRegisterForm'
 
 export default {
 
   data () {
     return {
       show: false,
-      userName: '',
-      userPassword: '',
-      currentUser: {},
       usersData: [],
-      access: false
+      access: true,
+      unregistered: false
     }
   },
   computed: {},
   methods: {
-    async submitUser () {
-      if (!this.userPassword.length || this.userPassword.length < 6) {
-        throw new Error('Некорректный пароль')
-      } else if (!this.userName.length) {
-        throw new Error('Введите логин')
-      } else {
-        this.currentUser = {
-          name: this.userName,
-          password: this.userPassword
-        }
-        this.userName = ''
-        this.userPassword = ''
-        try {
-          const { data } = await axios.get('https://vue-fitbody-project-default-rtdb.europe-west1.firebasedatabase.app/users.json')
-          if (!data) throw new Error('Что-то пошло не так..')
-          this.usersData = Object.keys(data).map(el => {
-            return {
-              name: data[el].name,
-              password: data[el].password
-            }
-          })
-          this.usersData.find(data => data.name === this.currentUser.name &&
-            data.password === this.currentUser.password) ? this.access = true : this.access = false
-          console.log(this.access)
-        } catch (e) {
-        } finally {
-        }
+    async submitUser (currentUser) {
+      try {
+        const { data } = await axios.get('https://vue-fitbody-project-default-rtdb.europe-west1.firebasedatabase.app/users.json')
+        if (!data) throw new Error('Что-то пошло не так..')
+        this.usersData = Object.keys(data).map(el => {
+          return {
+            name: data[el].name,
+            password: data[el].password
+          }
+        })
+        this.usersData.find(data => data.name === currentUser.name &&
+          data.password === currentUser.password) ? this.access = true : this.access = false
+        console.log(this.access)
+      } catch (e) {
+      } finally {
       }
     }
   },
   components: {
     AppLoginForm,
+    AppRegisterForm,
     AppRemainingCalc,
     AppHeader,
     AppFooter
@@ -73,8 +60,9 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.main {
+main.main {
   margin: 0 0 2rem 0;
+  width: 100%;
 
   &__wrapper {
     display: flex;
