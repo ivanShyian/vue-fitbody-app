@@ -16,7 +16,7 @@
     </form>
     <div>
       <span>Or if you don't have an account</span>
-      <a href="#">Sign up.</a>
+      <a href="#" @click.prevent="$emit('register-user')">Sign up.</a>
     </div>
   </div>
 </template>
@@ -24,7 +24,7 @@
 <script>
 
 export default {
-  emits: ['submit-user'],
+  emits: ['submit-user', 'register-user'],
   data () {
     return {
       userName: '',
@@ -65,6 +65,7 @@ export default {
   width: 25rem;
   box-shadow: -1px 7px 39px -16px rgba(0, 0, 0, 0.75);
   form {
+    margin: 0 0 .2rem 0;
     button {
       background: #d1273f;
       color: #ffffe3;
@@ -94,8 +95,12 @@ export default {
       font-size: .9rem;
       margin: 0 .3rem 0 0;
     }
+    a {
+      transition: all ease 0.5s;
+    }
     a:hover {
       color: #000063;
+      transition: all ease 0.5s;
     }
   }
 }

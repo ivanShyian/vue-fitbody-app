@@ -3,8 +3,10 @@
   <main class="main">
     <div class="main__wrapper">
       <app-login-form @submit-user="submitUser"
-                      v-if="!access && unregistered"></app-login-form>
-      <app-register-form v-else-if="!access && !unregistered"></app-register-form>
+                      v-if="!access && unregistered"
+                      @register-user="registerUser"></app-login-form>
+      <app-register-form v-else-if="!access && !unregistered"
+                      @cancel-registration="cancelRegistration"></app-register-form>
       <app-remaining-calc v-else></app-remaining-calc>
       <div>
       </div>
@@ -26,12 +28,18 @@ export default {
     return {
       show: false,
       usersData: [],
-      access: true,
-      unregistered: false
+      access: false,
+      unregistered: true
     }
   },
   computed: {},
   methods: {
+    registerUser () {
+      this.unregistered = false
+    },
+    cancelRegistration () {
+      this.unregistered = true
+    },
     async submitUser (currentUser) {
       try {
         const { data } = await axios.get('https://vue-fitbody-project-default-rtdb.europe-west1.firebasedatabase.app/users.json')
@@ -61,7 +69,7 @@ export default {
 </script>
 <style scoped lang="scss">
 main.main {
-  margin: 0 0 2rem 0;
+  padding: 0 0 3rem 0;
   width: 100%;
 
   &__wrapper {
