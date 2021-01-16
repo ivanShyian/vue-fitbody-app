@@ -5,7 +5,8 @@
       <input type="email"
              class="form-control"
              id="inputEmail4"
-             v-model.trim="email"
+             :value="modelEmail"
+             @input.prevent="emailValue"
              placeholder="Email"
              @keypress.enter.prevent>
     </div>
@@ -18,10 +19,30 @@
 
 <script>
 export default {
-  emits: ['prev', 'next'],
-  data () {
-    return {
-      email: ''
+  emits: {
+    prev: {
+      type: Function,
+      required: true
+    },
+    next: {
+      type: Function,
+      required: true
+    },
+    'update:modelEmail': {
+      type: String,
+      required: true
+    }
+  },
+  props: {
+    modelEmail: {
+      type: String,
+      required: true
+    }
+  },
+  methods: {
+    emailValue (e) {
+      const value = e.target.value
+      this.$emit('update:modelEmail', value.trim())
     }
   }
 }

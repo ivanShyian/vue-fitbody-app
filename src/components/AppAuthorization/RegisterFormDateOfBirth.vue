@@ -10,16 +10,14 @@
                  type="text"
                  id="dobday"
                  maxlength="2"
-                 :value="modelBirth.day"
-                 @input.prevent="birthValues.day"
+                 v-model="birthDate.day"
                  @keypress.enter.prevent>
         </div>
         <div class="col1">
           <label for="dobmounth"></label>
           <select class="form-control"
                   name="month"
-                  :value="modelBirth.month"
-                  @input.prevent="birthValues.month"
+                  v-model="birthDate.month"
                   id="dobmounth">
             <option>Month</option>
             <option value="1">Jan</option>
@@ -42,8 +40,7 @@
                  class="form-control"
                  type="text"
                  id="dobyear"
-                 :value="modelBirth.year"
-                 @input.prevent="birthValues.year"
+                 v-model="birthDate.year"
                  maxlength="4"
                  @keypress.enter.prevent>
         </div>
@@ -67,23 +64,17 @@ export default {
       type: Function,
       required: true
     },
-    'update:modelBirth': {
-      type: Object,
-      required: true
-    }
-  },
-  props: {
-    modelBirth: {
+    'birth-day': {
       type: Object,
       required: true
     }
   },
   data () {
     return {
-      birthValues: {
-        day: null,
-        month: null,
-        year: null
+      birthDate: {
+        day: '',
+        month: 'Month',
+        year: ''
       }
     }
   },
@@ -93,7 +84,7 @@ export default {
       this.$emit('next')
     },
     birthValue () {
-      this.$emit('update:modelBirth', this.birthValues)
+      this.$emit('birth-day', this.birthDate)
     }
   }
 }

@@ -5,13 +5,14 @@
       <input type="password"
              class="form-control"
              id="inputPassword4"
-             v-model.trim="password"
+             v-model="password"
              placeholder="Password"
              @keypress.enter.prevent>
       <label for="inputPassword5"></label>
       <input type="password"
              class="form-control"
-             v-model.trim="passwordTwo"
+             :value="modelPassword"
+             @input="passwordValue"
              id="inputPassword5"
              placeholder="Confirm password"
              @keypress.enter.prevent>
@@ -26,16 +27,38 @@
 
 <script>
 export default {
-  emits: ['prev', 'submit-register'],
-  data () {
-    return {
-      password: '',
-      passwordTwo: ''
+  emits: {
+    prev: {
+      type: Function,
+      required: true
+    },
+    next: {
+      type: Function,
+      required: true
+    },
+    'update:modelPassword': {
+      type: String,
+      required: true
     }
   },
-  computed: {
-    isSimilar () {
-      return this.password === this.passwordTwo
+  props: {
+    modelPassword: {
+      type: String,
+      required: true
+    }
+  },
+  data () {
+    return {
+      password: ''
+    }
+  },
+  methods: {
+    passwordValue (e) {
+      const value = e.target.value
+      if (value === this.password) {
+        console.log('confirm')
+        this.$emit('update:modelPassword', value.trim())
+      }
     }
   }
 }

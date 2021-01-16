@@ -2,17 +2,14 @@
   <form class="d-flex flex-column align-items-center register-form"
         @submit.prevent="submitRegister">
     <span class="register-form__counter">Step: {{ counter + 1 }} of {{ tabs.length }}</span>
-    <keep-alive>
       <component :is="'register-form-' + isTab"
                  v-model:modelGender="gender"
                  v-model:modelName="name"
-                 v-model:modelBirth="birthDate"
+                 @birth-day="setBirth"
                  v-model:modelEmail="email"
                  v-model:modelPassword="password"
                  @prev="prevPage"
-                 @next="nextPage"
-                 @submit-register="submitRegister"></component>
-    </keep-alive>
+                 @next="nextPage"></component>
   </form>
 
 </template>
@@ -37,18 +34,13 @@ export default {
       tabs: ['gender', 'name', 'date-of-birth', 'email', 'password'],
       gender: 'Choose...',
       name: '',
-      birthDate: {
-        day: '',
-        month: 'Month',
-        year: ''
-      },
+      birthDate: {},
       email: '',
       password: ''
     }
   },
   computed: {
     isTab () {
-      console.log(this.birthDate)
       return this.tabs[this.counter]
     },
     firstPage () {
@@ -59,6 +51,9 @@ export default {
     }
   },
   methods: {
+    setBirth (object) {
+      this.birthDate = object
+    },
     prevPage () {
       if (this.firstPage) {
         this.$emit('cancel-registration')
@@ -72,7 +67,12 @@ export default {
       }
     },
     submitRegister () {
-      console.log('ssssss')
+      console.group()
+      console.log('gender: ', this.gender)
+      console.log('name: ', this.name)
+      console.log('date of birth: ', this.birthDate.day, this.birthDate.month, this.birthDate.year)
+      console.log('email: ', this.email)
+      console.log('password', this.password)
     }
   },
   components: {
