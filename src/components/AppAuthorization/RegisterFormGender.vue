@@ -11,24 +11,12 @@
         <option value="woman">Woman</option>
       </select>
     </div>
-    <div class=" flex-row">
-      <button class="btn" @click.prevent="$emit('prev')">Back</button>
-      <button class="btn" @click.prevent="$emit('next')">Next</button>
-    </div>
   </div>
 </template>
 
 <script>
 export default {
   emits: {
-    prev: {
-      type: Function,
-      required: true
-    },
-    next: {
-      type: Function,
-      required: true
-    },
     'update:modelGender': {
       type: String,
       required: true
@@ -38,6 +26,11 @@ export default {
     modelGender: {
       type: String,
       required: true
+    }
+  },
+  computed: {
+    isEmpty () {
+      return this.modelGender === 'Choose...'
     }
   },
   methods: {
@@ -61,9 +54,9 @@ div.form-group {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin: 0 0 1.5rem 0;
 
     label {
+      margin: 0 0 1.5rem 0;
       font-family: "Quicksand", sans-serif;
       color: #000063;
       font-size: 1.5rem;

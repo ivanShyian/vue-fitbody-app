@@ -34,7 +34,6 @@
     font-family: "Quicksand", sans-serif;
     color: rgba(0, 0, 0, .6);
     letter-spacing: 1px;
-    margin: 0 0 2rem 0;
   }
 }
 </style>

@@ -10,14 +10,16 @@
                  type="text"
                  id="dobday"
                  maxlength="2"
-                 v-model="birthDate.day"
+                 :value="modelBirth.day"
+                 @input="updateValue('day', $event.target.value)"
                  @keypress.enter.prevent>
         </div>
         <div class="col1">
           <label for="dobmounth"></label>
           <select class="form-control"
                   name="month"
-                  v-model="birthDate.month"
+                  :value="modelBirth.month"
+                  @input="updateValue('month', $event.target.value)"
                   id="dobmounth">
             <option>Month</option>
             <option value="1">Jan</option>
@@ -40,51 +42,36 @@
                  class="form-control"
                  type="text"
                  id="dobyear"
-                 v-model="birthDate.year"
+                 :value="modelBirth.year"
+                 @input="updateValue('year', $event.target.value)"
                  maxlength="4"
                  @keypress.enter.prevent>
         </div>
       </div>
-    </div>
-    <div class="dob-btns">
-      <button class="btn" @click.prevent="$emit('prev')">Back</button>
-      <button class="btn" @click.prevent="nextPage">Next</button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  emits: {
-    prev: {
-      type: Function,
-      required: true
-    },
-    next: {
-      type: Function,
-      required: true
-    },
-    'birth-day': {
+  props: {
+    modelBirth: {
       type: Object,
       required: true
     }
   },
-  data () {
-    return {
-      birthDate: {
-        day: '',
-        month: 'Month',
-        year: ''
-      }
+  emits: {
+    'update:modelBirth': {
+      type: Object,
+      required: true
     }
   },
   methods: {
-    nextPage () {
-      this.birthValue()
-      this.$emit('next')
-    },
-    birthValue () {
-      this.$emit('birth-day', this.birthDate)
+    updateValue (key, value) {
+      this.$emit('update:modelBirth', {
+        ...this.modelBirth,
+        [key]: value
+      })
     }
   }
 }
@@ -99,23 +86,9 @@ div.control-group {
     @include registerTitle
   }
 
-  div.row {
-    margin-bottom: 1rem;
-
-    .col,
-    .col1 {
-      padding: 0;
-    }
-  }
-}
-
-.dob-btns {
-  display: flex;
-  justify-content: space-evenly;
-
-  button.btn:first-child {
-    border: 1px solid rgba(0, 0, 0, .2);
-    background-color: snow;
+  div.row .col,
+  .col1 {
+    padding: 0;
   }
 }
 </style>

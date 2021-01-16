@@ -2,18 +2,26 @@
   <form class="d-flex flex-column align-items-center register-form"
         @submit.prevent="submitRegister">
     <span class="register-form__counter">Step: {{ counter + 1 }} of {{ tabs.length }}</span>
-      <component :is="'register-form-' + isTab"
-                 v-model:modelGender="gender"
-                 v-model:modelName="name"
-                 @birth-day="setBirth"
-                 v-model:modelEmail="email"
-                 v-model:modelPassword="password"
-                 @prev="prevPage"
-                 @next="nextPage"></component>
+    <component :is="'register-form-' + isTab"
+               v-model:modelGender="gender"
+               v-model:modelName="name"
+               v-model:modelBirth="birthDate"
+               v-model:modelEmail="email"
+               v-model:modelPassword="password"></component>
+    <div>
+      <button class="btn" @click.prevent="prevPage">Back</button>
+      <button class="btn" :disabled="isEmpty" @click.prevent="nextPage" v-if="!lastPage">
+        Next
+      </button>
+      <button class="btn" v-else>Register</button>
+    </div>
   </form>
 
 </template>
-
+<!--               v-model:modelBday="birthDate.day"-->
+<!--               v-model:modelBmonth="birthDate.month"-->
+<!--               v-model:modelByear="birthDate.year"-->
+<!--@birth-day="setBirth"-->
 <script>
 import RegisterFormGender from './RegisterFormGender'
 import RegisterFormName from './RegisterFormName'
@@ -30,11 +38,15 @@ export default {
   },
   data () {
     return {
-      counter: 0,
+      counter: 2,
       tabs: ['gender', 'name', 'date-of-birth', 'email', 'password'],
       gender: 'Choose...',
       name: '',
-      birthDate: {},
+      birthDate: {
+        day: '',
+        month: 'Month',
+        year: ''
+      },
       email: '',
       password: ''
     }
@@ -42,6 +54,22 @@ export default {
   computed: {
     isTab () {
       return this.tabs[this.counter]
+    },
+    isEmpty () {
+      if (this.gender === 'Choose...' && this.tabs[this.counter] === 'gender') {
+        return true
+      } else if (!this.name.length && this.tabs[this.counter] === 'name') {
+        return true
+      } else if ((this.birthDate.day.length === 0 || this.birthDate.month === 'Month' ||
+        this.birthDate.year.length === 0) && this.tabs[this.counter] === 'date-of-birth') {
+        return true
+      } else if (this.email.length === 0 && this.tabs[this.counter] === 'email') {
+        return true
+      } else if (this.password.length === 0 && this.tabs[this.counter] === 'password') {
+        return true
+      } else {
+        return false
+      }
     },
     firstPage () {
       return this.counter === 0
@@ -56,12 +84,14 @@ export default {
     },
     prevPage () {
       if (this.firstPage) {
+        this.counter = 0
         this.$emit('cancel-registration')
       } else {
         this.counter--
       }
     },
     nextPage () {
+      // !this.lastPage ||
       if (!this.lastPage) {
         this.counter++
       }
@@ -86,19 +116,39 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '../../template';
+
+@include buttonStyling;
 .register-form {
   position: relative;
   margin: 0 auto;
   text-align: center;
-  padding: 1rem 1rem;
   width: 25rem;
 
   &__counter {
-    position: absolute;
-    top: -50%;
-    left: 30%;
     display: block;
     font-size: 2rem;
+    margin: 0 0 5rem 0;
+  }
+
+  div:last-child {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+
+    button.btn:first-child {
+      border: 1px solid rgba(0, 0, 0, .2);
+      background-color: snow;
+    }
+
+    button.btn.disable,
+    button.btn:disabled {
+      cursor: not-allowed;
+    }
+
+    button.btn:disabled:hover {
+      background-color: #fecb30;
+    }
   }
 }
 </style>

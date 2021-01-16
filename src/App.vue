@@ -29,7 +29,7 @@ export default {
       show: false,
       usersData: [],
       access: false,
-      unregistered: true
+      unregistered: false
     }
   },
   computed: {},
@@ -69,7 +69,7 @@ export default {
 </script>
 <style scoped lang="scss">
 main.main {
-  padding: 0 0 3rem 0;
+  padding: 0 0 10rem 0;
   width: 100%;
 
   &__wrapper {
