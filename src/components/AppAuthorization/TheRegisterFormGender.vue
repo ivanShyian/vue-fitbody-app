@@ -2,10 +2,12 @@
   <div class="form-group col-md-12">
     <div>
       <label for="inputGender">Who are you?</label>
-      <select id="inputGender"
-              :value="modelGender"
-              @input.prevent="genderValue"
-              class="form-control">
+      <select
+        id="inputGender"
+        v-focus
+        :value="modelGender"
+        @input.prevent="genderValue"
+        class="form-control">
         <option>Choose...</option>
         <option value="man">Man</option>
         <option value="woman">Woman</option>
@@ -15,6 +17,8 @@
 </template>
 
 <script>
+import focusDirective from './focusDirective'
+
 export default {
   emits: {
     'update:modelGender': {
@@ -27,6 +31,9 @@ export default {
       type: String,
       required: true
     }
+  },
+  directives: {
+    focus: focusDirective
   },
   computed: {
     isEmpty () {

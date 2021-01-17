@@ -2,32 +2,34 @@
   <form class="d-flex flex-column align-items-center register-form"
         @submit.prevent="submitRegister">
     <span class="register-form__counter">Step: {{ counter + 1 }} of {{ tabs.length }}</span>
-    <component :is="'register-form-' + isTab"
-               v-model:modelGender="gender"
-               v-model:modelName="name"
-               v-model:modelBirth="birthDate"
-               v-model:modelEmail="email"
-               v-model:modelPassword="password"></component>
+    <component
+      :is="'the-register-form-' + isTab"
+      v-model:modelGender="gender"
+      v-model:modelName="name"
+      v-model:modelBirth="birthDate"
+      v-model:modelEmail="email"
+      v-model:modelPassword="password"
+    ></component>
     <div>
       <button class="btn" @click.prevent="prevPage">Back</button>
-      <button class="btn" :disabled="isEmpty" @click.prevent="nextPage" v-if="!lastPage">
-        Next
+      <button
+        class="btn"
+        :disabled="isEmpty"
+        @click.prevent="nextPage"
+        v-if="!lastPage"
+      >Next
       </button>
-      <button class="btn" v-else>Register</button>
+      <button class="btn" :disabled="isEmptyPassword" v-else>Register</button>
     </div>
   </form>
 
 </template>
-<!--               v-model:modelBday="birthDate.day"-->
-<!--               v-model:modelBmonth="birthDate.month"-->
-<!--               v-model:modelByear="birthDate.year"-->
-<!--@birth-day="setBirth"-->
 <script>
-import RegisterFormGender from './RegisterFormGender'
-import RegisterFormName from './RegisterFormName'
-import RegisterFormDateOfBirth from './RegisterFormDateOfBirth'
-import RegisterFormEmail from './RegisterFormEmail'
-import RegisterFormPassword from './RegisterFormPassword'
+import TheRegisterFormGender from './TheRegisterFormGender'
+import TheRegisterFormName from './TheRegisterFormName'
+import TheRegisterFormDateOfBirth from './TheRegisterFormDateOfBirth'
+import TheRegisterFormEmail from './TheRegisterFormEmail'
+import TheRegisterFormPassword from './TheRegisterFormPassword'
 
 export default {
   emits: {
@@ -38,7 +40,7 @@ export default {
   },
   data () {
     return {
-      counter: 2,
+      counter: 4,
       tabs: ['gender', 'name', 'date-of-birth', 'email', 'password'],
       gender: 'Choose...',
       name: '',
@@ -55,6 +57,9 @@ export default {
     isTab () {
       return this.tabs[this.counter]
     },
+    isEmptyPassword () {
+      return this.password.length === 0 && this.tabs[this.counter] === 'password'
+    },
     isEmpty () {
       if (this.gender === 'Choose...' && this.tabs[this.counter] === 'gender') {
         return true
@@ -64,8 +69,6 @@ export default {
         this.birthDate.year.length === 0) && this.tabs[this.counter] === 'date-of-birth') {
         return true
       } else if (this.email.length === 0 && this.tabs[this.counter] === 'email') {
-        return true
-      } else if (this.password.length === 0 && this.tabs[this.counter] === 'password') {
         return true
       } else {
         return false
@@ -106,11 +109,11 @@ export default {
     }
   },
   components: {
-    RegisterFormGender,
-    RegisterFormName,
-    RegisterFormDateOfBirth,
-    RegisterFormEmail,
-    RegisterFormPassword
+    TheRegisterFormGender,
+    TheRegisterFormName,
+    TheRegisterFormDateOfBirth,
+    TheRegisterFormEmail,
+    TheRegisterFormPassword
   }
 }
 </script>

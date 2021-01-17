@@ -5,6 +5,7 @@
       <input type="password"
              class="form-control"
              id="inputPassword4"
+             v-focus
              v-model="password"
              placeholder="Password"
              @keypress.enter.prevent>
@@ -22,6 +23,8 @@
 </template>
 
 <script>
+import focusDirective from './focusDirective'
+
 export default {
   emits: {
     'update:modelPassword': {
@@ -39,6 +42,9 @@ export default {
     return {
       password: ''
     }
+  },
+  directives: {
+    focus: focusDirective
   },
   methods: {
     passwordValue (e) {

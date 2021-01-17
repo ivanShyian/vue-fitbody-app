@@ -5,15 +5,18 @@
       <input type="email"
              class="form-control"
              id="inputEmail4"
+             placeholder="Email"
+             v-focus
              :value="modelEmail"
              @input.prevent="emailValue"
-             placeholder="Email"
              @keypress.enter.prevent>
     </div>
   </div>
 </template>
 
 <script>
+import focusDirective from './focusDirective'
+
 export default {
   emits: {
     'update:modelEmail': {
@@ -26,6 +29,9 @@ export default {
       type: String,
       required: true
     }
+  },
+  directives: {
+    focus: focusDirective
   },
   methods: {
     emailValue (e) {

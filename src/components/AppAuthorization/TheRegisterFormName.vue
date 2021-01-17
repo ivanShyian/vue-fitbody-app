@@ -6,6 +6,7 @@
              class="form-control"
              id="inputName"
              placeholder="Name"
+             v-focus
              :value="modelName"
              @input.prevent="nameValue"
              @keypress.enter.prevent>
@@ -14,6 +15,8 @@
 </template>
 
 <script>
+import focusDirective from './focusDirective'
+
 export default {
   emits: {
     'update:modelName': {
@@ -26,6 +29,9 @@ export default {
       type: String,
       required: true
     }
+  },
+  directives: {
+    focus: focusDirective
   },
   methods: {
     nameValue (e) {
@@ -41,7 +47,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../template";
-
 @include buttonStyling
 
 div.form-group div:first-child label {

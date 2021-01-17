@@ -5,6 +5,7 @@
       <div>
         <input type="text"
                placeholder="Login"
+               v-focus
                v-model="userName"
                class="form-control">
         <input type="password"
@@ -23,6 +24,8 @@
 
 <script>
 
+import focusDirective from './focusDirective'
+
 export default {
   emits: ['submit-user', 'register-user'],
   data () {
@@ -31,6 +34,9 @@ export default {
       userPassword: '',
       currentUser: {}
     }
+  },
+  directives: {
+    focus: focusDirective
   },
   methods: {
     submitData () {

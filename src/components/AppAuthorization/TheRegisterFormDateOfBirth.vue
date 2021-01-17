@@ -10,6 +10,7 @@
                  type="text"
                  id="dobday"
                  maxlength="2"
+                 v-focus
                  :value="modelBirth.day"
                  @input="updateValue('day', $event.target.value)"
                  @keypress.enter.prevent>
@@ -53,6 +54,8 @@
 </template>
 
 <script>
+import focusDirective from './focusDirective'
+
 export default {
   props: {
     modelBirth: {
@@ -65,6 +68,9 @@ export default {
       type: Object,
       required: true
     }
+  },
+  directives: {
+    focus: focusDirective
   },
   methods: {
     updateValue (key, value) {
