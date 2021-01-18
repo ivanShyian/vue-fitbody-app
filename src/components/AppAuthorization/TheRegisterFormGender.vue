@@ -43,7 +43,9 @@ export default {
   methods: {
     genderValue (e) {
       const value = e.target.value
-      this.$emit('update:modelGender', value)
+      if (value === 'man' || value === 'woman') {
+        this.$emit('update:modelGender', value)
+      }
     }
   }
 }

@@ -32,15 +32,9 @@ import TheRegisterFormEmail from './TheRegisterFormEmail'
 import TheRegisterFormPassword from './TheRegisterFormPassword'
 
 export default {
-  emits: {
-    'cancel-registration': {
-      type: Function,
-      required: true
-    }
-  },
   data () {
     return {
-      counter: 4,
+      counter: 0,
       tabs: ['gender', 'name', 'date-of-birth', 'email', 'password'],
       gender: 'Choose...',
       name: '',
@@ -50,7 +44,8 @@ export default {
         year: ''
       },
       email: '',
-      password: ''
+      password: '',
+      newUser: {}
     }
   },
   computed: {
@@ -58,17 +53,20 @@ export default {
       return this.tabs[this.counter]
     },
     isEmptyPassword () {
-      return this.password.length === 0 && this.tabs[this.counter] === 'password'
+      return !this.password.length && this.tabs[this.counter] === 'password'
+    },
+    passToRegister () {
+      return this.gender !== 'Choose...' || this.name.length || this.birthDate.day.length || this.email.length
     },
     isEmpty () {
       if (this.gender === 'Choose...' && this.tabs[this.counter] === 'gender') {
         return true
       } else if (!this.name.length && this.tabs[this.counter] === 'name') {
         return true
-      } else if ((this.birthDate.day.length === 0 || this.birthDate.month === 'Month' ||
-        this.birthDate.year.length === 0) && this.tabs[this.counter] === 'date-of-birth') {
+      } else if ((!this.birthDate.day.length || this.birthDate.month === 'Month' ||
+        !this.birthDate.year.length) && this.tabs[this.counter] === 'date-of-birth') {
         return true
-      } else if (this.email.length === 0 && this.tabs[this.counter] === 'email') {
+      } else if (!this.email.length && this.tabs[this.counter] === 'email') {
         return true
       } else {
         return false
@@ -88,24 +86,30 @@ export default {
     prevPage () {
       if (this.firstPage) {
         this.counter = 0
-        this.$emit('cancel-registration')
+        this.$router.push({ name: 'login' })
       } else {
         this.counter--
       }
     },
     nextPage () {
-      // !this.lastPage ||
       if (!this.lastPage) {
         this.counter++
       }
     },
     submitRegister () {
-      console.group()
-      console.log('gender: ', this.gender)
-      console.log('name: ', this.name)
-      console.log('date of birth: ', this.birthDate.day, this.birthDate.month, this.birthDate.year)
-      console.log('email: ', this.email)
-      console.log('password', this.password)
+      if (this.passToRegister && !this.isEmptyPassword) {
+        this.newUser = {
+          gender: this.gender,
+          name: this.name,
+          'date-of-birth': this.birthDate,
+          email: this.email,
+          password: this.password
+        }
+        console.log(this.newUser)
+        this.$router.push({ name: 'true-register' })
+      } else {
+        console.log('falsieee')
+      }
     }
   },
   components: {
@@ -124,7 +128,7 @@ export default {
 @include buttonStyling;
 .register-form {
   position: relative;
-  margin: 0 auto;
+  margin: 0 auto 5rem auto;
   text-align: center;
   width: 25rem;
 

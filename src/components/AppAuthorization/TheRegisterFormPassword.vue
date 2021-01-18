@@ -8,6 +8,7 @@
              v-focus
              v-model="password"
              placeholder="Password"
+             autocomplete="on"
              @keypress.enter.prevent>
       <label for="inputPassword5"></label>
       <input type="password"
@@ -16,6 +17,7 @@
              @input="passwordValue"
              id="inputPassword5"
              placeholder="Confirm password"
+             autocomplete="on"
              @keypress.enter.prevent>
       <small>Minimum 6 symbols...</small>
     </div>
@@ -43,6 +45,11 @@ export default {
       password: ''
     }
   },
+  computed: {
+    isEmpty () {
+      return this.password.length
+    }
+  },
   directives: {
     focus: focusDirective
   },
@@ -50,7 +57,6 @@ export default {
     passwordValue (e) {
       const value = e.target.value
       if (value === this.password) {
-        console.log('confirm')
         this.$emit('update:modelPassword', value.trim())
       }
     }

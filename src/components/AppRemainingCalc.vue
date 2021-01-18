@@ -88,6 +88,13 @@ export default {
       ]
     }
   },
+  beforeRouteEnter (to, from, next) {
+    if (to.meta.cantLogin) {
+      next(false)
+    } else {
+      next()
+    }
+  },
   computed: {
     showCalculatedRes () {
       if (this.calculated === 'err') {
@@ -130,6 +137,7 @@ export default {
 .remaining-calculator {
   width: 50%;
   margin: 0 auto;
+
   &__mode {
     padding: 2rem;
     display: flex;
@@ -137,6 +145,7 @@ export default {
     align-items: center;
     border-radius: 1rem;
     box-shadow: -1px 7px 39px -16px rgba(0, 0, 0, 0.75);
+
     span {
       text-align: center;
       margin: 0 0 1rem 0;
@@ -144,6 +153,7 @@ export default {
   }
 
 }
+
 .remaining-calculator__group-mode,
 .remaining-calculator__daily-activity-group {
   border-radius: 1rem;

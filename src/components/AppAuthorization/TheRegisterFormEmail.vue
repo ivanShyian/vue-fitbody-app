@@ -36,7 +36,9 @@ export default {
   methods: {
     emailValue (e) {
       const value = e.target.value
-      this.$emit('update:modelEmail', value.trim())
+      if (value.length) {
+        this.$emit('update:modelEmail', value.trim())
+      }
     }
   }
 }

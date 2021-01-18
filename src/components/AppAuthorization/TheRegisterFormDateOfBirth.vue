@@ -74,10 +74,12 @@ export default {
   },
   methods: {
     updateValue (key, value) {
-      this.$emit('update:modelBirth', {
-        ...this.modelBirth,
-        [key]: value
-      })
+      if (value.length && value !== 'Month') {
+        this.$emit('update:modelBirth', {
+          ...this.modelBirth,
+          [key]: value
+        })
+      }
     }
   }
 }

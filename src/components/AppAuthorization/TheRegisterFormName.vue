@@ -36,10 +36,9 @@ export default {
   methods: {
     nameValue (e) {
       const value = e.target.value
-      if (value.length === 0) {
-        console.log('h')
+      if (value.length) {
+        this.$emit('update:modelName', value.trim())
       }
-      this.$emit('update:modelName', value.trim())
     }
   }
 }
