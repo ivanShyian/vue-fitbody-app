@@ -1,35 +1,17 @@
 <template>
-  <app-header></app-header>
-  <main class="main">
-    <div class="main__wrapper">
-      <router-view></router-view>
-    </div>
-  </main>
-  <app-footer></app-footer>
+    <component :is="layout + '-layout'"></component>
 </template>
 <script>
-import AppHeader from './components/AppHeader'
-import AppFooter from './components/AppFooter'
+import AuthLayout from '@/layouts/AuthLayout'
+import MainLayout from '@/layouts/MainLayout'
 
 export default {
-
-  data () {
-    return {
-      show: false,
-      access: false
+  computed: {
+    layout () {
+      return this.$route.meta.layout
     }
   },
-  computed: {},
-  methods: {
-    registerUser () {
-      console.log('work')
-      this.unregistered = false
-    }
-  },
-  components: {
-    AppHeader,
-    AppFooter
-  }
+  components: { AuthLayout, MainLayout }
 }
 </script>
 <style scoped lang="scss">

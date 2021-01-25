@@ -46,6 +46,14 @@ body {
     background-color: darkorange;
     color: darkblue;
   }
+  .btn.disabled,
+  .btn:disabled,
+  .btn:disabled:hover{
+    cursor: not-allowed;
+  }
+}
+.invalid {
+  border: 2px solid rgba(255, 0, 0, .5);
 }
 @mixin registerTitle {
   font-family: "Quicksand", sans-serif;

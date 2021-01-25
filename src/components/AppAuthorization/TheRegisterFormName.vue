@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import focusDirective from './focusDirective'
+import focusDirective from '../../directives/focusDirective'
 
 export default {
   emits: {
