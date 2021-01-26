@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import AppHeader from '../components/AppHeader'
-import AppFooter from '@/components/AppFooter'
-import AppMessage from '@/components/UI/AppMessage'
+import AppHeader from '../components/TheNavbar'
+import AppFooter from '@/components/TheFooter'
+import AppMessage from '@/components/ui/AppMessage'
 
 export default {
   components: { AppMessage, AppFooter, AppHeader }

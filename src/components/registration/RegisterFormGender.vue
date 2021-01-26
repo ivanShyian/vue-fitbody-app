@@ -3,11 +3,12 @@
     <div>
       <label for="inputGender">Who are you?</label>
       <select
-        id="inputGender"
         v-focus
-        :value="modelGender"
-        @input.prevent="genderValue"
-        class="form-control">
+        id="inputGender"
+        :value="value"
+        @input="setField"
+        class="form-control"
+      >
         <option>Choose...</option>
         <option value="man">Man</option>
         <option value="woman">Woman</option>
@@ -18,33 +19,25 @@
 
 <script>
 import focusDirective from '../../directives/focusDirective'
+import { mapGetters } from 'vuex'
 
 export default {
-  emits: {
-    'update:modelGender': {
-      type: String,
-      required: true
-    }
-  },
-  props: {
-    modelGender: {
-      type: String,
-      required: true
-    }
-  },
   directives: {
     focus: focusDirective
   },
+  data () {
+    return {}
+  },
   computed: {
-    isEmpty () {
-      return this.modelGender === 'Choose...'
-    }
+    ...mapGetters('register', { value: 'currentText' })
   },
   methods: {
-    genderValue (e) {
-      const value = e.target.value
-      if (value === 'man' || value === 'woman') {
-        this.$emit('update:modelGender', value)
+    setField (event) {
+      if (event.target.value !== 'Choose...') {
+        this.$store.commit('register/setText', event.target.value)
+        this.$store.commit('register/notEmpty')
+      } else {
+        this.$store.commit('register/isEmpty')
       }
     }
   }

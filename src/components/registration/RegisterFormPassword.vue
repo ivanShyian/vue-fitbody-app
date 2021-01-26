@@ -6,15 +6,16 @@
              class="form-control"
              id="inputPassword4"
              v-focus
-             v-model="password"
+             :value="value"
+             @input="setValue"
              placeholder="Password"
              autocomplete="on"
              @keypress.enter.prevent>
       <label for="inputPassword5"></label>
       <input type="password"
              class="form-control"
-             :value="modelPassword"
-             @input="passwordValue"
+             :value="password"
+             @input="$emit('update:password', $event.target.value)"
              id="inputPassword5"
              placeholder="Confirm password"
              autocomplete="on"
@@ -26,38 +27,21 @@
 
 <script>
 import focusDirective from '../../directives/focusDirective'
+import { mapGetters } from 'vuex'
 
 export default {
-  emits: {
-    'update:modelPassword': {
-      type: String,
-      required: true
-    }
-  },
-  props: {
-    modelPassword: {
-      type: String,
-      required: true
-    }
-  },
-  data () {
-    return {
-      password: ''
-    }
-  },
-  computed: {
-    isEmpty () {
-      return this.password.length
-    }
-  },
+  props: ['password'],
+  emits: ['update:password'],
   directives: {
     focus: focusDirective
   },
+  computed: {
+    ...mapGetters('register', { value: 'currentText' })
+  },
   methods: {
-    passwordValue (e) {
-      const value = e.target.value
-      if (value === this.password) {
-        this.$emit('update:modelPassword', value.trim())
+    setValue (event) {
+      if (event.target.value !== '') {
+        this.$store.commit('register/setText', event.target.value)
       }
     }
   }

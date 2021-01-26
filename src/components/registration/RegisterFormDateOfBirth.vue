@@ -11,16 +11,16 @@
                  id="dobday"
                  maxlength="2"
                  v-focus
-                 :value="modelBirth.day"
-                 @input="updateValue('day', $event.target.value)"
+                 :value="value.day"
+                 @input="setField('day', $event.target.value)"
                  @keypress.enter.prevent>
         </div>
         <div class="col1">
           <label for="dobmounth"></label>
           <select class="form-control"
                   name="month"
-                  :value="modelBirth.month"
-                  @input="updateValue('month', $event.target.value)"
+                  :value="value.month"
+                  @input="setField('month', $event.target.value)"
                   id="dobmounth">
             <option>Month</option>
             <option value="1">Jan</option>
@@ -43,8 +43,8 @@
                  class="form-control"
                  type="text"
                  id="dobyear"
-                 :value="modelBirth.year"
-                 @input="updateValue('year', $event.target.value)"
+                 :value="value.year"
+                 @input="setField('year', $event.target.value)"
                  maxlength="4"
                  @keypress.enter.prevent>
         </div>
@@ -55,30 +55,31 @@
 
 <script>
 import focusDirective from '../../directives/focusDirective'
+import { mapGetters } from 'vuex'
 
 export default {
-  props: {
-    modelBirth: {
-      type: Object,
-      required: true
-    }
+  directives: { focus: focusDirective },
+  data () {
+    return {}
   },
-  emits: {
-    'update:modelBirth': {
-      type: Object,
-      required: true
-    }
-  },
-  directives: {
-    focus: focusDirective
+  computed: {
+    ...mapGetters('register', { value: 'currentText' })
   },
   methods: {
-    updateValue (key, value) {
-      if (value.length && value !== 'Month') {
-        this.$emit('update:modelBirth', {
-          ...this.modelBirth,
-          [key]: value
-        })
+    setField (field, value) {
+      const date = this.$store.state.register['date-of-birth']
+      if (field === 'month' && value !== 'Choose...') {
+        this.$store.commit('register/setText', { value, fieldName: field })
+        if (date.day !== '' && date.year !== '') {
+          this.$store.commit('register/notEmpty')
+        }
+      } else if (value !== '') {
+        this.$store.commit('register/setText', { value, fieldName: field })
+        if (date.day !== '' && date.month !== 'Month' && date.year !== '') {
+          this.$store.commit('register/notEmpty')
+        }
+      } else {
+        this.$store.commit('register/isEmpty')
       }
     }
   }

@@ -38,7 +38,7 @@ body {
     text-transform: uppercase;
     cursor: pointer;
     transition: all ease-in .3s;
-    background-color: #fecb30;
+    background-color: #ffc13b;
     color: black;
     width: 33%;
   }
@@ -59,4 +59,17 @@ body {
   font-family: "Quicksand", sans-serif;
   color: #000063;
   font-size: 1.5rem;
+}
+
+.white-text {
+  color: #f5f0e1;
+}
+.card {
+  padding: 1rem;
+  border-radius: .5rem;
+  margin: .5rem;
+}
+.container {
+  width: 100%;
+  max-width: 1450px;
 }

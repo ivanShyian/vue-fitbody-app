@@ -9,13 +9,20 @@
 </template>
 
 <script>
-import AppHeader from '../components/AppHeader'
-import AppFooter from '../components/AppFooter'
+import AppHeader from '../components/TheNavbar'
+import AppFooter from '../components/TheFooter'
 export default {
   components: { AppFooter, AppHeader }
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.main {
+  height: 100%;
+  width: 100%;
+  background-color: #1e3d59;
+  &__wrapper {
+    height: 100%;
+  }
+}
 </style>

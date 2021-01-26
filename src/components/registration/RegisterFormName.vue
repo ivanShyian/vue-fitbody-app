@@ -6,41 +6,19 @@
              class="form-control"
              id="inputName"
              placeholder="Name"
+             :value="value"
+             @input="setField"
              v-focus
-             :value="modelName"
-             @input.prevent="nameValue"
              @keypress.enter.prevent>
     </div>
   </div>
 </template>
 
 <script>
-import focusDirective from '../../directives/focusDirective'
+import { registerMixin } from '@/mixins/register.mixin'
 
 export default {
-  emits: {
-    'update:modelName': {
-      type: String,
-      required: true
-    }
-  },
-  props: {
-    modelName: {
-      type: String,
-      required: true
-    }
-  },
-  directives: {
-    focus: focusDirective
-  },
-  methods: {
-    nameValue (e) {
-      const value = e.target.value
-      if (value.length) {
-        this.$emit('update:modelName', value.trim())
-      }
-    }
-  }
+  mixins: [registerMixin]
 }
 </script>
 

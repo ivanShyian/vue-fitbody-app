@@ -1,5 +1,5 @@
 <template>
-  <div class="logo">
+  <div class="card menu-logo">
     <img :src="imageM" alt="">
   </div>
 </template>
@@ -18,16 +18,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
-div.logo {
-  grid-area: logo;
-  border: 1px solid #000063;
+div.menu-logo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex: 0 1 10%;
+  padding: 0;
+  background-color: #1e3d59;
   img {
     display: block;
-    margin: 0 auto;
-    max-width: 200px;
+    border-radius: .5rem;
+    max-width: 100%;
     height: 100%;
-    border-radius: 50%;
-    border: 2px solid #d20c0c;
   }
 }
 </style>

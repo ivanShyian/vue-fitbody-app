@@ -1,6 +1,7 @@
 import { createStore, createLogger } from 'vuex'
 import auth from './modules/auth.module'
 import alert from './modules/alert.module'
+import register from './modules/register.module'
 
 const plugins = []
 if (process.env.NODE_ENV === 'development') {
@@ -14,6 +15,7 @@ export default createStore({
   },
   modules: {
     auth,
-    alert
+    alert,
+    register
   }
 })

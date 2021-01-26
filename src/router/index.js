@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import AppLoginForm from '@/views/AppLoginForm'
+import AppLoginForm from '@/views/Login'
 import store from '../store'
-import AppPageNotFound from '../components/AppPageNotFound'
+import AppPageNotFound from '../views/NotFound'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -18,7 +18,7 @@ const router = createRouter({
     {
       path: '/register',
       name: 'register',
-      component: () => import('../components/AppAuthorization/AppRegisterForm'),
+      component: () => import('../views/Register'),
       meta: {
         layout: 'auth',
         auth: false
@@ -36,7 +36,7 @@ const router = createRouter({
     {
       path: '/home',
       name: 'home',
-      component: () => import('../components/AppMenu/AppMenu'),
+      component: () => import('../views/Menu'),
       alias: '/',
       meta: {
         layout: 'main',
@@ -55,7 +55,7 @@ const router = createRouter({
     {
       path: '/success-register',
       name: 'true-register',
-      component: () => import('../components/AppAuthorization/TheCongratz'),
+      component: () => import('../components/registration/RegisterCongratz'),
       meta: {
         layout: 'auth',
         auth: false

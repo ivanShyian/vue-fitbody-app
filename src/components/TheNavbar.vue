@@ -4,9 +4,12 @@
       <div class="header__logo">F<span>i</span><span>t</span>Body</div>
       <div class="header__text" v-if="!mainLayout">"A healthy mind is in a healthy body"</div>
       <ul v-if="mainLayout" class="header__ul">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Some</a></li>
-        <li><a href="#" @click="$store.commit('auth/logout')">Exit</a></li>
+        <li>
+          <a href="#" title="Help"><i class="far fa-question-circle"></i></a>
+        </li>
+        <li>
+          <a href="#" @click="$store.commit('auth/logout')" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+        </li>
       </ul>
     </nav>
   </header>
@@ -26,7 +29,7 @@ export default {
 <style scoped lang="scss">
 .header {
   width: 100%;
-  margin: 0 0 1rem 0;
+  margin: 0 0 .5rem 0;
   &__wrapper {
     text-align: center;
     padding: 1rem 0 0 0;
@@ -41,9 +44,18 @@ export default {
   }
   &__ul {
     display: flex;
+    align-items: center;
+    margin: 0;
     li {
+      display: block;
       list-style: none;
       margin: 0 1rem;
+      a {
+        font-family: "Quicksand", sans-serif;
+        color: black;
+        font-weight: 400;
+        font-size: 1.2rem;
+      }
     }
   }
 

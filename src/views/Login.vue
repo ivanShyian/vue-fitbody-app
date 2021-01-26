@@ -37,22 +37,14 @@
 </template>
 
 <script>
-import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
-import * as yup from 'yup'
 import { error } from '@/utils/error'
+import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
+import { schemaValidator } from '@/utils/login-validator'
+
 export default {
   data () {
-    const PASSWORD_LENGTH = 6
-    const schema = yup.object({
-      email: yup.string()
-        .required('Enter email')
-        .email('Invalid email'),
-      password: yup.string()
-        .required('Enter password')
-        .min(PASSWORD_LENGTH, `Password can't be less then ${PASSWORD_LENGTH} symbols`)
-    })
     return {
-      schema
+      schema: schemaValidator
     }
   },
   mounted () {
@@ -67,7 +59,7 @@ export default {
     async onSubmit (values) {
       try {
         await this.$store.dispatch('auth/login', values)
-        await this.$router.push('/')
+        this.$router.push('/')
       } catch (e) {}
     }
   },

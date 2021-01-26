@@ -7,40 +7,19 @@
              id="inputEmail4"
              placeholder="Email"
              v-focus
-             :value="modelEmail"
-             @input.prevent="emailValue"
+             :value="value"
+             @input.prevent="setField"
              @keypress.enter.prevent>
     </div>
   </div>
 </template>
 
 <script>
-import focusDirective from '../../directives/focusDirective'
+
+import { registerMixin } from '@/mixins/register.mixin'
 
 export default {
-  emits: {
-    'update:modelEmail': {
-      type: String,
-      required: true
-    }
-  },
-  props: {
-    modelEmail: {
-      type: String,
-      required: true
-    }
-  },
-  directives: {
-    focus: focusDirective
-  },
-  methods: {
-    emailValue (e) {
-      const value = e.target.value
-      if (value.length) {
-        this.$emit('update:modelEmail', value.trim())
-      }
-    }
-  }
+  mixins: [registerMixin]
 }
 </script>
 
