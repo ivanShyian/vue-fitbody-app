@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import AppHeader from '../components/TheNavbar'
-import AppFooter from '@/components/TheFooter'
+import AppHeader from '../components/AppHeader'
+import AppFooter from '@/components/AppFooter'
 import AppMessage from '@/components/ui/AppMessage'
 
 export default {

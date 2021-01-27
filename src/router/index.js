@@ -27,7 +27,7 @@ const router = createRouter({
     {
       path: '/calories',
       name: 'calories',
-      component: () => import('../components/AppRemainingCalc'),
+      component: () => import('../components/calories/AppCalories'),
       meta: {
         layout: 'main',
         auth: true

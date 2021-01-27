@@ -3,6 +3,7 @@ import fitbodyAxios from '@/axios/fitbody-requests'
 import auth from './modules/auth.module'
 import alert from './modules/alert.module'
 import register from './modules/register.module'
+import menuList from './modules/menuList.module'
 
 const plugins = []
 if (process.env.NODE_ENV === 'development') {
@@ -43,6 +44,7 @@ export default createStore({
   modules: {
     auth,
     alert,
-    register
+    register,
+    menuList
   }
 })

@@ -1,33 +1,36 @@
 @import url("https://fonts.googleapis.com/css2?family=Jost&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
-
+html {
+  height: 100vh;
+  font-size: 15px;
+  font-family: "Jost", sans-serif;
+}
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
 #app {
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  height: 100vh;
 }
 
 * {
   box-sizing: border-box;
 }
 
-html {
-  height: 100vh;
-  font-size: 15px;
-  font-family: "Jost", sans-serif;
-}
 
-h1, h2, h3, h4, h5, h6 {
-  margin: 0;
-}
-
-body {
-  height: 100%;
+h1, h2, h3, h4, h5, h6, ul, li {
   margin: 0;
   padding: 0;
 }
+li {
+  list-style: none;
+}
+
 @mixin buttonStyling {
   button {
     font-family: 'Quicksand', sans-serif;
@@ -68,8 +71,15 @@ body {
   padding: 1rem;
   border-radius: .5rem;
   margin: .5rem;
+  background-color: transparent;
+  color: white;
+  a {
+    color: white;
+  }
 }
 .container {
   width: 100%;
   max-width: 1450px;
+  padding: 0;
+  margin: 0;
 }

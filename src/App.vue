@@ -20,16 +20,11 @@ export default {
 <style scoped lang="scss">
 main.main {
   width: 100%;
-
   &__wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     margin: 0 auto;
     width: 100%;
     max-width: 100rem;
     text-align: center;
-
     span {
       font-family: "Jost", sans-serif;
       font-size: 1.7rem;

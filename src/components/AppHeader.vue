@@ -1,9 +1,12 @@
 <template>
-  <header class="header">
+  <header class="header" :class="{'green': mainLayout}">
     <nav :class="{'header__wrapper': !mainLayout, 'header__wrapper-true': mainLayout}">
       <div class="header__logo">F<span>i</span><span>t</span>Body</div>
       <div class="header__text" v-if="!mainLayout">"A healthy mind is in a healthy body"</div>
       <ul v-if="mainLayout" class="header__ul">
+        <li>
+          <a href="#" title="Settings"><i class="fas fa-cog"></i></a>
+        </li>
         <li>
           <a href="#" title="Help"><i class="far fa-question-circle"></i></a>
         </li>
@@ -35,6 +38,7 @@ export default {
 <style scoped lang="scss">
 .header {
   width: 100%;
+  height: 10vh;
   padding: 0 0 .5rem 0;
 
   &__wrapper {
@@ -90,5 +94,8 @@ export default {
     color: rgba(0, 0, 0, .6);
     letter-spacing: 1px;
   }
+}
+.header.green {
+
 }
 </style>

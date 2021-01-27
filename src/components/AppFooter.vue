@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer" :class="{'layout': mainLayout}">
+  <footer class="footer" :class="{'green': mainLayout}">
     <div class="footer__wrapper">
       <span>ivanShyian prod. Bless you 2021</span>
     </div>
@@ -19,6 +19,7 @@ footer.footer {
   display: flex;
   justify-content: center;
   width: 100%;
+  height: 5vh;
   padding: .5rem 0 .5rem 0;
   &__wrapper {
     span {
@@ -27,7 +28,7 @@ footer.footer {
     }
   }
 }
-.footer.layout {
-  background-color: #abbd81
+.footer.green {
+  background-color: transparent;
 }
 </style>

@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import AppHeader from '../components/TheNavbar'
-import AppFooter from '../components/TheFooter'
+import AppHeader from '../components/AppHeader'
+import AppFooter from '../components/AppFooter'
 
 export default {
   components: {
@@ -20,12 +20,11 @@ export default {
 
 <style scoped lang="scss">
 .main {
+  height: 85vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
   width: 100%;
-  background-color: #abbd81
 }
 </style>

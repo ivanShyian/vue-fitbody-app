@@ -1,6 +1,8 @@
 <template>
   <div class="menu-logo">
     <img :src="currentImage" alt="">
+    <div class="menu-logo__lvl">lvl - 10</div>
+    <div class="menu-logo__status">Update status...</div>
   </div>
 </template>
 
@@ -26,17 +28,34 @@ export default {
 
 <style scoped lang="scss">
 div.menu-logo {
+  border-radius: 1rem;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  flex: 0 1 10%;
-  padding: .5rem 0 .5rem .5rem;
-
+  flex: 0 1 15%;
+  padding: .5rem;
+  position: relative;
+  margin: .5rem 0;
   img {
     display: block;
-    border-radius: .5rem;
+    border-radius: 50%;
     max-width: 100%;
     height: 100%;
+  }
+  &__lvl {
+    position: absolute;
+    right: 60%;
+    background-color: #ffd79d;
+    padding: .2rem 1rem;
+    border-radius: 1rem;
+  }
+  &__status {
+    position: absolute;
+    bottom: 0;
+    left: 30%;
+    background-color: #ffd79d;
+    padding: .3rem 1rem;
+    border-radius: 1rem;
   }
 }
 </style>
