@@ -1,20 +1,25 @@
 <template>
-  <form class="d-flex flex-column align-items-center register-form"
-        @submit.prevent>
+  <form class="d-flex flex-column align-items-center register-form">
     <span class="register-form__counter">Step: {{ $store.getters['register/spanCounter'] }}</span>
     <component :is="'the-register-form-' + isTab"
                v-model:password="password"
     ></component>
     <div>
-      <button class="btn" @click="previous">Back</button>
+      <button class="btn" @click.prevent="previous">Back</button>
       <button
         class="btn"
         :disabled="isEmpty"
-        @click="next"
+        @click.prevent="next"
         v-if="!lastPage"
       >Next
       </button>
-      <button class="btn" v-if="lastPage" :disabled="!hasValues">Register</button>
+      <button class="btn"
+              type="submit"
+              v-if="lastPage"
+              :disabled="!hasValues"
+              @click.prevent="submitRegister"
+      >Register
+      </button>
     </div>
   </form>
 
@@ -26,8 +31,9 @@ import TheRegisterFormDateOfBirth from '../components/registration/RegisterFormD
 import TheRegisterFormEmail from '../components/registration/RegisterFormEmail'
 import TheRegisterFormPassword from '../components/registration/RegisterFormPassword'
 import { mapGetters } from 'vuex'
+
 export default {
-  data () {
+  data() {
     return {
       password: ''
     }
@@ -37,23 +43,38 @@ export default {
       'isTab',
       'isEmpty',
       'lastPage',
-      'firstPage'
+      'firstPage',
+      'userPassword'
     ]),
-    hasValues () {
+    hasValues() {
       return this.password.length && this.$store.state.register.password
     }
   },
   methods: {
-    next () {
-      this.$store.commit('register/nextPage')
-      this.$store.commit('register/isEmpty')
+    next() {
+      if (!this.lastPage) {
+        this.$store.commit('register/nextPage')
+        this.$store.commit('register/isEmpty')
+      }
     },
-    previous () {
+    previous() {
       if (!this.firstPage) {
         this.$store.commit('register/prevPage')
         this.$store.commit('register/notEmpty')
       } else {
-        this.$router.push('/login')
+        this.$router.push('/auth')
+      }
+    },
+    async submitRegister() {
+      if (this.password !== this.userPassword) {
+        this.$store.dispatch('alert/setAlert', {
+          value: 'Пароли не совпадают',
+          type: 'warning'
+        })
+      } else {
+        await this.$store.commit('register/addNewUser')
+        await this.$store.dispatch('register/register')
+        this.$router.push('/registered')
       }
     }
   },

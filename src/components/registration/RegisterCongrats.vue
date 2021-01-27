@@ -3,15 +3,15 @@
     <h2>Congratulation!</h2>
     <h3>You have registered successfully</h3>
     <p>And the most coolest thing that you started a new life! With new body!</p>
-    <router-link :to="{name: 'menu'}" v-slot="{navigate}">
-      <button class="btn" @click="navigate">To home page</button>
+    <hr/>
+    <router-link :to="{name: 'login'}" v-slot="{navigate}">
+      <button class="btn" @click="navigate">To login page</button>
     </router-link>
   </div>
 </template>
 
 <script>
 export default {
-
 }
 </script>
 

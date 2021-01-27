@@ -1,14 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import AppLoginForm from '@/views/Login'
+import Login from '@/views/Login'
 import store from '../store'
-import AppPageNotFound from '../views/NotFound'
+import NotFound from '../views/NotFound'
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: '/login',
-      component: AppLoginForm,
+      path: '/auth',
+      component: Login,
       name: 'login',
       meta: {
         layout: 'auth',
@@ -46,16 +46,16 @@ const router = createRouter({
     {
       path: '/:notFound(.*)',
       name: 'notFound',
-      component: AppPageNotFound,
+      component: NotFound,
       meta: {
         layout: 'auth',
         auth: false
       }
     },
     {
-      path: '/success-register',
-      name: 'true-register',
-      component: () => import('../components/registration/RegisterCongratz'),
+      path: '/registered',
+      name: 'registered',
+      component: () => import('../components/registration/RegisterCongrats'),
       meta: {
         layout: 'auth',
         auth: false
@@ -67,7 +67,7 @@ router.beforeEach((to, from, next) => {
   if (requireAuth && store.getters['auth/isAuthenticated']) {
     next()
   } else if (requireAuth && !store.getters['auth/isAuthenticated']) {
-    next('/login?message=login')
+    next('/auth?message=auth')
   } else {
     next()
   }

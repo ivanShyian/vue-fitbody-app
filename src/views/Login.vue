@@ -25,7 +25,7 @@
         <button class="btn"
                 type="submit"
                 :disabled="isSubmitting || submitCount > 3"
-        >{{submitCount > 3 ? 'Try again later...' : 'Log in'}}
+        >{{ submitCount > 3 ? 'Try again later...' : 'Log in' }}
         </button>
       </form>
     </VeeForm>
@@ -42,12 +42,12 @@ import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
 import { schemaValidator } from '@/utils/login-validator'
 
 export default {
-  data () {
+  data() {
     return {
       schema: schemaValidator
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.query.message) {
       this.$store.dispatch('alert/setAlert', {
         value: error(this.$route.query.message),
@@ -56,11 +56,12 @@ export default {
     }
   },
   methods: {
-    async onSubmit (values) {
+    async onSubmit(values) {
       try {
         await this.$store.dispatch('auth/login', values)
         this.$router.push('/')
-      } catch (e) {}
+      } catch (e) {
+      }
     }
   },
   components: {
@@ -97,7 +98,8 @@ export default {
     button:hover {
       background: darkred;
     }
-    button:disabled:hover{
+
+    button:disabled:hover {
       cursor: not-allowed;
       color: #ffffe3;
       background: #d1273f;

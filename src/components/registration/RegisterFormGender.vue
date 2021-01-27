@@ -25,14 +25,14 @@ export default {
   directives: {
     focus: focusDirective
   },
-  data () {
+  data() {
     return {}
   },
   computed: {
     ...mapGetters('register', { value: 'currentText' })
   },
   methods: {
-    setField (event) {
+    setField(event) {
       if (event.target.value !== 'Choose...') {
         this.$store.commit('register/setText', event.target.value)
         this.$store.commit('register/notEmpty')

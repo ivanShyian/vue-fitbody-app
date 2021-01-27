@@ -43,7 +43,7 @@
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {
       currentMode: 0,
       currentDaily: 0,
@@ -88,7 +88,7 @@ export default {
       ]
     }
   },
-  beforeRouteEnter (to, from, next) {
+  beforeRouteEnter(to, from, next) {
     if (to.meta.cantLogin) {
       next(false)
     } else {
@@ -96,7 +96,7 @@ export default {
     }
   },
   computed: {
-    showCalculatedRes () {
+    showCalculatedRes() {
       if (this.calculated === 'err') {
         return null
       } else {
@@ -105,14 +105,14 @@ export default {
     }
   },
   methods: {
-    modeButton (idx, value) {
+    modeButton(idx, value) {
       if (value === 'mode') {
         this.currentMode = idx
       } else {
         this.currentDaily = idx
       }
     },
-    calculateResult (gender) {
+    calculateResult() {
       if (!this.height || !this.weight || !this.age) {
         this.calculated = 'err'
       } else {
@@ -124,7 +124,7 @@ export default {
         this.weight = null
       }
     },
-    calcModeAndDaily (array, counter) {
+    calcModeAndDaily(array, counter) {
       const res = array.filter(el => {
         return el.id === counter
       })

@@ -39,7 +39,7 @@ export default {
     ...mapGetters('register', { value: 'currentText' })
   },
   methods: {
-    setValue (event) {
+    setValue(event) {
       if (event.target.value !== '') {
         this.$store.commit('register/setText', event.target.value)
       }

@@ -1,22 +1,22 @@
 export default {
   namespaced: true,
-  state () {
+  state() {
     return {
       alertMessage: null
     }
   },
   getters: {
-    alert (state) {
+    alert(state) {
       return state.alertMessage
     }
   },
   mutations: {
-    setMessage (state, payload) {
+    setMessage(state, payload) {
       state.alertMessage = payload
     }
   },
   actions: {
-    setAlert ({ commit }, payload) {
+    setAlert({ commit }, payload) {
       commit('setMessage', payload)
       setTimeout(() => {
         commit('setMessage', null)

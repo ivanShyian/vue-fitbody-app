@@ -8,7 +8,7 @@
           <a href="#" title="Help"><i class="far fa-question-circle"></i></a>
         </li>
         <li>
-          <a href="#" @click="$store.commit('auth/logout')" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+          <a href="#" @click="logout" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
         </li>
       </ul>
     </nav>
@@ -16,12 +16,18 @@
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {}
   },
   computed: {
-    mainLayout () {
+    mainLayout() {
       return this.$route.meta.layout === 'main'
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.commit('auth/logout')
+      this.$store.commit('clearData')
     }
   }
 }
@@ -29,11 +35,13 @@ export default {
 <style scoped lang="scss">
 .header {
   width: 100%;
-  margin: 0 0 .5rem 0;
+  padding: 0 0 .5rem 0;
+
   &__wrapper {
     text-align: center;
     padding: 1rem 0 0 0;
   }
+
   &__wrapper-true {
     display: flex;
     justify-content: space-between;
@@ -42,14 +50,17 @@ export default {
     text-align: center;
     padding: 1rem 0 0 0;
   }
+
   &__ul {
     display: flex;
     align-items: center;
     margin: 0;
+
     li {
       display: block;
       list-style: none;
       margin: 0 1rem;
+
       a {
         font-family: "Quicksand", sans-serif;
         color: black;
@@ -73,6 +84,7 @@ export default {
       color: #d1273f;
     }
   }
+
   &__text {
     font-family: "Quicksand", sans-serif;
     color: rgba(0, 0, 0, .6);

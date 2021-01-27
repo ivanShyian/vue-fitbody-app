@@ -5,14 +5,14 @@ export const registerMixin = {
   directives: {
     focus: focusDirective
   },
-  data () {
+  data() {
     return {}
   },
   computed: {
     ...mapGetters('register', { value: 'currentText' })
   },
   methods: {
-    setField (event) {
+    setField(event) {
       if (event.target.value !== '') {
         this.$store.commit('register/setText', event.target.value)
         this.$store.commit('register/notEmpty')

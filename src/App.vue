@@ -1,5 +1,5 @@
 <template>
-    <component :is="layout + '-layout'"></component>
+  <component :is="layout + '-layout'"></component>
 </template>
 <script>
 import AuthLayout from '@/layouts/AuthLayout'
@@ -7,11 +7,14 @@ import MainLayout from '@/layouts/MainLayout'
 
 export default {
   computed: {
-    layout () {
+    layout() {
       return this.$route.meta.layout
     }
   },
-  components: { AuthLayout, MainLayout }
+  components: {
+    AuthLayout,
+    MainLayout
+  }
 }
 </script>
 <style scoped lang="scss">

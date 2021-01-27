@@ -1,4 +1,5 @@
 import { createStore, createLogger } from 'vuex'
+import fitbodyAxios from '@/axios/fitbody-requests'
 import auth from './modules/auth.module'
 import alert from './modules/alert.module'
 import register from './modules/register.module'
@@ -10,8 +11,34 @@ if (process.env.NODE_ENV === 'development') {
 
 export default createStore({
   plugins,
-  state () {
-    return {}
+  state() {
+    return {
+      userData: {}
+    }
+  },
+  mutations: {
+    setData(state, data) {
+      state.userData = data
+    },
+    clearData(state) {
+      state.userData = {}
+    }
+  },
+  getters: {
+    userData(state) {
+      return state.userData
+    },
+    isEmpty(state) {
+      return Object.keys(state.userData).length === 0
+    }
+  },
+  actions: {
+    async load({ rootGetters, commit }) {
+      const token = rootGetters['auth/token']
+      const uid = rootGetters['auth/userId']
+      const { data } = await fitbodyAxios.get(`/users/${uid}.json?auth=${token}`)
+      commit('setData', data)
+    }
   },
   modules: {
     auth,

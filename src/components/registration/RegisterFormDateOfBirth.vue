@@ -59,22 +59,28 @@ import { mapGetters } from 'vuex'
 
 export default {
   directives: { focus: focusDirective },
-  data () {
+  data() {
     return {}
   },
   computed: {
     ...mapGetters('register', { value: 'currentText' })
   },
   methods: {
-    setField (field, value) {
+    setField(field, value) {
       const date = this.$store.state.register['date-of-birth']
       if (field === 'month' && value !== 'Choose...') {
-        this.$store.commit('register/setText', { value, fieldName: field })
+        this.$store.commit('register/setText', {
+          value,
+          fieldName: field
+        })
         if (date.day !== '' && date.year !== '') {
           this.$store.commit('register/notEmpty')
         }
       } else if (value !== '') {
-        this.$store.commit('register/setText', { value, fieldName: field })
+        this.$store.commit('register/setText', {
+          value,
+          fieldName: field
+        })
         if (date.day !== '' && date.month !== 'Month' && date.year !== '') {
           this.$store.commit('register/notEmpty')
         }

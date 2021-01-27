@@ -8,7 +8,7 @@
 <script>
 
 export default {
-  data () {
+  data() {
     return {
       TITLE_MAP: {
         primary: 'Успешно!',
@@ -18,10 +18,10 @@ export default {
     }
   },
   computed: {
-    message () {
+    message() {
       return this.$store.getters['alert/alert']
     },
-    title () {
+    title() {
       return this.$store.getters['alert/alert'] ? this.TITLE_MAP[this.$store.getters['alert/alert'].type] : ''
     }
   }
@@ -30,6 +30,7 @@ export default {
 <style scoped lang="scss">
 div.alert {
   position: absolute;
+  z-index: 10;
   top: .5rem;
   text-align: center;
   width: 25rem;

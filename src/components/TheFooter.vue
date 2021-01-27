@@ -1,12 +1,20 @@
 <template>
-  <footer class="footer">
+  <footer class="footer" :class="{'layout': mainLayout}">
     <div class="footer__wrapper">
       <span>ivanShyian prod. Bless you 2021</span>
     </div>
   </footer>
 </template>
+<script>
+export default {
+  computed: {
+    mainLayout() {
+      return this.$route.meta.layout === 'main'
+    }
+  }
+}
+</script>
 <style scoped lang="scss">
-
 footer.footer {
   display: flex;
   justify-content: center;
@@ -18,5 +26,8 @@ footer.footer {
       color: rgba(0, 0, 0, .6);
     }
   }
+}
+.footer.layout {
+  background-color: #abbd81
 }
 </style>
