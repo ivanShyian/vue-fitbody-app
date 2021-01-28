@@ -1,31 +1,28 @@
 <template>
   <div class="calories">
-    <h1>Here will be calories calculator</h1>
+    <calories-mode :buttons="dailyButtons"
+                   :counter="modeCounter"
+    ></calories-mode>
+    <button class="btn next">Next step</button>
   </div>
 </template>
 <script>
+import CaloriesMode from '@/components/calories/CaloriesMode'
+import { mapGetters } from 'vuex'
 export default {
+  components: { CaloriesMode },
   data() {
     return {}
   },
-  beforeRouteEnter(to, from, next) {
-    if (to.meta.cantLogin) {
-      next(false)
-    } else {
-      next()
-    }
-  },
   mounted() {
     this.$store.commit('calories/setAge')
+    this.$store.commit('calories/setGender')
   },
   computed: {
-    showCalculatedRes() {
-      if (this.calculated === 'err') {
-        return null
-      } else {
-        return this.calculated
-      }
-    }
+    ...mapGetters('calories', [
+      'modeButtons', 'dailyButtons',
+      'dailyCounter', 'modeCounter'
+    ])
   },
   methods: {
     modeButton(idx, value) {
@@ -57,5 +54,18 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+@import '../template';
+.calories {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  @include buttonStyling;
+  button.btn.next {
+    margin: 2rem 0 0 0;
+  }
+}
 
 </style>

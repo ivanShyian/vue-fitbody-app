@@ -1,6 +1,7 @@
 <template>
   <AppLoader v-if="loading"/>
   <div class="menu container" v-else-if="hasData">
+  <div class="menu__wrapper">
     <div class="menu__wrapper-bar">
       <the-logo :gender="userData.gender"></the-logo>
       <div class="card menu-bar">
@@ -15,6 +16,8 @@
         <component :is="'app-' + currentTab"></component>
       </menu-main>
     </div>
+  </div>
+    <div class="menu__sidebar card"></div>
   </div>
 </template>
 
@@ -63,16 +66,27 @@ export default {
 </script>
 
 <style scoped lang="scss">
-div.menu {
+.menu {
+  display: flex;
+  height: 100%;
+}
+.menu__wrapper {
+  flex: 1 0 87%;
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  border-radius: 1rem;
   padding: 1rem;
 }
+.menu__sidebar {
+  flex: 1 0 10%;
+  background-color: #abbd81;
+  margin: 1rem 1rem 1rem 0;
+  box-shadow: -1px 7px 39px -16px rgba(0, 0, 0, 0.75);
+  border-radius: 1rem;
 
+}
 .menu__wrapper-bar {
   border-radius: 1rem;
   margin-bottom: 1rem;
@@ -88,6 +102,7 @@ div.menu {
   border: 0;
   background-color: #abbd81;
   box-shadow: -1px 7px 39px -16px rgba(0, 0, 0, 0.75);
+  margin: .5rem 0 .5rem .5rem
 
 }
 

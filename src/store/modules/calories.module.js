@@ -9,11 +9,12 @@ export default {
       weight: null,
       age: null,
       calculated: null,
-      modeButtonList: [
+      gender: null,
+      modeButtons: [
         { id: 0, name: 'Gain weight', value: 250 },
         { id: 1, name: 'Lose weight', value: -100 },
         { id: 2, name: 'Keep weight', value: 75 }],
-      dailyButtonList: [
+      dailyButtons: [
         { id: 0, name: 'Without', value: 1.2 },
         { id: 1, name: 'Low', value: 1.375 },
         { id: 2, name: 'Normal', value: 1.55 },
@@ -27,6 +28,32 @@ export default {
       birthDate[1] = birthDate[0]
       birthDate[0] = month
       state.age = Math.floor((Date.now() - Date.parse(birthDate.join('-'))) / 1000 / 60 / 60 / 24 / 365.25)
+    },
+    setGender(state) {
+      state.gender = store.getters.userData.gender
+    },
+    setMode(state, id) {
+      state.currentMode = id
+    },
+    setDaily(state, id) {
+      state.currentDaily = id
+    }
+  },
+  getters: {
+    result(state) {
+      return state.calculated
+    },
+    dailyButtons(state) {
+      return state.dailyButtons
+    },
+    modeButtons(state) {
+      return state.modeButtons
+    },
+    dailyCounter(state) {
+      return state.currentDaily
+    },
+    modeCounter(state) {
+      return state.currentMode
     }
   }
 }

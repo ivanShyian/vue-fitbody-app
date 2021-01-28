@@ -29,6 +29,7 @@ export default {
 .menu-nav {
   flex: 0 0 15%;
   margin: .5rem 0 0 0;
+  overflow: hidden;
   ul {
     margin: 0;
 
@@ -56,14 +57,8 @@ export default {
       }
     }
     li.card.active {
-      background-color: #ffd69f;
+      background-color: rgba(255, 255, 227, .7);
       width: 110%;
-    }
-
-    li:first-child {
-    }
-
-    li:last-child {
     }
   }
 }
