@@ -5,11 +5,13 @@ export default {
     return {
       currentMode: 0,
       currentDaily: 0,
-      height: null,
-      weight: null,
+      counter: 0,
+      height: '',
+      weight: '',
       age: null,
       calculated: null,
       gender: null,
+      caloriesComponents: ['mode', 'params', 'activity', 'result'],
       modeButtons: [
         { id: 0, name: 'Gain weight', value: 250 },
         { id: 1, name: 'Lose weight', value: -100 },
@@ -22,12 +24,8 @@ export default {
     }
   },
   mutations: {
-    setAge(state) {
-      const birthDate = Object.keys(store.getters.userData.birth).map(el => store.getters.userData.birth[el])
-      const month = birthDate[1]
-      birthDate[1] = birthDate[0]
-      birthDate[0] = month
-      state.age = Math.floor((Date.now() - Date.parse(birthDate.join('-'))) / 1000 / 60 / 60 / 24 / 365.25)
+    setAge(state, age) {
+      state.age = Math.floor((Date.now() - Date.parse(age.join('-'))) / 1000 / 60 / 60 / 24 / 365.25)
     },
     setGender(state) {
       state.gender = store.getters.userData.gender
@@ -37,11 +35,30 @@ export default {
     },
     setDaily(state, id) {
       state.currentDaily = id
+    },
+    nextStep(state) {
+      if (state.counter + 1 !== state.caloriesComponents.length) {
+        state.counter++
+      }
+    },
+    prevStep(state) {
+      if (state.counter !== 0) {
+        state.counter--
+      }
+    },
+    setHeight(state, height) {
+      state.height = height
+    },
+    setWeight(state, weight) {
+      state.weight = weight
+    },
+    setResult(state, result) {
+      state.calculated = result
     }
   },
   getters: {
     result(state) {
-      return state.calculated
+      return Math.round(state.calculated)
     },
     dailyButtons(state) {
       return state.dailyButtons
@@ -54,6 +71,41 @@ export default {
     },
     modeCounter(state) {
       return state.currentMode
+    },
+    currentComponent(state) {
+      return state.caloriesComponents[state.counter]
+    },
+    firstStep(state) {
+      return state.counter === 0
+    },
+    lastStep(_, getters) {
+      return getters.currentComponent === 'activity'
+    },
+    height(state) {
+      return state.height
+    },
+    weight(state) {
+      return state.weight
+    },
+    genderValue(state) {
+      return state.gender === 'man' ? 5 : 161
+    }
+  },
+  actions: {
+    calculate({ commit, state, dispatch, getters }) {
+      dispatch('age')
+      commit('setGender')
+      const mode = state.modeButtons[state.currentMode].value
+      const activity = state.dailyButtons[state.currentDaily].value
+      const result = (((10 * state.weight) + (6.25 * state.height) - (5 * state.age) + getters.genderValue) * activity) + mode
+      commit('setResult', result)
+    },
+    age({ rootGetters, commit }) {
+      const birthDate = Object.keys(rootGetters.userData.birth).map(el => rootGetters.userData.birth[el])
+      const month = birthDate[1]
+      birthDate[1] = birthDate[0]
+      birthDate[0] = month
+      commit('setAge', birthDate)
     }
   }
 }

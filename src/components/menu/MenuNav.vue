@@ -57,7 +57,7 @@ export default {
       }
     }
     li.card.active {
-      background-color: rgba(255, 255, 227, .7);
+      background-color: rgba(248, 248, 199, 0.7);
       width: 110%;
     }
   }

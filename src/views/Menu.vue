@@ -5,7 +5,7 @@
     <div class="menu__wrapper-bar">
       <the-logo :gender="userData.gender"></the-logo>
       <div class="card menu-bar">
-        <h2>{{ userData.name }}{{getCounter}}</h2>
+        <h2>{{ userData.name }}</h2>
       </div>
     </div>
     <div class="menu__wrapper-main">
@@ -85,6 +85,7 @@ export default {
   margin: 1rem 1rem 1rem 0;
   box-shadow: -1px 7px 39px -16px rgba(0, 0, 0, 0.75);
   border-radius: 1rem;
+  border: 0;
 
 }
 .menu__wrapper-bar {

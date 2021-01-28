@@ -16,7 +16,7 @@ export default {}
   flex: 1 1 auto;
   height: auto;
   margin: 0;
-  background-color: rgba(255, 255, 227, .7);
+  background-color: rgba(248, 248, 199, 0.7);
   border-radius: .5rem 1rem 1rem .5rem;
   border: 0;
   z-index: 25;

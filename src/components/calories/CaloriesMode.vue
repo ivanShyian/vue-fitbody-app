@@ -1,11 +1,11 @@
 <template>
   <div class="calories__mode">
-    <span>Choose your daily activity</span>
+    <span>Choose your mode</span>
     <div class="btn-group">
     <button type="button"
-            :class="['btn', 'danger', {'active': idx === counter}]"
+            :class="['btn', 'danger', {'active': idx === mcounter}]"
             @click="$store.commit('calories/setMode', idx)"
-            v-for="(btn, idx) in buttons"
+            v-for="(btn, idx) in mbuttons"
             :key="btn.id"> {{ btn.name }}
     </button>
     </div>
@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  props: ['buttons', 'counter']
+  props: ['mbuttons', 'mcounter']
 }
 </script>
 
@@ -41,6 +41,5 @@ export default {
 .btn-group {
   width: 50%;
   margin: 0 auto;
-
 }
 </style>

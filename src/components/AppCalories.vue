@@ -1,54 +1,61 @@
 <template>
   <div class="calories">
-    <calories-mode :buttons="dailyButtons"
-                   :counter="modeCounter"
-    ></calories-mode>
-    <button class="btn next">Next step</button>
+    <component :is="'calories-' + currentComponent"
+               :mbuttons="modeButtons"
+               :mcounter="modeCounter"
+               :dbuttons="dailyButtons"
+               :dcounter="dailyCounter"
+    ></component>
+    <div class="calories__btns" v-if="currentComponent !== 'result'">
+      <button class="btn previous"
+              @click="$store.commit('calories/prevStep')"
+              v-if="!firstStep"
+      >Step back
+      </button>
+      <button class="btn next"
+              @click="next"
+              :disabled="noValue"
+      >{{ lastStep ? 'Calculate' : 'Next step' }}</button>
+    </div>
   </div>
 </template>
 <script>
 import CaloriesMode from '@/components/calories/CaloriesMode'
+import CaloriesResult from '@/components/calories/CaloriesResult'
+import CaloriesParams from '@/components/calories/CaloriesParams'
+import CaloriesActivity from '@/components/calories/CaloriesActivity'
 import { mapGetters } from 'vuex'
+
 export default {
-  components: { CaloriesMode },
+  components: {
+    CaloriesActivity,
+    CaloriesResult,
+    CaloriesParams,
+    CaloriesMode
+  },
   data() {
     return {}
-  },
-  mounted() {
-    this.$store.commit('calories/setAge')
-    this.$store.commit('calories/setGender')
   },
   computed: {
     ...mapGetters('calories', [
       'modeButtons', 'dailyButtons',
-      'dailyCounter', 'modeCounter'
-    ])
+      'dailyCounter', 'modeCounter',
+      'currentComponent',
+      'firstStep', 'lastStep'
+    ]),
+    noValue() {
+      return this.currentComponent === 'params' &&
+        (this.$store.getters['calories/weight'] === '' || this.$store.getters['calories/height'] === '')
+    }
   },
   methods: {
-    modeButton(idx, value) {
-      if (value === 'mode') {
-        this.currentMode = idx
+    next() {
+      if (!this.lastStep) {
+        this.$store.commit('calories/nextStep')
       } else {
-        this.currentDaily = idx
+        this.$store.commit('calories/nextStep')
+        this.$store.dispatch('calories/calculate')
       }
-    },
-    calculateResult() {
-      if (!this.height || !this.weight || !this.age) {
-        this.calculated = 'err'
-      } else {
-        const activity = this.calcModeAndDaily(this.dailyButtonList, this.currentDaily)
-        const mode = this.calcModeAndDaily(this.modeButtonList, this.currentMode)
-        this.calculated = (((10 * this.weight) + (6.25 * this.height) - (5 * this.age) + 5) * activity) + mode
-        this.age = null
-        this.height = null
-        this.weight = null
-      }
-    },
-    calcModeAndDaily(array, counter) {
-      const res = array.filter(el => {
-        return el.id === counter
-      })
-      return res[0].value
     }
   }
 }
@@ -63,8 +70,20 @@ export default {
   width: 100%;
   height: 100%;
   @include buttonStyling;
-  button.btn.next {
+
+  &__btns {
     margin: 2rem 0 0 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    button.btn:first-child {
+      margin-right: 2rem;
+    }
+
+    button.btn {
+      max-width: 25%;
+    }
   }
 }
 
