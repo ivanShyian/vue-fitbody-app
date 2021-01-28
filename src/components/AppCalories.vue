@@ -1,53 +1,12 @@
 <template>
   <div class="calories">
+    <h1>Here will be calories calculator</h1>
   </div>
 </template>
 <script>
 export default {
   data() {
-    return {
-      currentMode: 0,
-      currentDaily: 0,
-      height: null,
-      weight: null,
-      age: null,
-      calculated: null,
-      modeButtonList: [{
-        id: 0,
-        name: 'Gain weight',
-        value: 250
-      }, {
-        id: 1,
-        name: 'Lose weight',
-        value: -100
-      }, {
-        id: 2,
-        name: 'Keep weight',
-        value: 75
-      }],
-      dailyButtonList: [
-        {
-          id: 0,
-          name: 'Without',
-          value: 1.2
-        },
-        {
-          id: 1,
-          name: 'Low',
-          value: 1.375
-        },
-        {
-          id: 2,
-          name: 'Normal',
-          value: 1.55
-        },
-        {
-          id: 3,
-          name: 'High',
-          value: 1.725
-        }
-      ]
-    }
+    return {}
   },
   beforeRouteEnter(to, from, next) {
     if (to.meta.cantLogin) {
@@ -55,6 +14,9 @@ export default {
     } else {
       next()
     }
+  },
+  mounted() {
+    this.$store.commit('calories/setAge')
   },
   computed: {
     showCalculatedRes() {

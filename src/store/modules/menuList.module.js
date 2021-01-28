@@ -3,18 +3,30 @@ export default {
   state() {
     return {
       tabs: [
-        { id: 0, name: 'Calories Calculator', path: '/calories' },
-        { id: 1, name: 'Something else', path: '' },
-        { id: 2, name: 'And something', path: '' },
-        { id: 3, name: 'Here will be', path: '' },
-        { id: 4, name: 'But here will be', path: '' }
+        { id: 0, name: 'Main', path: 'main' },
+        { id: 1, name: 'Nutrition', path: '' },
+        { id: 2, name: 'Activities', path: '' },
+        { id: 3, name: 'Calories', path: 'calories' },
+        { id: 4, name: 'Motivation', path: '' },
+        { id: 5, name: 'Statistic', path: '' }
       ],
-      counter: 1
+      counter: 0
     }
   },
   getters: {
     tabList(state) {
       return state.tabs
+    },
+    currentTab(state) {
+      return state.tabs[state.counter].path
+    },
+    getCounter(state) {
+      return state.counter
+    }
+  },
+  mutations: {
+    setActiveTab(state, tab) {
+      state.counter = tab
     }
   }
 }

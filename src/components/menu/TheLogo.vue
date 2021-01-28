@@ -35,7 +35,9 @@ div.menu-logo {
   flex: 0 1 15%;
   padding: .5rem;
   position: relative;
-  margin: .5rem 0;
+  background-color: #abbd81;
+  box-shadow: -1px 7px 39px -16px rgba(0, 0, 0, 0.75);
+
   img {
     display: block;
     border-radius: 50%;
@@ -51,7 +53,7 @@ div.menu-logo {
   }
   &__status {
     position: absolute;
-    bottom: 0;
+    bottom: -5%;
     left: 30%;
     background-color: #ffd79d;
     padding: .3rem 1rem;

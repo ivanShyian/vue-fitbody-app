@@ -1,25 +1,26 @@
 <template>
   <nav class="menu-nav">
     <ul>
-      <li class="card" v-for="tab in tabList"
-          :key="tab.id">
+      <li class="card"
+          v-for="(tab, idx) in tabs"
+          :class="['', {active: id === tab.id}]"
+          :key="tab.id"
+          @click="navigate(idx)">
         <a href="#"
-        >{{tab.name}}</a>
+        >{{ tab.name }}</a>
       </li>
     </ul>
   </nav>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 
 export default {
-  data() {
-    return {
+  props: ['tabs', 'id'],
+  methods: {
+    navigate(idx) {
+      this.$store.commit('menuList/setActiveTab', idx)
     }
-  },
-  computed: {
-    ...mapGetters('menuList', ['tabList'])
   }
 }
 </script>
@@ -28,7 +29,6 @@ export default {
 .menu-nav {
   flex: 0 0 15%;
   margin: .5rem 0 0 0;
-
   ul {
     margin: 0;
 
@@ -37,7 +37,7 @@ export default {
       padding: 0;
       width: 100%;
       list-style: none;
-      margin: 1rem 0;
+      margin: 0;
       z-index: 10;
       border: 0;
       background-color: transparent;
@@ -55,13 +55,15 @@ export default {
         text-decoration: none;
       }
     }
+    li.card.active {
+      background-color: #ffd69f;
+      width: 110%;
+    }
 
     li:first-child {
-      margin: 0 0 1rem 0;
     }
 
     li:last-child {
-      margin: 1rem 0 0 0;
     }
   }
 }

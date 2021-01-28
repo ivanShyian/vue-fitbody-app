@@ -4,14 +4,16 @@
     <div class="menu__wrapper-bar">
       <the-logo :gender="userData.gender"></the-logo>
       <div class="card menu-bar">
-        <h2>{{ userData.name }}</h2>
+        <h2>{{ userData.name }}{{getCounter}}</h2>
       </div>
     </div>
     <div class="menu__wrapper-main">
-      <menu-nav></menu-nav>
-      <div class="menu__gen card flex">
-        <component :is="'app-calories'"></component>
-      </div>
+      <menu-nav :tabs="tabList"
+                :id="getCounter"
+      ></menu-nav>
+      <menu-main>
+        <component :is="'app-' + currentTab"></component>
+      </menu-main>
     </div>
   </div>
 </template>
@@ -21,8 +23,10 @@
 import { mapGetters } from 'vuex'
 import TheLogo from '@/components/menu/TheLogo'
 import AppLoader from '@/components/ui/AppLoader'
+import MenuMain from '@/components/menu/MenuMain'
 import MenuNav from '@/components/menu/MenuNav'
-import AppCalories from '@/components/calories/AppCalories'
+import AppCalories from '@/components/AppCalories'
+import AppMain from '@/components/AppMain'
 
 export default {
   async mounted() {
@@ -37,6 +41,7 @@ export default {
   },
   computed: {
     ...mapGetters(['userData', 'isEmpty']),
+    ...mapGetters('menuList', ['tabList', 'currentTab', 'getCounter']),
     isLoading() {
       return this.loading
     },
@@ -47,10 +52,12 @@ export default {
   updated() {
   },
   components: {
+    AppMain,
+    AppCalories,
     AppLoader,
     TheLogo,
-    MenuNav,
-    AppCalories
+    MenuMain,
+    MenuNav
   }
 }
 </script>
@@ -72,8 +79,6 @@ div.menu {
   display: flex;
   height: 25%;
   width: 100%;
-  background-color: #abbd81;
-  box-shadow: -1px 7px 39px -16px rgba(0, 0, 0, 0.75);
 }
 
 .menu-bar {
@@ -81,6 +86,9 @@ div.menu {
   border-radius: 1rem;
   color: #2d203a;
   border: 0;
+  background-color: #abbd81;
+  box-shadow: -1px 7px 39px -16px rgba(0, 0, 0, 0.75);
+
 }
 
 .menu__wrapper-main {
@@ -90,22 +98,6 @@ div.menu {
   background-color: #e1b16a;
   border-radius: 1rem;
   box-shadow: -1px 7px 39px -16px rgba(0, 0, 0, 0.75);
-}
-
-.menu__gen.card.flex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1 1 90%;
-  height: auto;
-  margin: .5rem .5rem .5rem 0;
-  background-color: #ffd69f;
-
-  h1 {
-    color: rgba(45, 32, 58, .8);
-    text-align: center;
-    max-width: 25rem;
-  }
 }
 
 </style>

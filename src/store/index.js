@@ -4,6 +4,7 @@ import auth from './modules/auth.module'
 import alert from './modules/alert.module'
 import register from './modules/register.module'
 import menuList from './modules/menuList.module'
+import calories from './modules/calories.module'
 
 const plugins = []
 if (process.env.NODE_ENV === 'development') {
@@ -45,6 +46,7 @@ export default createStore({
     auth,
     alert,
     register,
-    menuList
+    menuList,
+    calories
   }
 })
