@@ -8,8 +8,7 @@
              placeholder="Name"
              :value="value"
              @input="setField"
-             v-focus
-             @keypress.enter.prevent>
+             v-focus>
     </div>
   </div>
 </template>

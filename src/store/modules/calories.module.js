@@ -54,23 +54,21 @@ export default {
     },
     setResult(state, result) {
       state.calculated = result
+    },
+    clear(state) {
+      state.currentMode = 0
+      state.currentDaily = 0
+      state.counter = 0
+      state.height = ''
+      state.weight = ''
+      state.age = null
+      state.calculated = null
+      state.gender = null
     }
   },
   getters: {
     result(state) {
       return Math.round(state.calculated)
-    },
-    dailyButtons(state) {
-      return state.dailyButtons
-    },
-    modeButtons(state) {
-      return state.modeButtons
-    },
-    dailyCounter(state) {
-      return state.currentDaily
-    },
-    modeCounter(state) {
-      return state.currentMode
     },
     currentComponent(state) {
       return state.caloriesComponents[state.counter]
@@ -89,6 +87,13 @@ export default {
     },
     genderValue(state) {
       return state.gender === 'man' ? 5 : 161
+    },
+    getAdditionalData(state) {
+      return {
+        height: state.height,
+        weight: state.weight,
+        calculated: state.calculated
+      }
     }
   },
   actions: {

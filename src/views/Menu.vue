@@ -11,9 +11,10 @@
     <div class="menu__wrapper-main">
       <menu-nav :tabs="tabList"
                 :id="getCounter"
+                :firstLoading="firstLoading"
       ></menu-nav>
       <menu-main>
-        <component :is="'app-' + currentTab"></component>
+        <component :is="'app-' + currentTab" :firstLoading="firstLoading"></component>
       </menu-main>
     </div>
   </div>
@@ -35,11 +36,17 @@ export default {
   async mounted() {
     this.loading = true
     await this.$store.dispatch('load')
+    const data = await this.$store.getters.userData
+    if (!data.weight || !data.height) {
+      this.firstLoading = true
+      this.loading = false
+    }
     this.loading = false
   },
   data() {
     return {
-      loading: false
+      loading: false,
+      firstLoading: false
     }
   },
   computed: {

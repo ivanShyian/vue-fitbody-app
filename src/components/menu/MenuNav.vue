@@ -4,10 +4,11 @@
       <li class="card"
           v-for="(tab, idx) in tabs"
           :class="['', {active: id === tab.id}]"
-          :key="tab.id"
-          @click="navigate(idx)">
-        <a href="#"
-        >{{ tab.name }}</a>
+          :key="tab.id">
+        <button
+           @click="navigate(idx)"
+           :disabled="firstLoading"
+        >{{ tab.name }}</button>
       </li>
     </ul>
   </nav>
@@ -16,10 +17,12 @@
 <script>
 
 export default {
-  props: ['tabs', 'id'],
+  props: ['tabs', 'id', 'firstLoading'],
   methods: {
     navigate(idx) {
-      this.$store.commit('menuList/setActiveTab', idx)
+      if (!this.firstLoading) {
+        this.$store.commit('menuList/setActiveTab', idx)
+      }
     }
   }
 }
@@ -41,18 +44,26 @@ export default {
       margin: 0;
       z-index: 10;
       border: 0;
-      background-color: transparent;
       border-bottom: 1px solid rgba(45, 32, 58, .2);
 
-      a {
+      button {
+        background-color: transparent;
+        border: 0;
         font-family: "Quicksand", sans-serif;
         font-size: 1.2rem;
         padding: .7em;
         font-weight: 700;
         color: rgba(45, 32, 58, .9);
       }
-
-      a:hover {
+      button:disabled {
+        cursor: not-allowed;
+        color: rgba(45, 32, 58, .4);
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+      button:focus {
+        outline: none;
+      }
+      button:hover {
         text-decoration: none;
       }
     }

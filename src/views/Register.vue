@@ -1,5 +1,7 @@
 <template>
-  <form class="d-flex flex-column align-items-center register-form">
+  <form class="d-flex flex-column align-items-center register-form"
+        @submit.prevent="submitRegister"
+        @keypress.prevent.enter>
     <span class="register-form__counter">Step: {{ $store.getters['register/spanCounter'] }}</span>
     <component :is="'the-register-form-' + isTab"
                v-model:password="password"
@@ -17,7 +19,6 @@
               type="submit"
               v-if="lastPage"
               :disabled="!hasValues"
-              @click.prevent="submitRegister"
       >Register
       </button>
     </div>

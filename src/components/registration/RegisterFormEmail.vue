@@ -8,8 +8,7 @@
              placeholder="Email"
              v-focus
              :value="value"
-             @input.prevent="setField"
-             @keypress.enter.prevent>
+             @input.prevent="setField">
     </div>
   </div>
 </template>

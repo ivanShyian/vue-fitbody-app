@@ -12,8 +12,7 @@
                  maxlength="2"
                  v-focus
                  :value="value.day"
-                 @input="setField('day', $event.target.value)"
-                 @keypress.enter.prevent>
+                 @input="setField('day', $event.target.value)">
         </div>
         <div class="col1">
           <label for="dobmounth"></label>
@@ -45,8 +44,7 @@
                  id="dobyear"
                  :value="value.year"
                  @input="setField('year', $event.target.value)"
-                 maxlength="4"
-                 @keypress.enter.prevent>
+                 maxlength="4">
         </div>
       </div>
     </div>

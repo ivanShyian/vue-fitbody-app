@@ -1,23 +1,19 @@
 <template>
-  <div class="calories">
+  <form class="calories" @keypress.enter.prevent @submit.prevent="updateData">
     <component :is="'calories-' + currentComponent"
-               :mbuttons="modeButtons"
-               :mcounter="modeCounter"
-               :dbuttons="dailyButtons"
-               :dcounter="dailyCounter"
     ></component>
     <div class="calories__btns" v-if="currentComponent !== 'result'">
       <button class="btn previous"
-              @click="$store.commit('calories/prevStep')"
+              @click.prevent="$store.commit('calories/prevStep')"
               v-if="!firstStep"
       >Step back
       </button>
       <button class="btn next"
-              @click="next"
+              @click.prevent="next"
               :disabled="noValue"
       >{{ lastStep ? 'Calculate' : 'Next step' }}</button>
     </div>
-  </div>
+  </form>
 </template>
 <script>
 import CaloriesMode from '@/components/calories/CaloriesMode'
@@ -40,8 +36,8 @@ export default {
     ...mapGetters('calories', [
       'modeButtons', 'dailyButtons',
       'dailyCounter', 'modeCounter',
-      'currentComponent',
-      'firstStep', 'lastStep'
+      'firstStep', 'lastStep',
+      'currentComponent'
     ]),
     noValue() {
       return this.currentComponent === 'params' &&
@@ -56,6 +52,12 @@ export default {
         this.$store.commit('calories/nextStep')
         this.$store.dispatch('calories/calculate')
       }
+    },
+    async updateData() {
+      const add = this.$store.getters['calories/getAdditionalData']
+      await this.$store.dispatch('update', { ...add })
+      this.$store.commit('calories/clear')
+      this.$store.commit('menuList/setActiveTab', 0)
     }
   }
 }
@@ -85,6 +87,10 @@ export default {
       max-width: 25%;
     }
   }
+}
+.calories-submit-btn {
+  margin-top: 2rem;
+  max-width: 15rem;
 }
 
 </style>

@@ -9,8 +9,7 @@
              :value="value"
              @input="setValue"
              placeholder="Password"
-             autocomplete="on"
-             @keypress.enter.prevent>
+             autocomplete="on">
       <label for="inputPassword5"></label>
       <input type="password"
              class="form-control"
@@ -18,8 +17,7 @@
              @input="$emit('update:password', $event.target.value)"
              id="inputPassword5"
              placeholder="Confirm password"
-             autocomplete="on"
-             @keypress.enter.prevent>
+             autocomplete="on">
       <small>Minimum 6 symbols...</small>
     </div>
   </div>

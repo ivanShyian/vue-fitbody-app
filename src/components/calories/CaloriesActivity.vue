@@ -3,9 +3,9 @@
       <span>Choose your daily activity</span>
       <div class="btn-group">
         <button type="button"
-                :class="['btn', {'active': idx === dcounter}]"
+                :class="['btn', {'active': idx === currentDaily}]"
                 @click="$store.commit('calories/setDaily', idx)"
-                v-for="(btn, idx) in dbuttons"
+                v-for="(btn, idx) in dailyButtons"
                 :key="btn.id">{{ btn.name }} activity
         </button>
     </div>
@@ -13,8 +13,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
-  props: ['dbuttons', 'dcounter']
+  computed: {
+    ...mapState('calories', ['currentDaily', 'dailyButtons'])
+  }
 }
 </script>
 

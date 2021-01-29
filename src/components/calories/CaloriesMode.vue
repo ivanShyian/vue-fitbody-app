@@ -3,9 +3,9 @@
     <span>Choose your mode</span>
     <div class="btn-group">
     <button type="button"
-            :class="['btn', 'danger', {'active': idx === mcounter}]"
+            :class="['btn', 'danger', {'active': idx === currentMode}]"
             @click="$store.commit('calories/setMode', idx)"
-            v-for="(btn, idx) in mbuttons"
+            v-for="(btn, idx) in modeButtons"
             :key="btn.id"> {{ btn.name }}
     </button>
     </div>
@@ -13,8 +13,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
-  props: ['mbuttons', 'mcounter']
+  computed: {
+    ...mapState('calories', ['currentMode', 'modeButtons'])
+  }
 }
 </script>
 
