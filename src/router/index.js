@@ -36,7 +36,7 @@ const router = createRouter({
     {
       path: '/home',
       name: 'home',
-      component: () => import('../views/Menu'),
+      component: () => import('../views/Home'),
       alias: '/',
       meta: {
         layout: 'main',

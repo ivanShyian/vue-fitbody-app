@@ -76,15 +76,10 @@ export default {
   &__btns {
     margin: 2rem 0 0 0;
     display: flex;
-    justify-content: center;
-    width: 100%;
-
-    button.btn:first-child {
-      margin-right: 2rem;
-    }
-
+    justify-content: space-around;
+    width: 40%;
     button.btn {
-      max-width: 25%;
+      max-width: 100%;
     }
   }
 }

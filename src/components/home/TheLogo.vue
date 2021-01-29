@@ -1,8 +1,7 @@
 <template>
   <div class="menu-logo">
     <img :src="currentImage" alt="">
-    <div class="menu-logo__lvl">lvl - 10</div>
-    <div class="menu-logo__status">Update status.........</div>
+    <div class="menu-logo__lvl">Level - 10</div>
   </div>
 </template>
 
@@ -37,7 +36,6 @@ div.menu-logo {
   position: relative;
   background-color: #abbd81;
   box-shadow: -1px 7px 39px -16px rgba(0, 0, 0, 0.75);
-
   img {
     display: block;
     border-radius: 50%;
@@ -45,21 +43,12 @@ div.menu-logo {
     height: 100%;
   }
   &__lvl {
+    font-family: Quicksand,serif;
     position: absolute;
-    right: 60%;
     background-color: #ffd79d;
     padding: .2rem 1rem;
     border-radius: 1rem;
-    max-width: none;
-  }
-  &__status {
-    position: absolute;
     bottom: -5%;
-    left: 15%;
-    background-color: #ffd79d;
-    padding: .3rem 1rem;
-    border-radius: 1rem;
-    max-width: none;
   }
 }
 </style>

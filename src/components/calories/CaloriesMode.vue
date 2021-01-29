@@ -1,6 +1,7 @@
 <template>
   <div class="calories__mode">
     <span>Choose your mode</span>
+    <small>Mode is like general point to usage this app</small>
     <div class="btn-group">
     <button type="button"
             :class="['btn', 'danger', {'active': idx === currentMode}]"
@@ -32,7 +33,12 @@ export default {
     color: #000063;
     font-family: "Jost", sans-serif;
     font-size: 1.7rem;
-    margin-bottom: 3rem;
+  }
+  small {
+    font-family: Quicksand, sans-serif;
+    font-size: 1rem;
+    color: rgba(0, 0, 0, .6);
+    margin: 1rem 0 3rem 0;
   }
   button.btn {
     border: 1px solid black;

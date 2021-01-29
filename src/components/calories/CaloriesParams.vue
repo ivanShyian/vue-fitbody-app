@@ -1,7 +1,11 @@
 <template>
   <div class="calories__params">
     <span class="calories__params-title">Enter your values</span>
-    <div>
+    <div class="calories__params-small">
+      <small>These values very important for current formula</small>
+      <small>Also these values will be used in application</small>
+    </div>
+    <div class="calories__params-wrapper">
       <div class="calories__params-height">
         <span>Your height in cm</span>
         <input type="text"
@@ -27,16 +31,26 @@ export default {}
 <style scoped lang="scss">
 .calories__params {
   text-align: center;
+  width: 100%;
 }
 .calories__params-title {
   display: block;
   font-size: 2rem;
   color: #000063;
   font-family: "Jost", sans-serif;
-  margin-bottom: 3rem;
 }
-.calories__params div {
+.calories__params-small {
+  font-family: "Quicksand", sans-serif;
   display: flex;
+  flex-direction: column;
+  font-size: 1.2rem;
+  color: rgba(0, 0, 0, .6);
+  margin: 1rem 0 3rem 0;
+}
+.calories__params-wrapper {
+  justify-content: center;
+  display: flex;
+  width: 100%;
   span {
     font-family: "Quicksand", sans-serif;
     font-size: 1.2rem;
