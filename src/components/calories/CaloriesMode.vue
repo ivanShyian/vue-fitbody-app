@@ -33,12 +33,22 @@ export default {
     color: #000063;
     font-family: "Jost", sans-serif;
     font-size: 1.7rem;
+    @media (max-height: 800px) {
+      font-size: 1.4rem;
+    }
   }
   small {
     font-family: Quicksand, sans-serif;
     font-size: 1rem;
     color: rgba(0, 0, 0, .6);
-    margin: 1rem 0 3rem 0;
+    margin: 1rem 0 2rem 0;
+    @media (max-height: 700px) {
+      margin: 1rem 0 1rem 0;
+    }
+    @media (max-height: 650px) {
+      margin: .5rem 0 .5rem 0;
+      font-size: .8rem;
+    }
   }
   button.btn {
     border: 1px solid black;
@@ -51,5 +61,10 @@ export default {
 .btn-group {
   width: 50%;
   margin: 0 auto;
+  button.btn {
+    @media (max-height: 700px) {
+      padding: .2rem;
+    }
+  }
 }
 </style>

@@ -11,6 +11,7 @@ export default {
       age: null,
       calculated: null,
       gender: null,
+      'desired-weight': '',
       caloriesComponents: ['mode', 'params', 'activity', 'result'],
       modeButtons: [
         { id: 0, name: 'Gain weight', value: 250 },
@@ -49,6 +50,9 @@ export default {
     setHeight(state, height) {
       state.height = height
     },
+    setDesWeight(state, weight) {
+      state['desired-weight'] = weight
+    },
     setWeight(state, weight) {
       state.weight = weight
     },
@@ -85,6 +89,9 @@ export default {
     weight(state) {
       return state.weight
     },
+    desireWeight(state) {
+      return state['desire-weight']
+    },
     genderValue(state) {
       return state.gender === 'man' ? 5 : 161
     },
@@ -94,6 +101,9 @@ export default {
         weight: state.weight,
         calculated: state.calculated
       }
+    },
+    firstVisitInfo(state) {
+      return state['desired-weight'] === '' || state.weight === ''
     }
   },
   actions: {

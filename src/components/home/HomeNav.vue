@@ -6,8 +6,7 @@
           :class="['', {active: id === tab.id}]"
           :key="tab.id">
         <button
-           @click="navigate(idx)"
-           :disabled="firstLoading"
+           @click="$store.commit('menuList/setActiveTab', idx)"
         >{{ tab.name }}</button>
       </li>
     </ul>
@@ -17,14 +16,7 @@
 <script>
 
 export default {
-  props: ['tabs', 'id', 'firstLoading'],
-  methods: {
-    navigate(idx) {
-      if (!this.firstLoading) {
-        this.$store.commit('menuList/setActiveTab', idx)
-      }
-    }
-  }
+  props: ['tabs', 'id']
 }
 </script>
 

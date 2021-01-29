@@ -33,6 +33,9 @@ export default createStore({
     },
     isEmpty(state) {
       return Object.keys(state.userData).length === 0
+    },
+    firstVisit(state) {
+      return !state.userData.weight
     }
   },
   actions: {

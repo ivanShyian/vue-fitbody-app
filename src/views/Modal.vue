@@ -1,36 +1,66 @@
 <template>
   <div class="modal">
     <div class="modal__wrapper card">
-      <h4>Welcome</h4>
-      <span>It's your first visit fitBody application</span>
-      <span>Before start for correct working you should fill out these fields</span>
-      <small>Sorry, but you can't cancel this procedure. It's important data for us</small>
-      <div class="calories__params">
-        <span class="calories__params-title">Enter your values</span>
-        <div>
-          <div class="calories__params-height">
-            <span>Your height in cm</span>
-            <input type="text"
-                   maxlength="3">
-          </div>
-          <div class="calories__params-weight">
-            <span>Your weight in kg</span>
-            <input type="text"
-                   maxlength="3">
-          </div>
+      <form @keyup.prevent.enter @submit="send">
+        <h4>Welcome!</h4>
+        <div class="modal__text" v-if="counter === 0">
+          <span>Before start you should fill out these fields</span>
+          <small>Sorry, but you can't cancel this procedure. It's important data for us</small>
         </div>
-      </div>
+        <component :is="'calories-' + tabs[counter]"
+                   :firstVisit="firstVisit"
+        ></component>
+        <button class="btn"
+                v-if="counter + 1 !== tabs.length"
+                @click.prevent="counter++"
+        >Next</button>
+        <button class="btn"
+                type="submit"
+                v-if="counter + 1 === tabs.length"
+                :disabled="noValue"
+        >Finish</button>
+      </form>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+import CaloriesParams from '@/components/calories/CaloriesParams'
+import CaloriesMode from '@/components/calories/CaloriesMode'
 
+export default {
+  data() {
+    return {
+      counter: 0,
+      tabs: ['mode', 'params']
+    }
+  },
+  computed: {
+    firstVisit() {
+      return this.$store.getters.firstVisit
+    },
+    noValue() {
+      return this.$store.getters['calories/firstVisitInfo']
+    }
+  },
+  methods: {
+    async send() {
+      const values = {
+        weight: this.$store.getters['calories/weight'],
+        height: this.$store.getters['calories/desireWeight']
+      }
+      await this.$store.dispatch('update', values)
+      this.$store.commit('calories/clear')
+    }
+  },
+  components: { CaloriesParams, CaloriesMode }
 }
 </script>
 
 <style scoped lang="scss">
+@import "../template";
+
+@include buttonStyling;
 div.modal {
   display: flex;
   justify-content: center;
@@ -42,11 +72,60 @@ div.modal {
   height: 100%;
   background-color: rgba(0, 0, 0, .4);
   z-index: 200;
+
   &__wrapper.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
     width: 50%;
     background-color: #eaeaea;
     color: black;
+    height: 50%;
+    overflow-y: hidden;
+    h4 {
+      font-family: "Jost", sans-serif;
+      font-size: 2.2rem;
+      margin: 1rem 0 1rem 0;
+      color: #000063;
+      @media (max-height: 750px) {
+        font-size: 1.7rem;
+        margin: 0 0 1rem 0;
+      }
+    }
+    form {
+      width: 100%;
+    }
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    span {
+      font-family: "Quicksand", sans-serif;
+      font-size: 1.5rem;
+    }
+
+    small {
+      font-weight: 400;
+      font-family: "Jost", sans-serif;
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &__params {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  button.btn {
+    margin-top: 2rem;
+    @media (max-height: 700px) {
+      margin-top: 1rem;
+    }
   }
 }
 </style>

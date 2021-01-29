@@ -1,22 +1,24 @@
 <template>
   <AppLoader v-if="loading"/>
   <div class="menu container" v-else-if="hasData">
-  <div class="menu__wrapper">
-    <div class="menu__wrapper-bar">
-      <the-logo :gender="userData.gender"></the-logo>
-      <home-bar :name="userData.name"></home-bar>
+    <div class="menu__wrapper">
+      <div class="menu__wrapper-bar">
+        <the-logo :gender="userData.gender"></the-logo>
+        <home-bar :name="userData.name"></home-bar>
+      </div>
+      <div class="menu__wrapper-main">
+        <menu-nav :tabs="tabList"
+                  :id="getCounter"
+        ></menu-nav>
+        <menu-main>
+          <component :is="'app-' + currentTab"></component>
+        </menu-main>
+      </div>
     </div>
-    <div class="menu__wrapper-main">
-      <menu-nav :tabs="tabList"
-                :id="getCounter"
-                :firstLoading="firstLoading"
-      ></menu-nav>
-      <menu-main>
-        <component :is="'app-' + currentTab" :firstLoading="firstLoading"></component>
-      </menu-main>
-    </div>
-  </div>
     <div class="menu__sidebar card"></div>
+    <teleport to="#app">
+    <modal v-if="firstVisit"></modal>
+    </teleport>
   </div>
 </template>
 
@@ -30,15 +32,12 @@ import MenuNav from '@/components/home/HomeNav'
 import AppCalories from '@/components/AppCalories'
 import AppMain from '@/components/AppMain'
 import HomeBar from '@/components/home/HomeBar'
+import Modal from '@/views/Modal'
 
 export default {
   async mounted() {
     this.loading = true
     await this.$store.dispatch('load')
-    const data = await this.$store.getters.userData
-    if (!data.weight || !data.height) {
-      this.firstLoading = true
-    }
     this.loading = false
   },
   data() {
@@ -54,7 +53,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userData', 'isEmpty']),
+    ...mapGetters(['userData', 'isEmpty', 'firstVisit']),
     ...mapGetters('menuList', ['tabList', 'currentTab', 'getCounter']),
     isLoading() {
       return this.loading
@@ -66,6 +65,7 @@ export default {
   updated() {
   },
   components: {
+    Modal,
     HomeBar,
     AppMain,
     AppCalories,
@@ -82,6 +82,7 @@ export default {
   display: flex;
   height: 100%;
 }
+
 .menu__wrapper {
   flex: 1 0 87%;
   display: flex;
@@ -91,6 +92,7 @@ export default {
   margin: 0 auto;
   padding: 1rem;
 }
+
 .menu__sidebar {
   flex: 1 0 10%;
   background-color: #abbd81;
@@ -100,6 +102,7 @@ export default {
   border: 0;
 
 }
+
 .menu__wrapper-bar {
   border-radius: 1rem;
   margin-bottom: 1rem;
@@ -107,6 +110,7 @@ export default {
   height: 25%;
   width: 100%;
 }
+
 .menu__wrapper-main {
   display: flex;
   width: 100%;
