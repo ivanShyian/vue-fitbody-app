@@ -84,11 +84,10 @@ div.modal {
     h4 {
       font-family: "Jost", sans-serif;
       font-size: 2.2rem;
-      margin-top: 1rem;
       color: #000063;
       @media (max-height: 750px) {
         font-size: 1.7rem;
-        margin: 0 0 1rem 0;
+        margin: 0 0 .5rem 0;
       }
     }
     form {
@@ -115,7 +114,6 @@ div.modal {
       font-weight: 400;
       font-family: "Jost", sans-serif;
       font-size: 1.2rem;
-      margin-bottom: 1.5rem;
     }
   }
 
@@ -125,9 +123,9 @@ div.modal {
     width: 100%;
   }
   button.btn {
-    margin-top: 2rem;
+    margin-top: 1rem;
     @media (max-height: 700px) {
-      margin-top: 1rem;
+      margin-top: .5rem;
     }
   }
 }

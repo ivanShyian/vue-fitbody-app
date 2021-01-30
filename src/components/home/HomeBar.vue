@@ -19,7 +19,7 @@
       </div>
       <div class="bar-bottom__headway-line" v-if="userData.params">
         <i class="fas fa-flag"></i>
-        <span>{{ progressValue || '0' }}%</span>
+        <span>{{ progressValue === 100 ? 'Done!' : progressValue + '%' }}</span>
         <i class="fas fa-flag-checkered"></i>
         <div class="bar-bottom__headway-line_active" :style="{'width': progressValue + '%'}"></div>
       </div>

@@ -73,13 +73,23 @@ export default createStore({
       if (state.userData.params.mode === 0) {
         const dif = 100 / (state.userData.params['desired-weight'] - state.userData.params.weight)
         const current = now - state.userData.params.weight
-        const result = dif * current
-        return Math.floor(result)
+        let result = dif * current
+        if (result > 100) {
+          result = 100
+        } else if (result < 0) {
+          result = 0
+        }
+        return Math.round(result)
       } else if (state.userData.params.mode === 1) {
         const dif = 100 / (state.userData.params.weight - state.userData.params['desired-weight'])
         const current = state.userData.params.weight - now
-        const result = dif * current
-        return Math.floor(result)
+        let result = dif * current
+        if (result > 100) {
+          result = 100
+        } else if (result < 0) {
+          result = 0
+        }
+        return Math.round(result)
       }
     }
   },
