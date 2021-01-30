@@ -2,7 +2,7 @@
   <div class="card home-bar">
     <div class="home-bar__upper bar-upper">
       <div class="bar-upper__nickname">
-        <h2>{{ name }}</h2>
+        <h2>{{userData.name}}</h2>
       </div>
       <div class="bar-upper__status">
         <span>Change status</span>
@@ -12,24 +12,31 @@
     <div class="home-bar__bottom bar-bottom">
       <div class="bar-bottom__pointers">
         <span class="bar-bottom__pointers-title">ROAD</span>
-        <div class="bar-bottom__pointers-inner">
-          <span><small>FROM</small> 80kg</span>
-          <span><small>TO</small> 100kg</span>
+        <div class="bar-bottom__pointers-inner" v-if="userData.params">
+          <span><small>FROM </small>{{userParams.weight}}kg</span>
+          <span><small>TO </small>{{userParams['desired-weight']}}kg</span>
         </div>
       </div>
-      <div class="bar-bottom__headway-line">
+      <div class="bar-bottom__headway-line" v-if="userData.params">
         <i class="fas fa-dragon"></i>
-        <span>30%</span>
+        <span>{{ progressValue || '0' }}%</span>
         <i class="fas fa-flag-checkered"></i>
-        <div class="bar-bottom__headway-line_active" :style="{'width': '30%'}"></div>
+        <div class="bar-bottom__headway-line_active" :style="{'width': progressValue + '%'}"></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  props: ['name']
+  computed: {
+    ...mapGetters(['userData', 'progressValue']),
+    userParams() {
+      return this.userData.params || ''
+    }
+  }
 }
 </script>
 

@@ -65,6 +65,7 @@ export default {
       state.counter = 0
       state.height = ''
       state.weight = ''
+      state['desired-weight'] = ''
       state.age = null
       state.calculated = null
       state.gender = null
@@ -72,7 +73,7 @@ export default {
   },
   getters: {
     result(state) {
-      return Math.round(state.calculated)
+      return Math.floor(state.calculated)
     },
     currentComponent(state) {
       return state.caloriesComponents[state.counter]
@@ -89,20 +90,19 @@ export default {
     weight(state) {
       return state.weight
     },
-    desireWeight(state) {
-      return state['desire-weight']
+    desiredWeight(state) {
+      return state['desired-weight']
+    },
+    mode(state) {
+      return state.currentMode
     },
     genderValue(state) {
       return state.gender === 'man' ? 5 : 161
     },
-    getAdditionalData(state) {
-      return {
-        height: state.height,
-        calculated: state.calculated
-      }
-    },
     firstVisitInfo(state) {
-      return state['desired-weight'] === '' || state.weight === ''
+      return state['desired-weight'] === '' ||
+        state.weight === '' ||
+        state.height === ''
     }
   },
   actions: {

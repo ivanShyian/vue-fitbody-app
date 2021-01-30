@@ -20,8 +20,12 @@ export default createStore({
     }
   },
   mutations: {
-    setData(state, data) {
-      state.userData = data
+    setData(state, extraData) {
+      if (extraData.height) {
+        state.userData = { ...state.userData, params: extraData }
+      } else {
+        state.userData = { ...state.userData, ...extraData }
+      }
     },
     clearData(state) {
       state.userData = {}
@@ -35,7 +39,14 @@ export default createStore({
       return Object.keys(state.userData).length === 0
     },
     firstVisit(state) {
-      return !state.userData.weight
+      return !state.userData.params
+    },
+    progressValue(state) {
+      const now = 78
+      const dif = 100 / (state.userData.params['desired-weight'] - state.userData.params.weight)
+      const current = now - state.userData.params.weight
+      const result = dif * current
+      return Math.floor(result)
     }
   },
   actions: {
@@ -45,11 +56,10 @@ export default createStore({
       const { data } = await fitbodyAxios.get(`/users/${uid}.json?auth=${token}`)
       commit('setData', data)
     },
-    async update({ state, getters, commit, rootGetters }, additional) {
+    async update({ state, getters, commit, rootGetters }, extraData) {
       const token = rootGetters['auth/token']
       const uid = rootGetters['auth/userId']
-      const data = state.userData
-      commit('setData', { ...data, ...additional })
+      commit('setData', extraData)
       await fitbodyAxios.put(`/users/${uid}.json?auth=${token}`, getters.userData)
     }
   },

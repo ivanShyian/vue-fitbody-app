@@ -1,7 +1,7 @@
 <template>
   <div class="modal">
     <div class="modal__wrapper card">
-      <form @keyup.prevent.enter @submit="send">
+      <form @keyup.prevent.enter @submit.prevent="send">
         <h4>Welcome!</h4>
         <div class="modal__text" v-if="counter === 0">
           <span>Before start you should fill out these fields</span>
@@ -41,11 +41,13 @@ export default {
   },
   methods: {
     async send() {
-      const values = {
+      const params = {
         weight: this.$store.getters['calories/weight'],
-        height: this.$store.getters['calories/desireWeight']
+        height: this.$store.getters['calories/height'],
+        mode: this.$store.getters['calories/mode'],
+        'desired-weight': this.$store.getters['calories/desiredWeight']
       }
-      await this.$store.dispatch('update', values)
+      await this.$store.dispatch('update', params)
       this.$store.commit('calories/clear')
     }
   },

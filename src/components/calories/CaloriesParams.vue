@@ -16,7 +16,7 @@
         v-if="firstVisit"
         text="Desired weight"
         input-id="calDesWeight"
-        :param="$store.getters['calories/desireWeight']"
+        :param="$store.getters['calories/desiredWeight']"
         @input-param="$store.commit('calories/setDesWeight', $event)">
       </calories-param-element>
       <calories-param-element

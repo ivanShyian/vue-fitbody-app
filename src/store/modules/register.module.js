@@ -1,5 +1,6 @@
 import axios from 'axios'
 import fitbodyAxios from '@/axios/fitbody-requests'
+import { error } from '@/utils/error'
 
 export default {
   namespaced: true,
@@ -97,14 +98,20 @@ export default {
     }
   },
   actions: {
-    async register({ state }) {
+    async register({ state, commit, dispatch }) {
       try {
         const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.VUE_APP_FB_KEY}`
+        commit('addNewUser')
         const { data } = await axios.post(url, { ...state.newUser, returnSecureToken: true })
         await fitbodyAxios.put(`/users/${data.localId}.json?auth=${data.idToken}`, {
           ...state.databaseUser
         })
-      } catch (e) { }
+      } catch (e) {
+        dispatch('alert/setAlert', {
+          value: error(e.message),
+          type: 'danger'
+        }, { root: true })
+      }
     }
   }
 }

@@ -4,7 +4,7 @@
     <div class="home__wrapper">
       <div class="home__wrapper-bar">
         <the-logo :gender="userData.gender"></the-logo>
-        <home-bar :name="userData.name"></home-bar>
+        <home-bar></home-bar>
       </div>
       <div class="home__wrapper-main">
         <home-nav :tabs="tabList"
@@ -41,14 +41,7 @@ export default {
   },
   data() {
     return {
-      loading: false,
-      firstLoading: false
-    }
-  },
-  watch: {
-    'userData.weight'(value) {
-      console.log(value, 'there')
-      this.firstLoading = false
+      loading: false
     }
   },
   computed: {

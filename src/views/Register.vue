@@ -79,8 +79,12 @@ export default {
           value: 'Пароли не совпадают',
           type: 'warning'
         })
+      } else if (this.userPassword.length < 6) {
+        this.$store.dispatch('alert/setAlert', {
+          value: 'Слишком маленький пароль',
+          type: 'warning'
+        })
       } else {
-        await this.$store.commit('register/addNewUser')
         await this.$store.dispatch('register/register')
         this.$router.push('/registered')
       }
