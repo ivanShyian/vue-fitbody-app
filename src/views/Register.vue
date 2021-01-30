@@ -2,12 +2,16 @@
   <form class="d-flex flex-column align-items-center register-form"
         @submit.prevent="submitRegister"
         @keypress.prevent.enter>
-    <span class="register-form__counter">Step: {{ $store.getters['register/spanCounter'] }}</span>
+    <span class="register-form__counter"
+    >Step: {{ $store.getters['register/spanCounter'] }}</span>
     <component :is="'the-register-form-' + isTab"
                v-model:password="password"
     ></component>
     <div>
-      <button class="btn" @click.prevent="previous">Back</button>
+      <button class="btn"
+              @click.prevent="previous"
+      >Back
+      </button>
       <button
         class="btn"
         :disabled="isEmpty"
@@ -34,6 +38,9 @@ import TheRegisterFormPassword from '../components/registration/RegisterFormPass
 import { mapGetters } from 'vuex'
 
 export default {
+  unmounted() {
+
+  },
   data() {
     return {
       password: ''

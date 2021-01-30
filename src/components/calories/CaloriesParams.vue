@@ -13,18 +13,17 @@
         @input-param="$store.commit('calories/setWeight', $event)"
       ></calories-param-element>
       <calories-param-element
-        v-if="!firstVisit"
-        text="Your height in cm"
-        input-id="calHeight"
-        :param="$store.getters['calories/height']"
-        @input-param="$store.commit('calories/setHeight', $event)">
-      </calories-param-element>
-      <calories-param-element
         v-if="firstVisit"
         text="Desired weight"
         input-id="calDesWeight"
         :param="$store.getters['calories/desireWeight']"
         @input-param="$store.commit('calories/setDesWeight', $event)">
+      </calories-param-element>
+      <calories-param-element
+        text="Your height in cm"
+        input-id="calHeight"
+        :param="$store.getters['calories/height']"
+        @input-param="$store.commit('calories/setHeight', $event)">
       </calories-param-element>
     </div>
   </div>
@@ -86,7 +85,10 @@ export default {
     border: 1px solid darkorange;
   }
   div:first-child {
-    margin-right: 3rem;
+    margin-right: 2rem;
+  }
+  div:last-child {
+    margin-left: 2rem;
   }
 }
 .calories__params-height,

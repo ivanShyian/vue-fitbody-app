@@ -80,6 +80,20 @@ export default {
         birth: state['date-of-birth'],
         gender: state.gender
       }
+    },
+    clear(state) {
+      state.gender = 'Choose...'
+      state.name = ''
+      state['date-of-birth'] = {
+        day: '',
+        month: 'Month',
+        year: ''
+      }
+      state.email = ''
+      state.password = ''
+      state.newUser = {}
+      state.databaseUser = {}
+      state.counter = 0
     }
   },
   actions: {
