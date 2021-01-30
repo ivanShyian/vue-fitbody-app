@@ -1,5 +1,8 @@
 export default {
   mounted(el) {
-    el.focus()
+    console.log(el.id)
+    if (el.id !== 'calHeight' && el.id !== 'calDesHeight') {
+      el.focus()
+    }
   }
 }

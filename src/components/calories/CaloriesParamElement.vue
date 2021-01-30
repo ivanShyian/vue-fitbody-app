@@ -1,7 +1,8 @@
 <template>
   <div class="calories__params-element">
-    <span>{{ text }}</span>
+    <label :for="inputId">{{ text }}</label>
     <input type="text"
+           :id="inputId"
            v-focus
            :value="param"
            @input="$emit('input-param', $event.target.value)"
@@ -10,6 +11,7 @@
 </template>
 
 <script>
+
 import focusDirective from '@/directives/focusDirective'
 
 export default {
@@ -20,6 +22,17 @@ export default {
       default: ''
     },
     text: {
+      type: String,
+      required: false,
+      default: ''
+    },
+    inputId: {
+      type: String,
+      required: true
+    }
+  },
+  emits: {
+    'input-param': {
       type: String,
       required: false,
       default: ''
@@ -36,7 +49,7 @@ export default {
   display: flex;
   flex-direction: column;
 }
-span {
+label {
   font-family: "Quicksand", sans-serif;
   font-size: 1.2rem;
   color: #2d203a;
@@ -51,6 +64,8 @@ input {
   border: 1px solid rgba(0, 0, 0, .2);
 }
 input:focus {
-  border: 1px solid darkorange;
+  border-color: #f4ad94;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(233, 176, 32, .5);
 }
 </style>

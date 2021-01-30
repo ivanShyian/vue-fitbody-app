@@ -98,7 +98,6 @@ export default {
     getAdditionalData(state) {
       return {
         height: state.height,
-        weight: state.weight,
         calculated: state.calculated
       }
     },

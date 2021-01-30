@@ -8,18 +8,21 @@
     <div class="calories__params-wrapper">
       <calories-param-element
         text="Your weight in kg"
+        input-id="calWeight"
         :param="$store.getters['calories/weight']"
         @input-param="$store.commit('calories/setWeight', $event)"
       ></calories-param-element>
       <calories-param-element
         v-if="!firstVisit"
         text="Your height in cm"
+        input-id="calHeight"
         :param="$store.getters['calories/height']"
         @input-param="$store.commit('calories/setHeight', $event)">
       </calories-param-element>
       <calories-param-element
         v-if="firstVisit"
         text="Desired weight"
+        input-id="calDesWeight"
         :param="$store.getters['calories/desireWeight']"
         @input-param="$store.commit('calories/setDesWeight', $event)">
       </calories-param-element>
@@ -29,12 +32,8 @@
 
 <script>
 import CaloriesParamElement from '@/components/calories/CaloriesParamElement'
-import focusDirective from '@/directives/focusDirective'
 
 export default {
-  directives: {
-    focus: focusDirective
-  },
   computed: {
     firstVisit() {
       return this.$store.getters.firstVisit
