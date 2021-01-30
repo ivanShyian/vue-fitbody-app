@@ -1,10 +1,29 @@
 <template>
   <div class="app__main">
+    <div>
+      <label for="newWeight">New weight?</label>
+      <input id="newWeight" v-model="newWeight" type="text">
+      <button class="btn" :disabled="newWeight === ''" @click="submitNewWeight">Update</button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      newWeight: ''
+    }
+  },
+  methods: {
+    submitNewWeight() {
+      const params = {
+        ...this.$store.state.userData.params,
+        newWeight: this.newWeight
+      }
+      this.$store.dispatch('update', params)
+    }
+  }
 }
 </script>
 
@@ -18,54 +37,31 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 100%;
-
-  h4 {
-    font-family: "Quicksand", sans-serif;
-    color: #2d203a;
-    font-size: 2.5rem;
-    margin: 0 0 1rem 0;
-  }
-
-  div.main-first__text {
+  div {
     display: flex;
     flex-direction: column;
-    margin-bottom: 2rem;
-
-    span {
+    width: 100%;
+    align-items: center;
+    label {
+      color: black;
       font-family: "Quicksand", sans-serif;
-      max-width: 30rem;
       font-size: 1.5rem;
     }
-
-    span:first-child {
-      font-size: 1.8rem;
-      color: #000063;
-      margin-bottom: 1rem;
+    input {
+      max-width: 30%;
+      border-radius: 1rem;
     }
-
-    span:last-child {
-      color: orangered;
+    input {
+      text-align: center;
+      border: 1px solid rgba(0, 0, 0, .2);
+      margin: 0 0 1rem 0;
+    }
+    button {
+      max-width: 10%;
+    }
+    input:focus {
+      outline: none;
     }
   }
-.main-second {
-  font-family: "Quicksand", sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  h5 {
-    font-size: 1.8rem;
-    color: #000063;
-    margin-bottom: 1rem;
-  }
-  span {
-    font-size: 1.3rem;
-    color: #ba5800;
-    margin-bottom: 1.5rem;
-  }
-  button {
-    max-width: 20%;
-  }
-}
 }
 </style>

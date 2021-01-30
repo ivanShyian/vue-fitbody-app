@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="bar-bottom__headway-line" v-if="userData.params">
-        <i class="fas fa-dragon"></i>
+        <i class="fas fa-flag"></i>
         <span>{{ progressValue || '0' }}%</span>
         <i class="fas fa-flag-checkered"></i>
         <div class="bar-bottom__headway-line_active" :style="{'width': progressValue + '%'}"></div>

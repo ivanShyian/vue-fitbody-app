@@ -54,8 +54,8 @@ export default {
       }
     },
     async updateData() {
-      const calculated = this.$store.getters['calories/result']
-      await this.$store.dispatch('update', calculated)
+      const calories = this.$store.getters['calories/result']
+      await this.$store.dispatch('update', { calories })
       this.$store.commit('calories/clear')
       this.$store.commit('menuList/setActiveTab', 0)
     }
