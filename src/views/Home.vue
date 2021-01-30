@@ -1,21 +1,21 @@
 <template>
   <AppLoader v-if="loading"/>
-  <div class="menu container" v-else-if="hasData">
-    <div class="menu__wrapper">
-      <div class="menu__wrapper-bar">
+  <div class="home container" v-else-if="hasData">
+    <div class="home__wrapper">
+      <div class="home__wrapper-bar">
         <the-logo :gender="userData.gender"></the-logo>
         <home-bar :name="userData.name"></home-bar>
       </div>
-      <div class="menu__wrapper-main">
-        <menu-nav :tabs="tabList"
+      <div class="home__wrapper-main">
+        <home-nav :tabs="tabList"
                   :id="getCounter"
-        ></menu-nav>
-        <menu-main>
+        ></home-nav>
+        <home-main>
           <component :is="'app-' + currentTab"></component>
-        </menu-main>
+        </home-main>
       </div>
     </div>
-    <div class="menu__sidebar card"></div>
+    <div class="home__sidebar card"></div>
     <teleport to="#app">
     <modal v-if="firstVisit"></modal>
     </teleport>
@@ -23,12 +23,11 @@
 </template>
 
 <script>
-
 import { mapGetters } from 'vuex'
 import TheLogo from '@/components/home/TheLogo'
 import AppLoader from '@/components/ui/AppLoader'
-import MenuMain from '@/components/home/HomeMain'
-import MenuNav from '@/components/home/HomeNav'
+import HomeMain from '@/components/home/HomeMain'
+import HomeNav from '@/components/home/HomeNav'
 import AppCalories from '@/components/AppCalories'
 import AppMain from '@/components/AppMain'
 import HomeBar from '@/components/home/HomeBar'
@@ -71,19 +70,19 @@ export default {
     AppCalories,
     AppLoader,
     TheLogo,
-    MenuMain,
-    MenuNav
+    HomeMain,
+    HomeNav
   }
 }
 </script>
 
 <style scoped lang="scss">
-.menu {
+.home {
   display: flex;
   height: 100%;
 }
 
-.menu__wrapper {
+.home__wrapper {
   flex: 1 0 87%;
   display: flex;
   flex-direction: column;
@@ -93,7 +92,7 @@ export default {
   padding: 1rem;
 }
 
-.menu__sidebar {
+.home__sidebar {
   flex: 1 0 10%;
   background-color: #abbd81;
   margin: 1rem 1rem 1rem 0;
@@ -103,7 +102,7 @@ export default {
 
 }
 
-.menu__wrapper-bar {
+.home__wrapper-bar {
   border-radius: 1rem;
   margin-bottom: 1rem;
   display: flex;
@@ -111,7 +110,7 @@ export default {
   width: 100%;
 }
 
-.menu__wrapper-main {
+.home__wrapper-main {
   display: flex;
   width: 100%;
   height: 100%;

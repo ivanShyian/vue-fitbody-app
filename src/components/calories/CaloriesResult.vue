@@ -5,8 +5,7 @@
   </div>
   <div class="calories__result-buttons">
     <button class="btn" @click.prevent="$store.commit('calories/clear')">Try again</button>
-    <button class="btn calories-submit-btn" type="submit">Continue</button>
-
+    <button class="btn calories-submit-btn" type="submit">Save</button>
   </div>
 </template>
 

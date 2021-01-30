@@ -8,7 +8,6 @@
           <small>Sorry, but you can't cancel this procedure. It's important data for us</small>
         </div>
         <component :is="'calories-' + tabs[counter]"
-                   :firstVisit="firstVisit"
         ></component>
         <button class="btn"
                 v-if="counter + 1 !== tabs.length"
@@ -36,9 +35,6 @@ export default {
     }
   },
   computed: {
-    firstVisit() {
-      return this.$store.getters.firstVisit
-    },
     noValue() {
       return this.$store.getters['calories/firstVisitInfo']
     }

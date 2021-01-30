@@ -1,5 +1,5 @@
 <template>
-  <div class="menu__main-wrapper card">
+  <div class="home__main-wrapper card">
     <slot></slot>
   </div>
 </template>
@@ -9,7 +9,7 @@ export default {}
 </script>
 
 <style scoped lang="scss">
-.menu__main-wrapper {
+.home__main-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;

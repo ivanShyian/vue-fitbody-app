@@ -1,25 +1,10 @@
 <template>
   <div class="app__main">
-    <div class="app__main-first main-first" v-if="firstLoading">
-      <h4>Welcome!</h4>
-      <div class="main-first__text">
-        <span>Step 1</span>
-        <span>Before start, first thing that you need is calculating calories</span>
-      </div>
-      <button class="btn" @click="$store.commit('menuList/setActiveTab', 3)">Click here</button>
-    </div>
-    <div class="app__main-second main-second" v-else>
-      <h4>Grate, let's continue!</h4>
-      <h5>Step 2</h5>
-      <span>For better motivation you must set goal</span>
-      <button class="btn" :disabled="true">Set goal!</button>
-    </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['firstLoading']
 }
 </script>
 

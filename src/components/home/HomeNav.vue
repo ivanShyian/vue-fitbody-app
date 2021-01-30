@@ -1,5 +1,5 @@
 <template>
-  <nav class="menu-nav">
+  <nav class="home-nav">
     <ul>
       <li class="card"
           v-for="(tab, idx) in tabs"
@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.menu-nav {
+.home-nav {
   flex: 0 0 15%;
   margin: .5rem 0 0 0;
   overflow: hidden;
