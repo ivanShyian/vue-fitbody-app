@@ -23,29 +23,10 @@ export default createStore({
     loadData(state, data) {
       state.userData = { ...state.userData, ...data }
     },
-    updateData(state, extraData) {
-      if (extraData.calories) {
-        if (state.userData.calories['remaining-calories']) {
-          state.userData = {
-            ...state.userData,
-            calories: {
-              'old-remaining-calories': state.userData.calories['remaining-calories'],
-              'remaining-calories': extraData.calories
-            }
-          }
-        } else {
-          state.userData = {
-            ...state.userData,
-            calories: {
-              'remaining-calories': extraData.calories
-            }
-          }
-        }
-      } else {
-        state.userData = {
-          ...state.userData,
-          params: extraData
-        }
+    updateData(state, payload) {
+      state.userData = {
+        ...state.userData,
+        ...payload
       }
     },
     clearData(state) {
@@ -65,17 +46,30 @@ export default createStore({
   },
   actions: {
     async load({ rootGetters, commit }) {
-      const token = rootGetters['auth/token']
-      const uid = rootGetters['auth/userId']
-      const { data } = await fitbodyAxios.get(`/users/${uid}.json?auth=${token}`)
-      commit('loadData', data)
-      commit('goals/loadGoal', data.goals)
+      try {
+        const token = rootGetters['auth/token']
+        const uid = rootGetters['auth/userId']
+        const { data } = await fitbodyAxios.get(`/users/${uid}.json?auth=${token}`)
+        commit('loadData', data)
+        if (data.goal) {
+          commit('goals/updGoal', data.goal)
+        }
+      } catch (e) {
+        console.log(e.message)
+      }
     },
-    async update({ state, getters, commit, rootGetters }, extraData) {
-      const token = rootGetters['auth/token']
-      const uid = rootGetters['auth/userId']
-      commit('updateData', extraData)
-      await fitbodyAxios.put(`/users/${uid}.json?auth=${token}`, getters.userData)
+    async update({ state, getters, commit, rootGetters }, payload) {
+      try {
+        const token = rootGetters['auth/token']
+        const uid = rootGetters['auth/userId']
+        commit('updateData', payload)
+        if (payload.goal) {
+          commit('goals/updGoal', payload.goal)
+        }
+        await fitbodyAxios.put(`/users/${uid}.json?auth=${token}`, getters.userData)
+      } catch (e) {
+        console.log(e.message)
+      }
     }
   },
   modules: {
