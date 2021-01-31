@@ -28,6 +28,7 @@ export default createStore({
         ...state.userData,
         ...payload
       }
+      console.log(state.userData)
     },
     clearData(state) {
       state.userData = {}
@@ -51,8 +52,8 @@ export default createStore({
         const uid = rootGetters['auth/userId']
         const { data } = await fitbodyAxios.get(`/users/${uid}.json?auth=${token}`)
         commit('loadData', data)
-        if (data.goal) {
-          commit('goals/updGoal', data.goal)
+        if (data.goals) {
+          commit('goals/loadGoal', data.goals)
         }
       } catch (e) {
         console.log(e.message)
@@ -63,8 +64,10 @@ export default createStore({
         const token = rootGetters['auth/token']
         const uid = rootGetters['auth/userId']
         commit('updateData', payload)
-        if (payload.goal) {
-          commit('goals/updGoal', payload.goal)
+        if (payload.goals) {
+          Object.keys(payload.goals).map(el => {
+            commit('goals/updateGoal', payload.goals[el])
+          })
         }
         await fitbodyAxios.put(`/users/${uid}.json?auth=${token}`, getters.userData)
       } catch (e) {

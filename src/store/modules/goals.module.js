@@ -4,18 +4,23 @@ export default {
   namespaced: true,
   state() {
     return {
-      goal: {}
+      goalList: [],
+      goalCounter: 0
     }
   },
   getters: {
-    isGoal(state) {
-      return state.goal
+    counter(state) {
+      return state.goalCounter
     },
-    hasGoal(state) {
-      return Object.keys(state.goal).length
+    currentGoal(state, getters) {
+      return state.goalList[getters.counter]
+    },
+    goals(state) {
+      return state.goalList
     },
     progressValue(state, getters) {
-      const goal = getters.isGoal
+      const goal = getters.currentGoal
+      console.log(goal)
       const now = goal.currentWeight
       if (goal.mode === 0) {
         const dif = 100 / (goal['desired-weight'] - goal.weight)
@@ -41,8 +46,12 @@ export default {
     }
   },
   mutations: {
-    updGoal(state, data) {
-      state.goal = data
+    updateGoal(state, data) {
+      if (!state.goalList.length) {
+        state.goalList = [data]
+      } else {
+        state.goalList = state.goalList.map(el => ({ ...el, ...data }))
+      }
     },
     loadGoal(state, data) {
       state.goalList = Object.keys(data).map(goal => {
@@ -62,9 +71,11 @@ export default {
     }, data) {
       const token = rootGetters['auth/token']
       const uid = rootGetters['auth/userId']
-      console.log(data)
-      commit('updGoal', data)
-      await fitbodyAxios.put(`/users/${uid}/goal.json?auth=${token}`, getters.goals)
+      console.log('upd', data)
+      await commit('updateGoal', data)
+      await Object.keys(getters.goals).map(el => (
+        fitbodyAxios.put(`/users/${uid}/goals/${getters.goals[el].id}.json?auth=${token}`, getters.goals[el])
+      ))
     }
   }
 }
