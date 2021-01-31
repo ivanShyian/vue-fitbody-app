@@ -41,13 +41,20 @@ export default {
   },
   methods: {
     async send() {
+      const id = Date.now().toString()
       const params = {
         weight: this.$store.getters['calories/weight'],
-        height: this.$store.getters['calories/height'],
+        height: this.$store.getters['calories/height']
+      }
+      const goal = {
         mode: this.$store.getters['calories/mode'],
-        'desired-weight': this.$store.getters['calories/desiredWeight']
+        weight: this.$store.getters['calories/weight'],
+        currentWeight: this.$store.getters['calories/weight'],
+        'desired-weight': this.$store.getters['calories/desiredWeight'],
+        finished: false
       }
       await this.$store.dispatch('update', params)
+      await this.$store.dispatch('goals/updateGoal', { goal, id })
       this.$store.commit('calories/clear')
     }
   },

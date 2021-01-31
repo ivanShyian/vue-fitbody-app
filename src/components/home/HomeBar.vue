@@ -12,12 +12,12 @@
     <div class="home-bar__bottom bar-bottom">
       <div class="bar-bottom__pointers">
         <span class="bar-bottom__pointers-title">ROAD</span>
-        <div class="bar-bottom__pointers-inner" v-if="userData.params">
-          <span><small>FROM </small>{{userParams.weight}}kg</span>
-          <span><small>TO </small>{{userParams['desired-weight']}}kg</span>
+        <div class="bar-bottom__pointers-inner" v-if="currentGoal">
+          <span><small>FROM </small>{{currentGoal.weight}}kg</span>
+          <span><small>TO </small>{{currentGoal['desired-weight']}}kg</span>
         </div>
       </div>
-      <div class="bar-bottom__headway-line" v-if="userData.params">
+      <div class="bar-bottom__headway-line" v-if="currentGoal">
         <i class="fas fa-flag"></i>
         <span>{{ progressValue === 100 ? 'Done!' : progressValue + '%' }}</span>
         <i class="fas fa-flag-checkered"></i>
@@ -32,10 +32,8 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['userData', 'progressValue']),
-    userParams() {
-      return this.userData.params || ''
-    }
+    ...mapGetters(['userData']),
+    ...mapGetters('goals', ['goals', 'progressValue', 'currentGoal'])
   }
 }
 </script>
