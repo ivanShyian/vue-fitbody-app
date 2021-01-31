@@ -53,7 +53,7 @@ export default {
         'desired-weight': this.$store.getters['calories/desiredWeight'],
         finished: false
       }
-      await this.$store.dispatch('update', { params, goals: { [id]: { ...goals } } })
+      await this.$store.dispatch('update', { params, goals: { [id]: { ...goals } }, activeGoal: id })
       this.$store.commit('calories/clear')
     }
   },

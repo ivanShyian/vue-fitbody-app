@@ -5,22 +5,22 @@ export default {
   state() {
     return {
       goalList: [],
-      goalCounter: 0
+      activeGoal: null
     }
   },
   getters: {
-    counter(state) {
-      return state.goalCounter
+    activeId(state) {
+      return state.activeGoal
     },
     currentGoal(state, getters) {
-      return state.goalList[getters.counter]
+      console.log(state.goalList.find(el => el.id === getters.activeId))
+      return state.goalList.find(el => el.id === getters.activeId)
     },
     goals(state) {
       return state.goalList
     },
     progressValue(state, getters) {
       const goal = getters.currentGoal
-      console.log(goal)
       const now = goal.currentWeight
       if (goal.mode === 0) {
         const dif = 100 / (goal['desired-weight'] - goal.weight)
@@ -47,10 +47,15 @@ export default {
   },
   mutations: {
     updateGoal(state, data) {
-      if (!state.goalList.length) {
-        state.goalList = [data]
-      } else {
-        state.goalList = state.goalList.map(el => ({ ...el, ...data }))
+      if (data) {
+        if (!state.goalList.length) {
+          console.log('bad')
+          state.goalList = [data]
+          state.activeGoal = data.id
+        } else {
+          console.log('good')
+          state.goalList = data
+        }
       }
     },
     loadGoal(state, data) {
@@ -60,6 +65,13 @@ export default {
           ...data[goal]
         }
       })
+    },
+    setActive(state, id) {
+      console.log('setted--------->', id)
+      state.activeGoal = id
+    },
+    pushNewGoal(state, data) {
+      state.goalList.push(data)
     }
   },
   actions: {
@@ -71,10 +83,9 @@ export default {
     }, data) {
       const token = rootGetters['auth/token']
       const uid = rootGetters['auth/userId']
-      console.log('upd', data)
       await commit('updateGoal', data)
-      await Object.keys(getters.goals).map(el => (
-        fitbodyAxios.put(`/users/${uid}/goals/${getters.goals[el].id}.json?auth=${token}`, getters.goals[el])
+      await state.goalList.map(el => (
+        fitbodyAxios.put(`/users/${uid}/goals/${el.id}.json?auth=${token}`, el)
       ))
     }
   }

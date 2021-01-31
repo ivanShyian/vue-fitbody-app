@@ -54,6 +54,7 @@ export default createStore({
         commit('loadData', data)
         if (data.goals) {
           commit('goals/loadGoal', data.goals)
+          commit('goals/setActive', data.activeGoal)
         }
       } catch (e) {
         console.log(e.message)

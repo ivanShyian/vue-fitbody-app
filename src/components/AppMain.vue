@@ -22,22 +22,21 @@ export default {
     }
   },
   methods: {
-    submitNewWeight() {
-      this.$store.getters['goals/goals'].map(el => {
-        this.$store.dispatch('goals/updateGoal', {
-          ...el, currentWeight: this.newWeight
-        })
-      })
+    async submitNewWeight() {
+      const modified = this.$store.getters['goals/goals'].map(el => ({ ...el, currentWeight: this.newWeight }))
+      await this.$store.dispatch('goals/updateGoal', modified)
     },
-    addNewGoal() {
-      this.$store.dispatch('goals/updateGoal', {
+    async addNewGoal() {
+      const newItem = {
         id: Date.now().toString(),
         mode: 0,
         currentWeight: this.$store.getters.userData.params.weight,
         weight: this.$store.getters.userData.params.weight,
         finished: false,
         'desired-weight': this.desiredWeight
-      })
+      }
+      await this.$store.commit('goals/pushNewGoal', newItem)
+      await this.$store.dispatch('goals/updateGoal')
     }
   }
 }
