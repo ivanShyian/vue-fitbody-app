@@ -3,7 +3,7 @@
   <div class="home container" v-else-if="hasData">
     <div class="home__wrapper">
       <div class="home__wrapper-bar">
-        <the-logo :gender="userData.gender"></the-logo>
+        <home-logo :gender="userData.gender"></home-logo>
         <home-bar></home-bar>
       </div>
       <div class="home__wrapper-main">
@@ -15,7 +15,7 @@
         </home-main>
       </div>
     </div>
-    <div class="home__sidebar card"></div>
+    <home-sidebar></home-sidebar>
     <teleport to="#app">
     <modal v-if="firstVisit"></modal>
     </teleport>
@@ -24,13 +24,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import TheLogo from '@/components/home/TheLogo'
-import AppLoader from '@/components/ui/AppLoader'
+import HomeLogo from '@/components/home/HomeLogo'
 import HomeMain from '@/components/home/HomeMain'
 import HomeNav from '@/components/home/HomeNav'
+import HomeBar from '@/components/home/HomeBar'
+import HomeSidebar from '@/components/home/HomeSidebar'
+import AppLoader from '@/components/ui/AppLoader'
 import AppCalories from '@/components/AppCalories'
 import AppMain from '@/components/AppMain'
-import HomeBar from '@/components/home/HomeBar'
 import Modal from '@/views/Modal'
 
 export default {
@@ -57,14 +58,15 @@ export default {
   updated() {
   },
   components: {
-    Modal,
     HomeBar,
+    HomeSidebar,
+    HomeLogo,
+    HomeMain,
+    HomeNav,
+    Modal,
     AppMain,
     AppCalories,
-    AppLoader,
-    TheLogo,
-    HomeMain,
-    HomeNav
+    AppLoader
   }
 }
 </script>
@@ -84,17 +86,6 @@ export default {
   margin: 0 auto;
   padding: 1rem;
 }
-
-.home__sidebar {
-  flex: 1 0 10%;
-  background-color: #abbd81;
-  margin: 1rem 1rem 1rem 0;
-  box-shadow: -1px 7px 39px -16px rgba(0, 0, 0, 0.75);
-  border-radius: 1rem;
-  border: 0;
-
-}
-
 .home__wrapper-bar {
   border-radius: 1rem;
   margin-bottom: 1rem;

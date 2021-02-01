@@ -13,7 +13,6 @@ export default {
       return state.activeGoal
     },
     currentGoal(state, getters) {
-      console.log(state.goalList.find(el => el.id === getters.activeId))
       return state.goalList.find(el => el.id === getters.activeId)
     },
     goals(state) {
@@ -49,11 +48,9 @@ export default {
     updateGoal(state, data) {
       if (data) {
         if (!state.goalList.length) {
-          console.log('bad')
           state.goalList = [data]
           state.activeGoal = data.id
         } else {
-          console.log('good')
           state.goalList = data
         }
       }
@@ -67,7 +64,6 @@ export default {
       })
     },
     setActive(state, id) {
-      console.log('setted--------->', id)
       state.activeGoal = id
     },
     pushNewGoal(state, data) {

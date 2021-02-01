@@ -1,88 +1,31 @@
 <template>
   <div class="app__main">
-    <div>
-      <label for="newWeight">New weight?</label>
-      <input id="newWeight" v-model="newWeight" type="text">
-      <button class="btn" :disabled="newWeight === ''" @click="submitNewWeight">Update</button>
-    </div>
-    <div>
-      <label for="newGoal">Want to add a new goal?</label>
-      <input id="newGoal" type="text" v-model="desiredWeight">
-      <button class="btn" @click="addNewGoal"></button>
-    </div>
+    <main-indicators></main-indicators>
+    <main-mode></main-mode>
+    <main-actions></main-actions>
   </div>
 </template>
 
 <script>
+import MainActions from '@/components/main/MainActions'
+import MainIndicators from '@/components/main/MainIndicators'
+import MainMode from '@/components/main/MainMode'
 export default {
-  data() {
-    return {
-      newWeight: '',
-      desiredWeight: ''
-    }
-  },
-  methods: {
-    async submitNewWeight() {
-      const modified = this.$store.getters['goals/goals'].map(el => ({ ...el, currentWeight: this.newWeight }))
-      await this.$store.dispatch('goals/updateGoal', modified)
-    },
-    async addNewGoal() {
-      const newItem = {
-        id: Date.now().toString(),
-        mode: 0,
-        currentWeight: this.$store.getters.userData.params.weight,
-        weight: this.$store.getters.userData.params.weight,
-        finished: false,
-        'desired-weight': this.desiredWeight
-      }
-      await this.$store.commit('goals/pushNewGoal', newItem)
-      await this.$store.dispatch('goals/updateGoal')
-    }
+  components: {
+    MainMode,
+    MainActions,
+    MainIndicators
   }
 }
 </script>
 
 <style scoped lang="scss">
-@import "../template";
-
-@include buttonStyling;
 .app__main {
+  width: 100%;
+  height: 100%;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-
-  div {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-
-    label {
-      color: black;
-      font-family: "Quicksand", sans-serif;
-      font-size: 1.5rem;
-    }
-
-    input {
-      max-width: 30%;
-      border-radius: 1rem;
-    }
-
-    input {
-      text-align: center;
-      border: 1px solid rgba(0, 0, 0, .2);
-      margin: 0 0 1rem 0;
-    }
-
-    button {
-      max-width: 10%;
-    }
-
-    input:focus {
-      outline: none;
-    }
-  }
 }
 </style>

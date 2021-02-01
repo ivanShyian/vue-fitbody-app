@@ -19,6 +19,20 @@ export default createStore({
       userData: {}
     }
   },
+  getters: {
+    userData(state) {
+      return state.userData
+    },
+    isEmpty(state) {
+      return Object.keys(state.userData).length === 0
+    },
+    firstVisit(state) {
+      return !state.userData.params
+    },
+    params(state) {
+      return state.userData.params
+    }
+  },
   mutations: {
     loadData(state, data) {
       state.userData = { ...state.userData, ...data }
@@ -32,17 +46,6 @@ export default createStore({
     },
     clearData(state) {
       state.userData = {}
-    }
-  },
-  getters: {
-    userData(state) {
-      return state.userData
-    },
-    isEmpty(state) {
-      return Object.keys(state.userData).length === 0
-    },
-    firstVisit(state) {
-      return !state.userData.params
     }
   },
   actions: {

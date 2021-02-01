@@ -1,12 +1,14 @@
 <template>
+  <AppLoader v-if="loading"/>
   <form class="d-flex flex-column align-items-center register-form"
+        v-else
         @submit.prevent="submitRegister"
         @keypress.prevent.enter>
     <span class="register-form__counter"
     >Step: {{ $store.getters['register/spanCounter'] }}</span>
-    <component :is="'the-register-form-' + isTab"
-               v-model:password="password"
-    ></component>
+      <component :is="'the-register-form-' + isTab"
+                 v-model:password="password"
+      ></component>
     <div>
       <button class="btn"
               @click.prevent="previous"
@@ -35,6 +37,7 @@ import TheRegisterFormName from '../components/registration/RegisterFormName'
 import TheRegisterFormDateOfBirth from '../components/registration/RegisterFormDateOfBirth'
 import TheRegisterFormEmail from '../components/registration/RegisterFormEmail'
 import TheRegisterFormPassword from '../components/registration/RegisterFormPassword'
+import AppLoader from '../components/ui/AppLoader'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -43,6 +46,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       password: ''
     }
   },
@@ -85,12 +89,15 @@ export default {
           type: 'warning'
         })
       } else {
+        this.loading = true
         await this.$store.dispatch('register/register')
         this.$router.push('/registered')
+        this.loading = false
       }
     }
   },
   components: {
+    AppLoader,
     TheRegisterFormGender,
     TheRegisterFormName,
     TheRegisterFormDateOfBirth,
