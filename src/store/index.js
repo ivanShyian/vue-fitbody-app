@@ -31,6 +31,14 @@ export default createStore({
     },
     params(state) {
       return state.userData.params
+    },
+    daysOfRegister(state) {
+      const res = Math.floor((Date.now() - state.userData.registerDate) / (1000 * 60 * 60 * 24))
+      if (res <= 1) {
+        return res + ' day'
+      } else {
+        return res + ' days'
+      }
     }
   },
   mutations: {

@@ -1,7 +1,7 @@
 <template>
   <div class="menu-logo">
     <img :src="currentImage" alt="">
-    <div class="menu-logo__lvl">Level - 10</div>
+    <div class="menu-logo__lvl">Level - 1</div>
   </div>
 </template>
 

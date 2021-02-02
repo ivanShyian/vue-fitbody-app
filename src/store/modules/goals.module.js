@@ -13,6 +13,7 @@ export default {
       return state.activeGoal
     },
     currentGoal(state, getters) {
+      console.log(state.goalList)
       return state.goalList.find(el => el.id === getters.activeId)
     },
     goals(state) {
@@ -41,6 +42,16 @@ export default {
           result = 0
         }
         return Math.round(result)
+      }
+    },
+    modeName(state, getters) {
+      if (getters.currentGoal) {
+        const naming = {
+          0: 'Gain weight',
+          1: 'Lose weight',
+          2: 'Keep weight'
+        }
+        return naming[getters.currentGoal.mode] ? naming[getters.currentGoal.mode] : 'Not set'
       }
     }
   },

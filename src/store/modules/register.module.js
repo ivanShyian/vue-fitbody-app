@@ -79,7 +79,8 @@ export default {
         name: state.name,
         email: state.email,
         birth: state['date-of-birth'],
-        gender: state.gender
+        gender: state.gender,
+        registerDate: Date.now()
       }
     },
     clear(state) {

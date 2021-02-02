@@ -42,7 +42,8 @@ import { mapGetters } from 'vuex'
 
 export default {
   unmounted() {
-
+    this.password = ''
+    this.$store.commit('register/clear')
   },
   data() {
     return {

@@ -42,11 +42,19 @@ export default {
     color: rgba(0, 0, 99, .7);
   }
   input {
+    max-width: 40%;
     text-align: center;
     border-radius: 2rem;
     padding: 0 1rem;
     border: 1px solid rgba(0, 0, 0, .2);
     margin-bottom: 1rem;
+  }
+  input:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #f4ad94;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(233, 84, 32, .2);
   }
   button {
     padding: .1rem;

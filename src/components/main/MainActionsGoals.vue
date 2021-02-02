@@ -1,19 +1,28 @@
 <template>
   <div class="main__actions-goal">
     <div class="main__actions-goal-new">
-      <label for="newGoal">Add new goal</label>
-      <div class="main__actions-goal-new-wrapper" v-if="false">
+      <label for="newGoal" @click="toggleGoal('new')">Add new goal</label>
+      <div class="main__actions-goal-new-wrapper"
+           v-if="openNew">
         <div class="main__actions-goal-new-mode">
-          <span v-for="btn in modeButtons" :key="btn.id">{{ btn.name }}</span>
+          <span v-for="btn in modeButtons"
+                :key="btn.id"
+          >{{ btn.name }}</span>
         </div>
-        <input id="newGoal" type="text" v-model="desiredWeight" placeholder="Desired weight">
-        <button class="btn" @click="addNewGoal">Add</button>
+        <input id="newGoal"
+               type="text"
+               v-model="desiredWeight"
+               placeholder="Desired weight">
+        <button class="btn"
+                @click="addNewGoal"
+        >Add</button>
       </div>
     </div>
     <div class="main__actions-goal-change">
-      <label for="changeGoal">Change current goal</label>
-      <div v-if="false">
+      <label for="changeGoalFrom" @click="toggleGoal('change')">Change current goal</label>
+      <div v-if="openChange">
         <div>
+          <label for="changeGoal"></label>
           <input id="changeGoalFrom" type="text" placeholder="From...">
           <input id="changeGoal" type="text" placeholder="To...">
         </div>
@@ -25,11 +34,17 @@
 
 <script>
 import { mapState } from 'vuex'
+import focusDirective from '@/directives/focusDirective'
 
 export default {
+  directives: {
+    focus: focusDirective
+  },
   data() {
     return {
-      desiredWeight: ''
+      desiredWeight: '',
+      openNew: false,
+      openChange: false
     }
   },
   computed: {
@@ -47,6 +62,23 @@ export default {
       }
       await this.$store.commit('goals/pushNewGoal', newItem)
       await this.$store.dispatch('goals/updateGoal')
+    },
+    toggleGoal(link) {
+      if (link === 'new') {
+        if (this.openNew === false) {
+          this.openNew = true
+          this.openChange = false
+        } else {
+          this.openNew = false
+        }
+      } else if (link === 'change') {
+        if (this.openChange === false) {
+          this.openChange = true
+          this.openNew = false
+        } else {
+          this.openChange = false
+        }
+      }
     }
   }
 }
@@ -73,6 +105,7 @@ export default {
     font-family: "Jost", sans-serif;
     color: rgba(0, 0, 99, .7);
     border-radius: 2rem;
+    cursor: pointer;
   }
 
   input {
@@ -82,6 +115,13 @@ export default {
     text-align: center;
     margin-bottom: 1rem;
   }
+  input:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #f4ad94;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(233, 84, 32, .2);
+  }
 
   button {
     padding: .1rem .2rem;
@@ -90,15 +130,6 @@ export default {
 }
 .main__actions-goal-new {
   margin-bottom: 1rem;
-  label:before {
-    position: absolute;
-    bottom: -75%;
-    left: 50%;
-    content: '';
-    width: 1px;
-    height: 1.5rem;
-    border: 1px dashed rgba(0, 0, 0, .2);
-  }
 }
 .main__actions-goal-new,
 .main__actions-goal-change {
@@ -141,12 +172,12 @@ export default {
 }
 
 .main__actions-goal-change {
-  input:first-child {
-    margin-right: 1rem;
+  input:last-child {
+    margin-left: 1rem;
   }
-
   input {
     max-width: 25%;
   }
 }
+
 </style>

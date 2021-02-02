@@ -1,6 +1,6 @@
 <template>
   <div class="main__indicators">
-    <div class="main__indicators-left">
+    <div class="main__indicators-left" v-if="params">
       <div class="main__indicators-weight">
         <span>Weight</span>
         <strong>{{ params.weight + ' kg' }}</strong>
@@ -10,14 +10,14 @@
         <strong>{{ params.height + ' cm' }}</strong>
       </div>
     </div>
-    <div class="main__indicators-right">
+    <div class="main__indicators-right" v-if="params">
       <div class="main__indicators-online">
         <span>Days with assistant</span>
-        <strong>1 day</strong>
+        <strong>{{ daysOfRegister }}</strong>
       </div>
       <div class="main__indicators-mode">
         <span>Mode</span>
-        <strong>Lose weight</strong>
+        <strong>{{ modeName }}</strong>
       </div>
     </div>
   </div>
@@ -28,7 +28,8 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['params'])
+    ...mapGetters(['params', 'daysOfRegister']),
+    ...mapGetters('goals', ['modeName'])
   }
 }
 </script>
