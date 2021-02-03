@@ -1,17 +1,21 @@
 <template>
   <div class="main__actions-goal">
     <div class="main__actions-goal-new">
-      <label for="newGoal" @click="toggleGoal('new')">Add new goal</label>
-      <div class="main__actions-goal-new-wrapper"
-           v-if="openNew">
+      <label for="newGoal"
+             @click="toggleGoal('new')"
+      >Add new goal</label>
+      <div class="main__actions-goal-new-wrapper" v-if="openNew">
         <div class="main__actions-goal-new-mode">
           <span v-for="btn in modeButtons"
                 :key="btn.id"
+                @click="chooseActive(btn.id)"
+                :class='[{active: activeNewGoal === btn.id}]'
           >{{ btn.name }}</span>
         </div>
         <input id="newGoal"
                type="text"
                v-model="desiredWeight"
+               maxlength="3"
                placeholder="Desired weight">
         <button class="btn"
                 @click="addNewGoal"
@@ -19,14 +23,24 @@
       </div>
     </div>
     <div class="main__actions-goal-change">
-      <label for="changeGoalFrom" @click="toggleGoal('change')">Change current goal</label>
+      <label for="changeGoalFrom"
+             @click="toggleGoal('change')"
+      >Change active goal</label>
       <div v-if="openChange">
         <div>
           <label for="changeGoal"></label>
-          <input id="changeGoalFrom" type="text" placeholder="From...">
-          <input id="changeGoal" type="text" placeholder="To...">
+          <input id="changeGoalFrom"
+                 type="text"
+                 v-model="changeFrom"
+                 placeholder="From...">
+          <input id="changeGoal"
+                 type="text"
+                 v-model="changeTo"
+                 placeholder="To...">
         </div>
-        <button class="btn">Change</button>
+        <button class="btn"
+                @click="change"
+        >Change</button>
       </div>
     </div>
   </div>
@@ -44,17 +58,24 @@ export default {
     return {
       desiredWeight: '',
       openNew: false,
-      openChange: false
+      openChange: false,
+      activeNewGoal: 0,
+      changeFrom: '',
+      changeTo: '',
+      changed: null
     }
   },
   computed: {
     ...mapState('calories', ['modeButtons'])
   },
   methods: {
+    chooseActive(id) {
+      this.activeNewGoal = id
+    },
     async addNewGoal() {
       const newItem = {
         id: Date.now().toString(),
-        mode: 0,
+        mode: this.activeNewGoal,
         currentWeight: this.$store.getters.userData.params.weight,
         weight: this.$store.getters.userData.params.weight,
         finished: false,
@@ -62,6 +83,8 @@ export default {
       }
       await this.$store.commit('goals/pushNewGoal', newItem)
       await this.$store.dispatch('goals/updateGoal')
+      this.activeNewGoal = 0
+      this.desiredWeight = ''
     },
     toggleGoal(link) {
       if (link === 'new') {
@@ -79,6 +102,22 @@ export default {
           this.openChange = false
         }
       }
+    },
+    async change() {
+      this.changed = Object.assign({}, this.$store.getters['goals/currentGoal'], {
+        weight: this.changeFrom,
+        'desired-weight': this.changeTo
+      })
+      const changedGoal = this.$store.getters['goals/goals'].map(el => {
+        if (el.id === this.changed.id) {
+          return this.changed
+        }
+        return el
+      })
+      await this.$store.dispatch('goals/updateGoal', changedGoal)
+      this.changeFrom = ''
+      this.changeTo = ''
+      this.changed = null
     }
   }
 }
@@ -100,12 +139,18 @@ export default {
   label {
     display: block;
     position: relative;
-    padding: 0 1rem;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-family: "Jost", sans-serif;
     color: rgba(0, 0, 99, .7);
     border-radius: 2rem;
     cursor: pointer;
+    @media (max-height: 750px) {
+      font-size: 1.2rem;
+    }
+    @media (max-height: 660px) {
+      margin: 0;
+      padding: .1rem .4rem;
+    }
   }
 
   input {
@@ -114,6 +159,9 @@ export default {
     border: 1px solid rgba(0, 0, 0, .2);
     text-align: center;
     margin-bottom: 1rem;
+    @media (max-height: 750px) {
+      margin-bottom: .5rem;
+    }
   }
   input:focus {
     color: #495057;
@@ -124,12 +172,18 @@ export default {
   }
 
   button {
-    padding: .1rem .2rem;
+    padding: 0;
     max-width: 35%;
+    @media (max-height: 750px) {
+      font-size: .9rem;
+    }
   }
 }
 .main__actions-goal-new {
   margin-bottom: 1rem;
+  @media (max-height: 750px) {
+    margin-bottom: .5rem;
+  }
 }
 .main__actions-goal-new,
 .main__actions-goal-change {
@@ -156,8 +210,16 @@ export default {
     margin-bottom: 1rem;
     color: black;
     border: 1px solid black;
+    cursor: pointer;
+    @media (max-height: 750px) {
+      margin-bottom: .5rem;
+      padding: .1rem .4rem;
+    }
   }
-
+  span.active {
+    background-color: rgba(1, 186, 1, 0.7);
+    color: #ffffff;
+  }
   span:last-child {
     border-bottom-right-radius: .5rem;
     border-top-right-radius: .5rem;

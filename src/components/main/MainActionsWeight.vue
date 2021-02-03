@@ -1,7 +1,7 @@
 <template>
   <div class="main__actions-weight">
     <label for="newWeight">New weight?</label>
-    <input id="newWeight" v-model="newWeight" type="text" maxlength="2">
+    <input id="newWeight" v-model="newWeight" type="text" maxlength="3">
     <button class="btn" :disabled="newWeight === ''" @click="submitNewWeight">Update</button>
   </div>
 </template>
@@ -33,6 +33,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   border-right: 2px dotted rgba(42, 35, 58, .3);
   width: 100%;
   flex: 0 0 50%;

@@ -13,7 +13,6 @@ export default {
       return state.activeGoal
     },
     currentGoal(state, getters) {
-      console.log(state.goalList)
       return state.goalList.find(el => el.id === getters.activeId)
     },
     goals(state) {
@@ -62,6 +61,7 @@ export default {
           state.goalList = [data]
           state.activeGoal = data.id
         } else {
+          console.log(state.goalList)
           state.goalList = data
         }
       }
