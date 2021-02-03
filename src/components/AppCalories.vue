@@ -54,10 +54,7 @@ export default {
       }
     },
     async updateData() {
-      const calories = this.$store.getters['calories/result']
-      await this.$store.dispatch('update', { calories })
-      this.$store.commit('calories/clear')
-      this.$store.commit('menuList/setActiveTab', 0)
+      await this.$store.dispatch('calories/submitCalories')
     }
   }
 }

@@ -1,19 +1,27 @@
 <template>
   <div class="home__sidebar card">
     <p>Calories limit</p>
-    <div class="home__sidebar-message" v-if="false">
+    <div class="home__sidebar-message" v-if="!calories">
       <span>Calculate calories limit</span>
       <button class="btn">Click</button>
     </div>
-    <div class="home__sidebar-sc sidebar-sc" v-if="true">
-      <span class="sidebar-sc__max">2566ccal</span>
-      <span class="sidebar-sc__start">0ccal</span>
+    <div class="home__sidebar-sc sidebar-sc" v-if="calories">
+      <span class="sidebar-sc__max">{{ calories + 'ccal' }}</span>
+      <span class="sidebar-sc__value">10%</span>
+      <div class="sidebar-sc__scale" :style="{'height': '10%'}"></div>
+      <span class="sidebar-sc__start">10ccal</span>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  computed: {
+    calories() {
+      const nutrition = this.$store.getters.userData.nutrition
+      return nutrition ? nutrition.calories : null
+    }
+  }
 }
 </script>
 
@@ -61,7 +69,7 @@ export default {
     transition: all ease 0.5s;
   }
 }
-.home__sidebar-sc {
+.sidebar-sc {
   overflow: hidden;
   border: 2px solid rgba(0, 0, 0, .1);
   border-radius: 3rem;
@@ -70,18 +78,34 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-.sidebar-sc__start {
-  border-top: 2px solid rgba(0, 0, 0, .1);
-}
-.sidebar-sc__max {
-  border-bottom: 2px solid rgba(0, 0, 0, .1);
-}
-.sidebar-sc__max,
-.sidebar-sc__start {
-  font-size: 1.2rem;
-  font-family: "Quicksand", sans-serif;
-  font-weight: 700;
-  color: #2d203a;
+  position: relative;
+  &__start {
+    border-top: 2px solid rgba(0, 0, 0, .1);
+  }
+  &__max {
+    border-bottom: 2px solid rgba(0, 0, 0, .1);
+  }
+  &__max,
+  &__start {
+    font-size: 1.2rem;
+    font-family: "Quicksand", sans-serif;
+    font-weight: 700;
+    color: #2d203a;
+    z-index: 2;
+  }
+  &__value {
+    font-family: "Jost", sans-serif;
+    color: #2d203a;
+    font-weight: 700;
+    font-size: 1.2rem;
+    z-index: 2;
+  }
+  &__scale {
+    content: '';
+    background-color: rgba(100, 255, 100, 0.6);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
 }
 </style>

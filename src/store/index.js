@@ -50,7 +50,6 @@ export default createStore({
         ...state.userData,
         ...payload
       }
-      console.log(state.userData)
     },
     clearData(state) {
       state.userData = {}

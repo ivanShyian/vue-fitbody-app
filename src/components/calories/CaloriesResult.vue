@@ -11,6 +11,9 @@
 
 <script>
 export default {
+  unmounted() {
+    this.$store.commit('calories/clear')
+  },
   computed: {
     result() {
       return this.$store.getters['calories/result']

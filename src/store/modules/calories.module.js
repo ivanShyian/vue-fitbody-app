@@ -1,4 +1,5 @@
 import store from '../index'
+import fitbodyAxios from '@/axios/fitbody-requests'
 export default {
   namespaced: true,
   state() {
@@ -120,6 +121,20 @@ export default {
       birthDate[1] = birthDate[0]
       birthDate[0] = month
       commit('setAge', birthDate)
+    },
+    async submitCalories({ getters, rootGetters, commit }) {
+      try {
+        const token = rootGetters['auth/token']
+        const uid = rootGetters['auth/userId']
+        await fitbodyAxios.put(`/users/${uid}/nutrition.json?auth=${token}`, {
+          calories: getters.result
+        })
+        store.commit('updateData', { nutrition: { calories: getters.result } })
+        commit('clear')
+        store.commit('menuList/setActiveTab', 0)
+      } catch (e) {
+        console.warn(e.message)
+      }
     }
   }
 }
