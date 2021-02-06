@@ -35,7 +35,7 @@ div.menu-logo {
   padding: .5rem;
   position: relative;
   background-color: #abbd81;
-  box-shadow: -1px 7px 39px -16px rgba(0, 0, 0, 0.75);
+  box-shadow: rgba(0, 0, 0, 0.19) 0 10px 20px, rgba(0, 0, 0, 0.23) 0 6px 6px;
   img {
     display: block;
     border-radius: 50%;

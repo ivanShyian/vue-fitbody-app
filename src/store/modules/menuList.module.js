@@ -4,7 +4,7 @@ export default {
     return {
       tabs: [
         { id: 0, name: 'Main', path: 'main' },
-        { id: 1, name: 'Nutrition', path: '' },
+        { id: 1, name: 'Nutrition', path: 'nutrition' },
         { id: 2, name: 'Activities', path: '' },
         { id: 3, name: 'Calories', path: 'calories' },
         { id: 4, name: 'Motivation', path: '' },

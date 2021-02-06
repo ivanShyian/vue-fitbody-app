@@ -30,7 +30,7 @@ export default {
   flex: 1 0 10%;
   background-color: #abbd81;
   margin: 1rem 1rem 1rem 0;
-  box-shadow: -1px 7px 39px -16px rgba(0, 0, 0, 0.75);
+  box-shadow: rgba(0, 0, 0, 0.25) 0 14px 28px, rgba(0, 0, 0, 0.22) 0 10px 10px;
   border-radius: 1rem;
   border: 0;
   height: auto;

@@ -32,6 +32,7 @@ import HomeSidebar from '@/components/home/HomeSidebar'
 import AppLoader from '@/components/ui/AppLoader'
 import AppCalories from '@/components/AppCalories'
 import AppMain from '@/components/AppMain'
+import AppNutrition from '@/components/AppNutrition'
 import Modal from '@/views/Modal'
 
 export default {
@@ -66,7 +67,8 @@ export default {
     Modal,
     AppMain,
     AppCalories,
-    AppLoader
+    AppLoader,
+    AppNutrition
   }
 }
 </script>
@@ -97,10 +99,10 @@ export default {
 .home__wrapper-main {
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 75%;
   background-color: #e1b16a;
   border-radius: 1rem;
-  box-shadow: -1px 7px 39px -16px rgba(0, 0, 0, 0.75);
+  box-shadow: rgba(0, 0, 0, 0.25) 0 14px 28px, rgba(0, 0, 0, 0.22) 0 10px 10px;
 }
 
 </style>

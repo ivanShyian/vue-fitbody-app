@@ -6,6 +6,7 @@ import register from './modules/register.module'
 import menuList from './modules/menuList.module'
 import calories from './modules/calories.module'
 import goals from './modules/goals.module'
+import nutrition from './modules/nutrition-edamam.module'
 
 const plugins = []
 if (process.env.NODE_ENV === 'development') {
@@ -92,6 +93,7 @@ export default createStore({
     register,
     menuList,
     calories,
-    goals
+    goals,
+    nutrition
   }
 })

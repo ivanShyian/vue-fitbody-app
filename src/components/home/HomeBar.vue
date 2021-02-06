@@ -47,7 +47,7 @@ export default {
   color: #2d203a;
   border: 0;
   background-color: #abbd81;
-  box-shadow: -1px 7px 39px -16px rgba(0, 0, 0, 0.75);
+  box-shadow: rgba(0, 0, 0, 0.19) 0 10px 20px, rgba(0, 0, 0, 0.23) 0 6px 6px;
   margin: .5rem 0 .5rem .5rem;
   padding: 1rem;
   overflow-y: hidden;
