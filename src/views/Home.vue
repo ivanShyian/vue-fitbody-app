@@ -99,7 +99,7 @@ export default {
 .home__wrapper-main {
   display: flex;
   width: 100%;
-  height: 75%;
+  height: 72%;
   background-color: #e1b16a;
   border-radius: 1rem;
   box-shadow: rgba(0, 0, 0, 0.25) 0 14px 28px, rgba(0, 0, 0, 0.22) 0 10px 10px;

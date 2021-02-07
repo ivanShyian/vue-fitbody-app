@@ -14,7 +14,7 @@
           <p>55</p>
           <p>66</p>
         </div>
-        <slot v-if="active"></slot>
+        <nutrition-dish-item v-if="active"></nutrition-dish-item>
       </div>
       <div class="nutrition-daily__item-bottom-arrow"><i class="fas fa-chevron-down"></i></div>
     </div>
@@ -22,18 +22,20 @@
 </template>
 
 <script>
+import NutritionDishItem from '@/components/ui/NutritionDishItem'
 export default {
   props: {
     label: String,
     active: Boolean
-  }
+  },
+  components: { NutritionDishItem }
 }
 </script>
 
 <style scoped lang="scss">
 .nutrition-daily {
   &__item {
-    width: 80%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     font-family: "Quicksand", sans-serif;
@@ -68,7 +70,7 @@ export default {
 
       a i {
         font-size: 1.5rem;
-        color: #ff4f4f;
+        color: #17c271;
       }
     }
   }
@@ -76,25 +78,31 @@ export default {
   &__item-bottom {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     flex: 1 0 60%;
     padding: .5rem 1rem;
     background-color: rgb(171, 189, 129);
   }
 
   &__item-bottom-inner {
-    flex: 1 0 75%;
+    flex: 1 0 95%;
     width: 100%;
   }
   &__item-bottom-results {
     display: flex;
     justify-content: space-around;
+    max-width: 79%;
+    p {
+      font-family: "Jost", sans-serif;
+      color: #5e3200;
+    }
   }
   &__item-bottom-arrow {
     display: flex;
-    flex: 0 1 25%;
+    flex: 0 1 5%;
     font-size: 1.5rem;
     justify-content: flex-end;
+    color: #e2dfd6;
   }
 
   &__snacks {
@@ -103,18 +111,14 @@ export default {
 }
 
 .nutrition-daily__item.active-item {
-  flex: 0 0 50%;
 }
 
 .nutrition-daily__item.active-item .nutrition-daily__item-bottom {
-  align-items: normal;
-
   div:first-child {
   }
 
   div:last-child {
     align-items: flex-end;
-
     i {
       transform: rotate(180deg);
     }

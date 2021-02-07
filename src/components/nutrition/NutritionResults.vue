@@ -25,11 +25,11 @@ export default {}
 
 <style scoped lang="scss">
 .nutrition__results {
-  margin: 0 auto 1rem auto;
-  width: 80%;
+  margin: 0 auto;
+  width: 90%;
   display: flex;
   padding: 0 1rem;
-  flex: 0 0 15%;
+  flex: 0 0 20%;
   p {
     flex: 0 0 25%;
     color: #2d203a;

@@ -6,7 +6,6 @@
                     @click="toggleItem(nut.id)"
                     :active="activeItem === nut.id"
     >
-      Some Component
     </nutrition-item>
   </div>
 </template>
@@ -43,11 +42,10 @@ export default {
 <style scoped lang="scss">
 .nutrition-daily {
   display: flex;
-  height: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex: 0 0 75%;
+  flex: 0 0 auto;
   &__item:last-child {
     margin: 0;
   }
