@@ -1,10 +1,14 @@
 <template>
   <div :class="['nutrition-daily__item', {'active-item': active}]">
     <div class="nutrition-daily__item-upper">
-      <p>{{ label }}</p>
+      <p>{{ nutrition.label }}</p>
       <div>
         <span><strong>2500</strong></span>
-        <a href="#"><i class="fas fa-plus"></i></a>
+        <a href="#">
+          <i class="fas fa-plus"
+             @click.prevent="$emit('add-dish', nutrition.name)"
+          ></i>
+        </a>
       </div>
     </div>
     <div class="nutrition-daily__item-bottom">
@@ -14,9 +18,17 @@
           <p>55</p>
           <p>66</p>
         </div>
-        <nutrition-dish-item v-if="active"></nutrition-dish-item>
+        <div class="nutrition-daily__item-bottom-list" v-if="active">
+          <nutrition-dish-item
+          ></nutrition-dish-item>
+        </div>
       </div>
-      <div class="nutrition-daily__item-bottom-arrow"><i class="fas fa-chevron-down"></i></div>
+      <div class="nutrition-daily__item-bottom-arrow">
+        <i class="fas fa-chevron-down"
+           style="cursor: pointer"
+           @click.prevent="$emit('set-active', nutrition.id)"
+        ></i>
+      </div>
     </div>
   </div>
 </template>
@@ -24,9 +36,15 @@
 <script>
 import NutritionDishItem from '@/components/ui/NutritionDishItem'
 export default {
+  emits: {
+    'add-dish': Function,
+    'set-active': Function
+  },
   props: {
-    label: String,
-    active: Boolean
+    active: Boolean,
+    nutrition: Object
+  },
+  methods: {
   },
   components: { NutritionDishItem }
 }
@@ -88,15 +106,18 @@ export default {
     flex: 1 0 95%;
     width: 100%;
   }
+
   &__item-bottom-results {
     display: flex;
     justify-content: space-around;
     max-width: 79%;
+
     p {
       font-family: "Jost", sans-serif;
       color: #5e3200;
     }
   }
+
   &__item-bottom-arrow {
     display: flex;
     flex: 0 1 5%;
@@ -119,9 +140,15 @@ export default {
 
   div:last-child {
     align-items: flex-end;
+
     i {
       transform: rotate(180deg);
     }
+  }
+}
+.nutrition-daily__item-bottom-list {
+  div {
+    border-top: 2px solid rgba(0, 0, 0, .2);
   }
 }
 </style>

@@ -3,7 +3,9 @@
     <nutrition-item v-for="nut in nutrition"
                     :key="nut.id"
                     :label="nut.label"
-                    @click="toggleItem(nut.id)"
+                    :nutrition="nut"
+                    @set-active="toggleItem"
+                    @add-dish="$emit('add-dish', $event)"
                     :active="activeItem === nut.id"
     >
     </nutrition-item>
@@ -14,6 +16,11 @@
 import NutritionItem from '@/components/ui/NutritionItem'
 export default {
   emits: {
+    'add-dish': {
+      type: Function,
+      required: false,
+      default: Function
+    }
   },
   data() {
     return {

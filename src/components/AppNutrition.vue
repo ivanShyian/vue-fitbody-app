@@ -1,16 +1,43 @@
 <template>
   <div class="app-nutrition">
-    <nutrition-results></nutrition-results>
-    <nutrition-daily
-    ></nutrition-daily>
+    <nutrition-add-dish v-if="newDish"
+                        :title="title"
+    ></nutrition-add-dish>
+    <div class="app-nutrition__content" v-else>
+      <nutrition-results></nutrition-results>
+      <nutrition-daily
+        @add-dish="addDish"
+      ></nutrition-daily>
+    </div>
   </div>
 </template>
 
 <script>
 import NutritionResults from '@/components/nutrition/NutritionResults'
 import NutritionDaily from '@/components/nutrition/NutritionDaily'
+import NutritionAddDish from '@/components/nutrition/NutritionAddDish'
+
 export default {
-  components: { NutritionDaily, NutritionResults }
+  async mounted() {
+    await this.$store.dispatch('nutrition/loadNutrition')
+  },
+  data() {
+    return {
+      newDish: true,
+      title: ''
+    }
+  },
+  methods: {
+    addDish(title) {
+      this.title = title
+      this.newDish = true
+    }
+  },
+  components: {
+    NutritionAddDish,
+    NutritionDaily,
+    NutritionResults
+  }
 }
 </script>
 
@@ -21,23 +48,27 @@ export default {
   height: 100%;
   width: 100%;
   overflow-y: auto;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
 }
-.app-nutrition::-webkit-scrollbar-track
-{
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+
+.app-nutrition::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   background-color: #F5F5F5;
 }
 
-.app-nutrition::-webkit-scrollbar
-{
+.app-nutrition::-webkit-scrollbar {
   width: 10px;
   background-color: #F5F5F5;
   border-radius: 10px;
 }
 
-.app-nutrition::-webkit-scrollbar-thumb
-{
+.app-nutrition::-webkit-scrollbar-thumb {
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #898989;
