@@ -3,16 +3,18 @@
     <p class="nutrition-dish__item-number">{{ idx + 1 || '1' }}</p>
     <div class="nutrition-dish__item-wrapper">
       <div class="nutrition-dish__item-data">
-        <span>{{ nutrients ? nutrients.PROCNT.toFixed(2) : 25 }}</span>
-        <span>{{ nutrients ? nutrients.FAT.toFixed(2) : 25 }}</span>
-        <span>{{ nutrients ? nutrients.CHOCDF.toFixed(2) : 25 }}</span>
-        <span>{{ nutrients ? nutrients.ENERC_KCAL.toFixed(2) : 25 }}</span>
+        <span>{{ nutrients ? nutrients.PROCNT.toFixed(2) : '' }}</span>
+        <span>{{ nutrients ? nutrients.FAT.toFixed(2) : '' }}</span>
+        <span>{{ nutrients ? nutrients.CHOCDF.toFixed(2) : '' }}</span>
+        <span>{{ nutrients ? nutrients.ENERC_KCAL.toFixed(2) : '' }}</span>
       </div>
       <p>
-        <span>{{ item ? item.food.label : 'Name' }}</span>
-        <span>{{ measures ? measures : 'No data' }}</span>
+        <span>{{ name || 'Unnamed' }}</span>
+        <span>{{ measure ? measure.portion : null }}</span>
+        <span>{{ measure && measure.weight ? measure.weight.toFixed(2) + ' grams' : null }}</span>
       </p>
     </div>
+    <button class="btn" v-if="status">Add</button>
   </div>
 </template>
 
@@ -21,31 +23,29 @@ export default {
   props: {
     name: {
       type: String,
-      required: false,
-      default: String
+      required: false
     },
     idx: {
       type: Number,
-      required: false,
-      default: Number
+      required: false
     },
-    item: {
+    measure: {
       type: Object,
-      required: false,
-      default: Object
+      required: false
+    },
+    nutrients: {
+      type: Object,
+      required: false
+    },
+    status: {
+      type: Object,
+      required: false
     }
   },
   data() {
-    return {
-    }
+    return {}
   },
   computed: {
-    nutrients() {
-      return this.item.food.nutrients
-    },
-    measures() {
-      return this.item.measures.filter(el => el.label === 'Serving' || el.label === 'Whole' ? el : null)
-    }
   }
 }
 </script>
@@ -55,10 +55,12 @@ export default {
   display: flex;
   align-items: center;
 }
+
 .nutrition-dish__item-number {
   font-size: 1.3rem;
   font-weight: 700;
 }
+
 .nutrition-dish__item-data {
   display: flex;
   justify-content: space-around;
@@ -76,16 +78,30 @@ export default {
     margin: 0 -1.5rem 0 0;
   }
 }
+
 .nutrition-dish__item-wrapper {
   padding: .2rem 0;
   display: flex;
   flex-direction: column;
   width: 100%;
   margin: 0 -.5rem;
+
   p {
     display: flex;
     margin-left: 2rem;
-    justify-content: space-between;
+
+    span {
+      text-align: center;
+      display: block;
+      flex: 0 0 33.33%
+    }
+
+    span:first-child {
+      text-align: left;
+    }
   }
+}
+button.btn {
+  border: 2px solid rgba(0, 0, 0, .2);
 }
 </style>

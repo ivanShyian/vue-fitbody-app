@@ -1,5 +1,7 @@
 <template>
-  <button class="btn prev-btn">Step back</button>
+  <button class="btn prev-btn"
+          @click="$emit('step-back')"
+  >&#8592; Step back</button>
   <div class="add-dish">
     <h4>Add dish that you ate on {{ title }}</h4>
     <div class="add-dish__indicators">
@@ -17,9 +19,14 @@
         <button @click.prevent="searchDish">Search</button>
       </div>
     </form>
-    <ul v-if="result">
-      <li v-for="(item, idx) in result" :key="item.food.foodId">
-        <nutrition-dish-item :idx="idx" :item="item"></nutrition-dish-item>
+    <ul v-if="resultList">
+      <li v-for="(item, idx) in resultList" :key="item.foodId">
+        <nutrition-dish-item :idx="idx"
+                             :name="item.label"
+                             :measure="item.gram"
+                             :nutrients="item.nutrients"
+                             :status="status"
+        ></nutrition-dish-item>
       </li>
     </ul>
   </div>
@@ -29,19 +36,25 @@
 import NutritionDishItem from '@/components/ui/NutritionDishItem'
 
 export default {
+  emits: {
+    'step-back': Function
+  },
   props: {
-    title: String
+    title: String,
+    status: Boolean
   },
   data() {
     return {
       query: '',
-      result: null
+      resultList: null
     }
   },
   methods: {
     async searchDish() {
       if (this.query.length && isNaN(this.query)) {
         await this.$store.dispatch('edamam/searchEdamam', this.query)
+        this.resultList = await this.$store.getters['edamam/result']
+        this.query = ''
       } else {
         this.$store.dispatch('alert/setAlert', {
           value: 'Enter correct query please',
@@ -62,6 +75,14 @@ export default {
 .prev-btn {
   padding: 0;
   width: 25%;
+  background: transparent;
+}
+.prev-btn:hover {
+  background: transparent;
+  color: #74706c;
+}
+.prev-btn:focus {
+  box-shadow: none;
 }
 .add-dish {
   display: flex;

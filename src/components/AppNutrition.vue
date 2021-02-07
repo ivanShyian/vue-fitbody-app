@@ -2,6 +2,8 @@
   <div class="app-nutrition">
     <nutrition-add-dish v-if="newDish"
                         :title="title"
+                        @step-back="newDish = false"
+                        :status="newDish"
     ></nutrition-add-dish>
     <div class="app-nutrition__content" v-else>
       <nutrition-results></nutrition-results>
@@ -23,7 +25,7 @@ export default {
   },
   data() {
     return {
-      newDish: true,
+      newDish: false,
       title: ''
     }
   },

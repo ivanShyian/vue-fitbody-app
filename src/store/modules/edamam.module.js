@@ -9,22 +9,23 @@ export default {
   },
   getters: {
     result(state) {
-      console.log(state.searchResult)
       return state.searchResult
     }
   },
   mutations: {
     setResult(state, result) {
+      state.searchResult = []
       result.map(obj => {
         let item = {}
         Object.keys(obj).map(el => {
           if (el === 'measures') {
-            const calories = obj[el].find(label => label.label === 'Whole' || label === 'Serving')
+            const calories = obj[el].find(label => label.label === 'Whole' || label.label === 'Serving')
             if (calories !== undefined) {
               const { label: portion, weight } = calories
               item = { ...item, gram: { portion, weight } }
             }
           } else {
+            delete obj[el].nutrients.FIBTG
             item = { ...obj[el] }
           }
         })
