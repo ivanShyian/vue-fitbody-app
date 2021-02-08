@@ -7,6 +7,7 @@
                     @set-active="toggleItem"
                     @add-dish="$emit('add-dish', $event)"
                     :active="activeItem === nut.id"
+                    :food="food[nut.name]"
     >
     </nutrition-item>
   </div>
@@ -20,6 +21,12 @@ export default {
       type: Function,
       required: false,
       default: Function
+    }
+  },
+  props: {
+    food: {
+      type: Object,
+      required: false
     }
   },
   data() {

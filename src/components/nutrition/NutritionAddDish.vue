@@ -10,22 +10,25 @@
       <span>Carbs</span>
       <span>Calories</span>
     </div>
-    <form>
+    <form @submit.prevent="searchDish">
       <div>
         <input id="dish"
                type="text"
                v-model="query"
                placeholder="Enter here...">
-        <button @click.prevent="searchDish">Search</button>
+        <button type="submit">Search</button>
       </div>
     </form>
     <ul v-if="resultList">
-      <li v-for="(item, idx) in resultList" :key="item.foodId">
+      <li v-for="(item, idx) in resultList" :key="item.unicId">
         <nutrition-dish-item :idx="idx"
                              :name="item.label"
                              :measure="item.gram"
                              :nutrients="item.nutrients"
                              :status="status"
+                             :itemId="item.unicId"
+                             :item="item"
+                             @add-to-ration="addToRation"
         ></nutrition-dish-item>
       </li>
     </ul>
@@ -61,6 +64,9 @@ export default {
           type: 'warning'
         })
       }
+    },
+    addToRation(item) {
+      this.$store.dispatch('nutrition/updateNutrition', { source: this.title, item })
     }
   },
   components: { NutritionDishItem }

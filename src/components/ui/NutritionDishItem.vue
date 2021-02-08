@@ -3,10 +3,10 @@
     <p class="nutrition-dish__item-number">{{ idx + 1 || '1' }}</p>
     <div class="nutrition-dish__item-wrapper">
       <div class="nutrition-dish__item-data">
-        <span>{{ nutrients ? nutrients.PROCNT.toFixed(2) : '' }}</span>
-        <span>{{ nutrients ? nutrients.FAT.toFixed(2) : '' }}</span>
-        <span>{{ nutrients ? nutrients.CHOCDF.toFixed(2) : '' }}</span>
-        <span>{{ nutrients ? nutrients.ENERC_KCAL.toFixed(2) : '' }}</span>
+        <span>{{ nutrient.PROCNT }}</span>
+        <span>{{ nutrient.FAT }}</span>
+        <span>{{ nutrient.CHOCDF }}</span>
+        <span>{{ nutrient.ENERC_KCAL }}</span>
       </div>
       <p>
         <span>{{ name || 'Unnamed' }}</span>
@@ -14,12 +14,18 @@
         <span>{{ measure && measure.weight ? measure.weight.toFixed(2) + ' grams' : null }}</span>
       </p>
     </div>
-    <button class="btn" v-if="status">Add</button>
+    <button class="btn" v-if="status" @click="addToRation(item)">Add</button>
   </div>
 </template>
 
 <script>
 export default {
+  emits: {
+    'add-to-ration': {
+      type: Function,
+      required: false
+    }
+  },
   props: {
     name: {
       type: String,
@@ -29,15 +35,11 @@ export default {
       type: Number,
       required: false
     },
-    measure: {
-      type: Object,
-      required: false
-    },
-    nutrients: {
-      type: Object,
-      required: false
-    },
     status: {
+      type: Boolean,
+      required: false
+    },
+    item: {
       type: Object,
       required: false
     }
@@ -45,7 +47,22 @@ export default {
   data() {
     return {}
   },
+  methods: {
+    addToRation(item) {
+      this.$emit('add-to-ration', item)
+    }
+  },
   computed: {
+    measure() {
+      return this.item.gram
+    },
+    nutrient() {
+      const obj = {}
+      Object.keys(this.item.nutrients).map(el => {
+        obj[el] = this.item.nutrients[el].toFixed(2)
+      })
+      return obj || '0.00'
+    }
   }
 }
 </script>
@@ -101,7 +118,14 @@ export default {
     }
   }
 }
+
 button.btn {
   border: 2px solid rgba(0, 0, 0, .2);
+  @media (max-width: 950px) {
+    padding: .2rem;
+  }
+  @media (max-width: 800px) {
+    padding: 0;
+  }
 }
 </style>

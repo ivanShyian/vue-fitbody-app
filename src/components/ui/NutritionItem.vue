@@ -18,7 +18,7 @@
           <p>55</p>
           <p>66</p>
         </div>
-        <div class="nutrition-daily__item-bottom-list" v-if="active">
+        <div class="nutrition-daily__item-bottom-list" v-if="false">
           <nutrition-dish-item
           ></nutrition-dish-item>
         </div>
@@ -30,6 +30,7 @@
         ></i>
       </div>
     </div>
+    {{ currentDishes }}
   </div>
 </template>
 
@@ -42,7 +43,17 @@ export default {
   },
   props: {
     active: Boolean,
-    nutrition: Object
+    nutrition: Object,
+    food: {
+      type: Object,
+      required: false
+    }
+  },
+  computed: {
+    currentDishes() {
+      console.log(this.food)
+      return this.food
+    }
   },
   methods: {
   },

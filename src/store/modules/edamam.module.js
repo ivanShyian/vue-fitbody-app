@@ -25,8 +25,9 @@ export default {
               item = { ...item, gram: { portion, weight } }
             }
           } else {
+            const unicId = encodeURI(obj[el].label) + '%' + obj[el].foodId
             delete obj[el].nutrients.FIBTG
-            item = { ...obj[el] }
+            item = { ...obj[el], unicId }
           }
         })
         state.searchResult.push(item)

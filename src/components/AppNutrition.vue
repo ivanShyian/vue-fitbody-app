@@ -2,13 +2,14 @@
   <div class="app-nutrition">
     <nutrition-add-dish v-if="newDish"
                         :title="title"
-                        @step-back="newDish = false"
                         :status="newDish"
+                        @step-back="newDish = false"
     ></nutrition-add-dish>
     <div class="app-nutrition__content" v-else>
       <nutrition-results></nutrition-results>
       <nutrition-daily
         @add-dish="addDish"
+        :food="food"
       ></nutrition-daily>
     </div>
   </div>
@@ -22,11 +23,13 @@ import NutritionAddDish from '@/components/nutrition/NutritionAddDish'
 export default {
   async mounted() {
     await this.$store.dispatch('nutrition/loadNutrition')
+    this.food = await this.$store.getters['nutrition/nutrition']
   },
   data() {
     return {
       newDish: false,
-      title: ''
+      title: '',
+      food: {}
     }
   },
   methods: {
