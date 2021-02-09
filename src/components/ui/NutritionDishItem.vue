@@ -14,7 +14,11 @@
         <span>{{ measure && measure.weight ? measure.weight.toFixed(2) + ' grams' : null }}</span>
       </p>
     </div>
-    <button class="btn" v-if="status" @click="addToRation(item)">Add</button>
+    <button class="btn" v-if="status"
+            :disabled="added"
+            @click="addToRation(item)"
+            :style="added ? 'color: blue; border-color: blue' : null"
+    >{{ added ? 'Added' : 'Add' }}</button>
   </div>
 </template>
 
@@ -45,11 +49,14 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      added: false
+    }
   },
   methods: {
     addToRation(item) {
       this.$emit('add-to-ration', item)
+      this.added = true
     }
   },
   computed: {

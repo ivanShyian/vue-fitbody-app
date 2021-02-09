@@ -6,7 +6,9 @@
                         @step-back="newDish = false"
     ></nutrition-add-dish>
     <div class="app-nutrition__content" v-else>
-      <nutrition-results></nutrition-results>
+      <nutrition-results
+        :food="food"
+      ></nutrition-results>
       <nutrition-daily
         @add-dish="addDish"
         :food="food"

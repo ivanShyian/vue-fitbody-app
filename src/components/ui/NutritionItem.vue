@@ -3,7 +3,7 @@
     <div class="nutrition-daily__item-upper">
       <p>{{ nutrition.label }}</p>
       <div>
-        <span><strong>2500</strong></span>
+        <span><strong>{{ showIndicators.kcal || '0' }}</strong></span>
         <a href="#">
           <i class="fas fa-plus"
              @click.prevent="$emit('add-dish', nutrition.name)"
@@ -14,12 +14,16 @@
     <div class="nutrition-daily__item-bottom">
       <div class="nutrition-daily__item-bottom-inner">
         <div class="nutrition-daily__item-bottom-results">
-          <p>24</p>
-          <p>55</p>
-          <p>66</p>
+          <p>{{ showIndicators.procnt || '0' }}</p>
+          <p>{{ showIndicators.fat || '0' }}</p>
+          <p>{{ showIndicators.chocs || '0' }}</p>
         </div>
-        <div class="nutrition-daily__item-bottom-list" v-if="false">
-          <nutrition-dish-item
+        <div class="nutrition-daily__item-bottom-list" v-if="active">
+          <nutrition-dish-item v-for="(dish, idx) in currentDishes"
+                               :key="dish.unicId"
+                               :name="dish.label"
+                               :idx="idx"
+                               :item="dish"
           ></nutrition-dish-item>
         </div>
       </div>
@@ -30,7 +34,6 @@
         ></i>
       </div>
     </div>
-    {{ currentDishes }}
   </div>
 </template>
 
@@ -51,8 +54,47 @@ export default {
   },
   computed: {
     currentDishes() {
-      console.log(this.food)
-      return this.food
+      return this.food ? Object.keys(this.food).map(el => this.food[el]) : null
+    },
+    calcData() {
+      const result = {}
+      if (this.currentDishes) {
+        const obj = this.currentDishes.map(el => {
+          return el.nutrients
+        })
+        result.fat = obj.reduce((acc, curr) => {
+          if (curr.FAT !== undefined) {
+            acc += curr.FAT
+          }
+          return acc
+        }, 0)
+        result.chocs = obj.reduce((acc, curr) => {
+          if (curr.CHOCDF !== undefined) {
+            acc += curr.CHOCDF
+          }
+          return acc
+        }, 0)
+        result.procnt = obj.reduce((acc, curr) => {
+          if (curr.PROCNT !== undefined) {
+            acc += curr.PROCNT
+          }
+          return acc
+        }, 0)
+        result.kcal = obj.reduce((acc, curr) => {
+          if (curr.ENERC_KCAL !== undefined) {
+            acc += curr.ENERC_KCAL
+          }
+          return acc
+        }, 0)
+      }
+      return result
+    },
+    showIndicators() {
+      const data = {}
+      Object.keys(this.calcData).map(el => {
+        data[el] = this.calcData[el].toFixed(2)
+      })
+      return this.calcData ? data : null
     }
   },
   methods: {

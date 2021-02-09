@@ -20,7 +20,21 @@
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    food: {
+      type: Object,
+      required: false
+    }
+  },
+  computed: {
+    resultData() {
+      return this.food ? Object.keys(this.food).map(el => {
+        console.log(this.food[el])
+      }) : null
+    }
+  }
+}
 </script>
 
 <style scoped lang="scss">
