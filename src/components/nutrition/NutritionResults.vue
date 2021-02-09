@@ -28,11 +28,6 @@ export default {
     }
   },
   computed: {
-    resultData() {
-      return this.food ? Object.keys(this.food).map(el => {
-        console.log(this.food[el])
-      }) : null
-    }
   }
 }
 </script>

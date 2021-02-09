@@ -57,32 +57,27 @@ export default {
       return this.food ? Object.keys(this.food).map(el => this.food[el]) : null
     },
     calcData() {
-      const result = {}
+      const result = {
+        FAT: 0,
+        CHOCDF: 0,
+        PROCNT: 0,
+        ENERC_KCAL: 0
+      }
       if (this.currentDishes) {
-        const obj = this.currentDishes.map(el => {
+        this.currentDishes.map(el => {
           return el.nutrients
-        })
-        result.fat = obj.reduce((acc, curr) => {
-          if (curr.FAT !== undefined) {
-            acc += curr.FAT
+        }).reduce((acc, curr) => {
+          if (curr.FAT) {
+            result.FAT += curr.FAT
           }
-          return acc
-        }, 0)
-        result.chocs = obj.reduce((acc, curr) => {
-          if (curr.CHOCDF !== undefined) {
-            acc += curr.CHOCDF
+          if (curr.CHOCDF) {
+            result.CHOCDF += curr.FAT
           }
-          return acc
-        }, 0)
-        result.procnt = obj.reduce((acc, curr) => {
-          if (curr.PROCNT !== undefined) {
-            acc += curr.PROCNT
+          if (curr.PROCNT) {
+            result.PROCNT += curr.PROCNT
           }
-          return acc
-        }, 0)
-        result.kcal = obj.reduce((acc, curr) => {
-          if (curr.ENERC_KCAL !== undefined) {
-            acc += curr.ENERC_KCAL
+          if (curr.ENERC_KCAL) {
+            result.ENERC_KCAL += curr.FAT
           }
           return acc
         }, 0)

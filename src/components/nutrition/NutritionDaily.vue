@@ -40,6 +40,8 @@ export default {
       ]
     }
   },
+  computed: {
+  },
   methods: {
     toggleItem(idx) {
       if (idx === this.activeItem) {

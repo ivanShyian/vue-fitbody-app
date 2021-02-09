@@ -4,15 +4,41 @@ export default {
   namespaced: true,
   state() {
     return {
-      nutritionList: {}
+      nutritionList: {},
+      nutResults: {}
     }
   },
   getters: {
     nutrition(state) {
       return state.nutritionList
-    }
+    },
+    calories(_, getters) {
+      console.log(getters.nutrition)
+      return getters.nutrition
+    },
+    itemResults() {}
   },
   mutations: {
+    calcResults() {
+      // if (this.currentDishes) {
+      //   this.currentDishes.map(el => {
+      //     return el.nutrients
+      //   }).reduce((acc, curr) => {
+      //     if (curr.FAT) {
+      //       result.FAT += curr.FAT
+      //     }
+      //     if (curr.CHOCDF) {
+      //       result.CHOCDF += curr.FAT
+      //     }
+      //     if (curr.PROCNT) {
+      //       result.PROCNT += curr.PROCNT
+      //     }
+      //     if (curr.ENERC_KCAL) {
+      //       result.ENERC_KCAL += curr.FAT
+      //     }
+      //     return acc
+      //   }, 0)
+    },
     setList(state, payload) {
       state.nutritionList = payload
     },
