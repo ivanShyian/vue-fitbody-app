@@ -3,7 +3,7 @@
     <div class="main__indicators-left" v-if="params">
       <div class="main__indicators-weight">
         <span>Weight</span>
-        <strong>{{ params.weight + ' kg' }}</strong>
+        <strong>{{ params.currentWeight ? params.currentWeight : params.weight }} kg</strong>
       </div>
       <div class="main__indicators-height">
         <span>Height</span>

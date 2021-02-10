@@ -5,8 +5,13 @@
         <h2>{{userData.name}}</h2>
       </div>
       <div class="bar-upper__status">
-        <span>Change status</span>
-        <i class="fas fa-edit"></i>
+        <input v-if="editing"
+               type="text"
+               v-model="statusMessage"
+               maxlength="69"
+               @keydown.enter="changeStatus">
+        <span v-else>{{ userData.userStatus || 'Change status...' }}</span>
+        <i class="fas fa-edit" @click.prevent="changeStatus"></i>
       </div>
     </div>
     <div class="home-bar__bottom bar-bottom">
@@ -29,11 +34,41 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
 export default {
+  props: {
+    uStatus: {
+      type: String,
+      required: false,
+      default: String
+    }
+  },
+  data() {
+    return {
+      statusMessage: this.uStatus,
+      editing: false
+    }
+  },
   computed: {
     ...mapGetters(['userData']),
     ...mapGetters('goals', ['goals', 'progressValue', 'currentGoal'])
+  },
+  methods: {
+    async changeStatus() {
+      const userMss = this.$store.getters.userData.userStatus
+        ? this.$store.getters.userData.userStatus
+        : 'Change status...'
+      if (!this.statusMessage) {
+        this.statusMessage = 'Change status...'
+        if (userMss !== this.statusMessage) {
+          await this.$store.dispatch('update', { userStatus: this.statusMessage })
+        }
+      } else {
+        if (userMss !== this.statusMessage) {
+          await this.$store.dispatch('update', { userStatus: this.statusMessage })
+        }
+      }
+      this.editing = !this.editing
+    }
   }
 }
 </script>
@@ -59,18 +94,41 @@ export default {
   align-items: center;
   flex: 0 1 35%;
   border-bottom: 2px solid rgba(0, 0, 0, .1);
-
-  h2 {
-    @media (max-height: 700px) {
+  &__nickname {
+    h2 {
+      font-size: 2rem;
+      @media (max-width: 800px) {
       font-size: 1.3rem;
+      }
+      @media (max-width: 700px) {
+        font-size: 1.1rem;
+      }
+      @media (max-height: 800px) {
+        font-size: 1.3rem;
+      }
+      @media (max-height: 600px) {
+        font-size: 1rem;
+      }
     }
   }
 
   &__status {
     font-size: 1.2rem;
-
+    input {
+      border-radius: 1rem;
+      padding: 0 .5rem;
+      font-size: 1rem;
+      background-color: #abbd81;
+      color: rgba(0, 0, 0, .5);
+      border: 1px solid rgba(0, 0, 0, .4);
+    }
+    input:focus {
+      outline: none;
+    }
     i {
-      color: rgba(0, 0, 0, .5)
+      margin-left: .5rem;
+      color: rgba(0, 0, 0, .5);
+      cursor: pointer;
     }
 
     span {

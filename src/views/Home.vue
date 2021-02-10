@@ -4,7 +4,7 @@
     <div class="home__wrapper">
       <div class="home__wrapper-bar">
         <home-logo :gender="userData.gender"></home-logo>
-        <home-bar></home-bar>
+        <home-bar :uStatus="userStatus"></home-bar>
       </div>
       <div class="home__wrapper-main">
         <home-nav :tabs="tabList"
@@ -55,6 +55,9 @@ export default {
     },
     hasData() {
       return !this.isLoading && !this.isEmpty
+    },
+    userStatus() {
+      return this.userData.userStatus ? this.userData.userStatus : 'Change Status...'
     }
   },
   components: {

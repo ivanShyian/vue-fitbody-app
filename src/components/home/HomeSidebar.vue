@@ -12,7 +12,7 @@
       <span class="sidebar-sc__max">{{ calories + 'kcal' }}</span>
       <span class="sidebar-sc__value">{{ currentResult + '%' }}</span>
       <div class="sidebar-sc__scale" :style="{'height': currentResult + '%'}"></div>
-      <span class="sidebar-sc__start">{{ currentCalories[3] + 'kcal' }}</span>
+      <span class="sidebar-sc__start">{{ Math.floor(currentCalories[3]) + 'kcal' }}</span>
     </div>
   </div>
 </template>
@@ -28,9 +28,12 @@ export default {
       return this.$store.getters['nutrition/dailyResult']
     },
     currentResult() {
-      console.log(this.calories)
-      console.log(this.currentCalories[3])
-      return Math.floor((100 / this.calories) * this.currentCalories[3])
+      const result = Math.floor((100 / this.calories) * this.currentCalories[3])
+      if (result >= 100) {
+        return 100
+      } else {
+        return result
+      }
     }
   }
 }

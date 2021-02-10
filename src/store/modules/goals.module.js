@@ -1,4 +1,5 @@
 import fitbodyAxios from '@/axios/fitbody-requests'
+import { modeNaming } from '@/utils/constants'
 
 export default {
   namespaced: true,
@@ -41,16 +42,25 @@ export default {
           result = 0
         }
         return Math.round(result)
+      } else {
+        const max = +now + 10
+        const min = now - 10
+        if (now < goal.weight) {
+          return Math.round((100 / goal.weight) * min)
+        } else if (now > goal.weight) {
+          console.log(max)
+          return Math.round((100 / max) * goal.weight)
+        } else {
+          return 100
+        }
       }
     },
     modeName(state, getters) {
       if (getters.currentGoal) {
-        const naming = {
-          0: 'Gain weight',
-          1: 'Lose weight',
-          2: 'Keep weight'
+        if (getters.currentGoal.mode === 0) {
+          return modeNaming[getters.currentGoal.mode]
         }
-        return naming[getters.currentGoal.mode] ? naming[getters.currentGoal.mode] : 'Not set'
+        return getters.currentGoal.mode ? modeNaming[getters.currentGoal.mode] : 'Not set'
       }
     }
   },
@@ -62,6 +72,7 @@ export default {
           state.activeGoal = data.id
         } else {
           console.log(state.goalList)
+          console.log(data)
           state.goalList = data
         }
       }
@@ -91,9 +102,10 @@ export default {
       const token = rootGetters['auth/token']
       const uid = rootGetters['auth/userId']
       await commit('updateGoal', data)
-      await state.goalList.map(el => (
+      await getters.goals.map(el => {
         fitbodyAxios.put(`/users/${uid}/goals/${el.id}.json?auth=${token}`, el)
-      ))
+        return console.log(el)
+      })
     }
   }
 }

@@ -209,7 +209,7 @@ export default {
     padding: .3rem .5rem;
     margin-bottom: 1rem;
     color: black;
-    border: 1px solid black;
+    border: 1px solid rgba(0, 0, 0, .4);
     cursor: pointer;
     @media (max-height: 750px) {
       margin-bottom: .5rem;
@@ -217,8 +217,8 @@ export default {
     }
   }
   span.active {
-    background-color: rgba(1, 186, 1, 0.7);
-    color: #ffffff;
+    background-color: rgba(28, 241, 28, 0.7);
+    color: #1d0055;
   }
   span:last-child {
     border-bottom-right-radius: .5rem;

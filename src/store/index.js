@@ -48,8 +48,6 @@ export default createStore({
       state.userData = { ...state.userData, ...data }
     },
     updateData(state, payload) {
-      console.log(state.userData)
-      console.log(payload)
       state.userData = {
         ...state.userData,
         ...payload
@@ -57,6 +55,11 @@ export default createStore({
     },
     clearData(state) {
       state.userData = {}
+    },
+    updateGoals(state, payload) {
+      payload.map(el => {
+        state.userData.goals[el.id] = el
+      })
     }
   },
   actions: {
@@ -81,6 +84,7 @@ export default createStore({
         commit('updateData', payload)
         if (payload.goals) {
           Object.keys(payload.goals).map(el => {
+            console.log(el)
             commit('goals/updateGoal', payload.goals[el])
           })
         }
