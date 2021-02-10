@@ -3,7 +3,7 @@
     <div class="nutrition-daily__item-upper">
       <p>{{ nutrition.label }}</p>
       <div>
-        <span><strong>{{ showIndicators.kcal || '0' }}</strong></span>
+                <span><strong>{{ itemSum[3] || 0 }}</strong></span>
         <a href="#">
           <i class="fas fa-plus"
              @click.prevent="$emit('add-dish', nutrition.name)"
@@ -14,9 +14,9 @@
     <div class="nutrition-daily__item-bottom">
       <div class="nutrition-daily__item-bottom-inner">
         <div class="nutrition-daily__item-bottom-results">
-          <p>{{ showIndicators.procnt || '0' }}</p>
-          <p>{{ showIndicators.fat || '0' }}</p>
-          <p>{{ showIndicators.chocs || '0' }}</p>
+                    <p>{{ itemSum[0] || '0' }}</p>
+                    <p>{{ itemSum[1] || '0' }}</p>
+                    <p>{{ itemSum[2] || '0' }}</p>
         </div>
         <div class="nutrition-daily__item-bottom-list" v-if="active">
           <nutrition-dish-item v-for="(dish, idx) in currentDishes"
@@ -39,6 +39,7 @@
 
 <script>
 import NutritionDishItem from '@/components/ui/NutritionDishItem'
+
 export default {
   emits: {
     'add-dish': Function,
@@ -56,44 +57,28 @@ export default {
     currentDishes() {
       return this.food ? Object.keys(this.food).map(el => this.food[el]) : null
     },
-    calcData() {
-      const result = {
-        FAT: 0,
-        CHOCDF: 0,
-        PROCNT: 0,
-        ENERC_KCAL: 0
-      }
-      if (this.currentDishes) {
-        this.currentDishes.map(el => {
-          return el.nutrients
-        }).reduce((acc, curr) => {
+    itemSum() {
+      return this.currentDishes ? this.currentDishes
+        .map(el => el.nutrients)
+        .reduce((acc, curr) => {
+          if (curr.PROCNT) {
+            acc[0] += curr.PROCNT
+          }
           if (curr.FAT) {
-            result.FAT += curr.FAT
+            acc[1] += curr.FAT
           }
           if (curr.CHOCDF) {
-            result.CHOCDF += curr.FAT
-          }
-          if (curr.PROCNT) {
-            result.PROCNT += curr.PROCNT
+            acc[2] += curr.CHOCDF
           }
           if (curr.ENERC_KCAL) {
-            result.ENERC_KCAL += curr.FAT
+            acc[3] += curr.ENERC_KCAL
           }
           return acc
-        }, 0)
-      }
-      return result
-    },
-    showIndicators() {
-      const data = {}
-      Object.keys(this.calcData).map(el => {
-        data[el] = this.calcData[el].toFixed(2)
-      })
-      return this.calcData ? data : null
+        }, [0, 0, 0, 0])
+        .map(el => el.toFixed(2)) : ''
     }
   },
-  methods: {
-  },
+  methods: {},
   components: { NutritionDishItem }
 }
 </script>
@@ -194,6 +179,7 @@ export default {
     }
   }
 }
+
 .nutrition-daily__item-bottom-list {
   div {
     border-top: 2px solid rgba(0, 0, 0, .2);

@@ -2,19 +2,19 @@
   <div class="app-nutrition__results nutrition__results">
     <p>
       <strong>Proteins</strong>
-      <span>2</span>
+      <span>{{ nutResults[0] }}</span>
     </p>
     <p>
       <strong>Fats</strong>
-      <span>2</span>
+      <span>{{ nutResults[1] }}</span>
     </p>
     <p>
       <strong>Carbs</strong>
-      <span>2</span>
+      <span>{{ nutResults[2] }}</span>
     </p>
     <p>
       <strong>Calories</strong>
-      <span>2</span>
+      <span>{{ nutResults[3] }}</span>
     </p>
   </div>
 </template>
@@ -28,6 +28,9 @@ export default {
     }
   },
   computed: {
+    nutResults() {
+      return this.$store.getters['nutrition/dailyResult'].map(el => el.toFixed(2))
+    }
   }
 }
 </script>

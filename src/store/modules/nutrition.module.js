@@ -4,19 +4,38 @@ export default {
   namespaced: true,
   state() {
     return {
-      nutritionList: {},
-      nutResults: {}
+      nutritionList: {}
     }
   },
   getters: {
     nutrition(state) {
       return state.nutritionList
     },
-    calories(_, getters) {
-      console.log(getters.nutrition)
-      return getters.nutrition
+    dailyResult(_, getters) {
+      return Object.keys(getters.nutrition)
+        .map(dish => Object.keys(getters.nutrition[dish])
+          .map(item => getters.nutrition[dish][item].nutrients))
+        .reduce((acc, curr) => {
+          acc.push(...curr)
+          return acc
+        }, []).reduce((sum, item) => {
+          if (item.PROCNT) {
+            sum[0] += item.PROCNT
+          }
+          if (item.FAT) {
+            sum[1] += item.FAT
+          }
+          if (item.CHOCDF) {
+            sum[2] += item.CHOCDF
+          }
+          if (item.ENERC_KCAL) {
+            sum[3] += item.ENERC_KCAL
+          }
+          return sum
+        }, [0, 0, 0, 0])
     },
-    itemResults() {}
+    itemResults() {
+    }
   },
   mutations: {
     calcResults() {
@@ -42,7 +61,10 @@ export default {
     setList(state, payload) {
       state.nutritionList = payload
     },
-    updateList(state, { source, item }) {
+    updateList(state, {
+      source,
+      item
+    }) {
       if (Object.keys(state.nutritionList).length) {
         state.nutritionList[source] = {
           ...state.nutritionList[source], ...{ [item.unicId]: item }
@@ -54,7 +76,10 @@ export default {
     }
   },
   actions: {
-    async loadNutrition({ commit, rootGetters }) {
+    async loadNutrition({
+      commit,
+      rootGetters
+    }) {
       try {
         const token = rootGetters['auth/token']
         const uid = rootGetters['auth/userId']
@@ -67,11 +92,21 @@ export default {
         console.log(e.message)
       }
     },
-    async updateNutrition({ commit, rootGetters, getters }, { source, item }) {
+    async updateNutrition({
+      commit,
+      rootGetters,
+      getters
+    }, {
+      source,
+      item
+    }) {
       try {
         const token = rootGetters['auth/token']
         const uid = rootGetters['auth/userId']
-        commit('updateList', { source, item })
+        commit('updateList', {
+          source,
+          item
+        })
         const response = await fitbodyAxios.put(`/users/${uid}/nutrition/${source}.json?auth=${token}`, {
           ...getters.nutrition[source], ...{ [item.unicId]: item }
         })
