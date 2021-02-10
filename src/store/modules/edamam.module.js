@@ -4,34 +4,45 @@ export default {
   namespaced: true,
   state() {
     return {
-      searchResult: []
+      searchResult: [],
+      empty: false
     }
   },
   getters: {
     result(state) {
       return state.searchResult
+    },
+    empty(state) {
+      return state.empty
     }
   },
   mutations: {
     setResult(state, result) {
-      state.searchResult = []
-      result.map(obj => {
-        let item = {}
-        Object.keys(obj).map(el => {
-          if (el === 'measures') {
-            const calories = obj[el].find(label => label.label === 'Whole' || label.label === 'Serving')
-            if (calories !== undefined) {
-              const { label: portion, weight } = calories
-              item = { ...item, gram: { portion, weight } }
+      console.log(result)
+      if (result.length) {
+        state.searchResult = []
+        state.empty = false
+        result.map(obj => {
+          let item = {}
+          Object.keys(obj).map(el => {
+            if (el === 'measures') {
+              const calories = obj[el].find(label => label.label === 'Whole' || label.label === 'Serving')
+              if (calories) {
+                const { label: portion, weight } = calories
+                item = { ...item, gram: { portion, weight } }
+              }
+            } else {
+              const unicId = encodeURI(obj[el].label) + '%' + obj[el].foodId
+              delete obj[el].nutrients.FIBTG
+              item = { ...obj[el], unicId }
             }
-          } else {
-            const unicId = encodeURI(obj[el].label) + '%' + obj[el].foodId
-            delete obj[el].nutrients.FIBTG
-            item = { ...obj[el], unicId }
-          }
+          })
+          state.searchResult.push(item)
         })
-        state.searchResult.push(item)
-      })
+      } else {
+        state.empty = true
+      }
+      console.log(state.empty)
     }
   },
   actions: {
@@ -41,9 +52,6 @@ export default {
         const encoded = query ? `ingr=${encodeURI(query)}` : 'ingr=food'
         const url = `/parser?${encoded}&app_id=${process.env.VUE_APP_EDAMAM_APP_ID}&app_key=${process.env.VUE_APP_EDAMAM_APP_KEY}`
         const { data } = await edamamAxios.get(url)
-        if (!data.hints.length) {
-          throw new Error('No matches defined')
-        }
         commit('setResult', data.hints)
       } catch (e) {
         console.log(e.message)

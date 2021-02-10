@@ -100,7 +100,9 @@ export default {
     },
     correctEmail(state, access) {
       state.correctEmail = access
-      state.counter = 3
+      if (!access) {
+        state.counter = 3
+      }
     }
   },
   actions: {

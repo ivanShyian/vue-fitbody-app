@@ -52,6 +52,9 @@ export default {
     font-size: 1.4rem;
     font-family: "Jost", sans-serif;
     color: black;
+    @media (max-width: 1100px) {
+      font-size: 1rem;
+    }
   }
 }
 
@@ -106,20 +109,19 @@ export default {
   }
 
   &__max,
-  &__start {
+  &__start,
+  &__value {
     font-size: 1.2rem;
     font-family: "Quicksand", sans-serif;
     font-weight: 700;
     color: #2d203a;
     z-index: 2;
-  }
-
-  &__value {
-    font-family: "Jost", sans-serif;
-    color: #2d203a;
-    font-weight: 700;
-    font-size: 1.2rem;
-    z-index: 2;
+    @media (max-width: 1300px) {
+      font-size: 1rem;
+    }
+    @media (max-width: 1200px) {
+      padding: 1rem 0;
+    }
   }
 
   &__scale {

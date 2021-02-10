@@ -11,9 +11,9 @@ export default {
   data() {
     return {
       TITLE_MAP: {
-        primary: 'Успешно!',
-        danger: 'Ошибка!',
-        warning: 'Внимание!'
+        primary: 'Successful!',
+        danger: 'Error!',
+        warning: 'Warning!'
       }
     }
   },
@@ -45,7 +45,7 @@ div.alert {
   border-bottom: 1rem solid transparent;
   border-left: 1rem solid transparent;
   border-right: 1rem solid transparent;
-  box-shadow: -1px 7px 39px -16px rgba(0, 0, 0, 0.75);
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 
   p.alert-title {
     font-family: "Jost", sans-serif;

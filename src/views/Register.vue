@@ -92,8 +92,7 @@ export default {
       } else {
         this.loading = true
         await this.$store.dispatch('register/register')
-        console.log(this.$store.state.register.access)
-        if (this.$store.state.register.access) {
+        if (this.$store.state.register.correctEmail) {
           this.$router.push('/registered')
         }
         this.loading = false

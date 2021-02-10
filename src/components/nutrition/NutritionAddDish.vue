@@ -19,7 +19,10 @@
         <button type="submit">Search</button>
       </div>
     </form>
-    <ul v-if="resultList">
+    <app-loader v-if="loading"></app-loader>
+    <span class="add-dish__no-food" v-else-if="isEmpty && !loading"
+    >No food matching your request :(</span>
+    <ul v-else-if="resultList && !loading">
       <li v-for="(item, idx) in resultList" :key="item.unicId">
         <nutrition-dish-item :idx="idx"
                              :name="item.label"
@@ -37,6 +40,7 @@
 
 <script>
 import NutritionDishItem from '@/components/ui/NutritionDishItem'
+import AppLoader from '@/components/ui/AppLoader'
 
 export default {
   emits: {
@@ -49,15 +53,23 @@ export default {
   data() {
     return {
       query: '',
-      resultList: null
+      resultList: null,
+      loading: false
+    }
+  },
+  computed: {
+    isEmpty() {
+      return this.$store.getters['edamam/empty']
     }
   },
   methods: {
     async searchDish() {
       if (this.query.length && isNaN(this.query)) {
+        this.loading = true
         await this.$store.dispatch('edamam/searchEdamam', this.query)
         this.resultList = await this.$store.getters['edamam/result']
         this.query = ''
+        this.loading = false
       } else {
         this.$store.dispatch('alert/setAlert', {
           value: 'Enter correct query please',
@@ -69,7 +81,7 @@ export default {
       this.$store.dispatch('nutrition/updateNutrition', { source: this.title, item })
     }
   },
-  components: { NutritionDishItem }
+  components: { AppLoader, NutritionDishItem }
 }
 </script>
 
@@ -154,5 +166,11 @@ export default {
 }
 .nutrition-dish__item-wrapper:first-child {
   border-top: 0;
+}
+.add-dish__no-food {
+  margin-top: 2rem;
+  color: rgba(0, 0, 0, .7);
+  font-family: "Jost", sans-serif;
+  font-size: 1.5rem;
 }
 </style>
