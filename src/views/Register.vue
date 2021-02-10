@@ -92,7 +92,10 @@ export default {
       } else {
         this.loading = true
         await this.$store.dispatch('register/register')
-        this.$router.push('/registered')
+        console.log(this.$store.state.register.access)
+        if (this.$store.state.register.access) {
+          this.$router.push('/registered')
+        }
         this.loading = false
       }
     }

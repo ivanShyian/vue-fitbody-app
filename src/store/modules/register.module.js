@@ -19,7 +19,8 @@ export default {
       databaseUser: {},
       counter: 0,
       tabs: ['gender', 'name', 'date-of-birth', 'email', 'password'],
-      emptyField: true
+      emptyField: true,
+      correctEmail: false
     }
   },
   getters: {
@@ -96,6 +97,10 @@ export default {
       state.newUser = {}
       state.databaseUser = {}
       state.counter = 0
+    },
+    correctEmail(state, access) {
+      state.correctEmail = access
+      state.counter = 3
     }
   },
   actions: {
@@ -107,11 +112,13 @@ export default {
         await fitbodyAxios.put(`/users/${data.localId}.json?auth=${data.idToken}`, {
           ...state.databaseUser
         })
+        commit('correctEmail', true)
       } catch (e) {
         dispatch('alert/setAlert', {
-          value: error(e.message),
+          value: error(e.response.data.error.message),
           type: 'danger'
         }, { root: true })
+        commit('correctEmail', false)
       }
     }
   }

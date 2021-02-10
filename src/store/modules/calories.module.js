@@ -126,12 +126,16 @@ export default {
       try {
         const token = rootGetters['auth/token']
         const uid = rootGetters['auth/userId']
+        console.log(store.getters.userData.nutrition)
         await fitbodyAxios.put(`/users/${uid}/nutrition.json?auth=${token}`, {
+          ...store.getters['nutrition/nutrition'],
           calories: getters.result
         })
         store.commit('updateData', { nutrition: { calories: getters.result } })
         commit('clear')
         store.commit('menuList/setActiveTab', 0)
+        console.log(store.getters.userData)
+        console.log('here')
       } catch (e) {
         console.warn(e.message)
       }

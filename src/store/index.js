@@ -48,6 +48,8 @@ export default createStore({
       state.userData = { ...state.userData, ...data }
     },
     updateData(state, payload) {
+      console.log(state.userData)
+      console.log(payload)
       state.userData = {
         ...state.userData,
         ...payload

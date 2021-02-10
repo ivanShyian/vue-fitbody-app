@@ -1,7 +1,7 @@
 <template>
   <div class="calories__result">
     <span>Your result</span>
-    <span>{{ result }} <strong>ccal</strong></span>
+    <span>{{ result }} <strong>kcal</strong></span>
   </div>
   <div class="calories__result-buttons">
     <button class="btn" @click.prevent="$store.commit('calories/clear')">Try again</button>

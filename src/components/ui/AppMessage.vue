@@ -24,6 +24,11 @@ export default {
     title() {
       return this.$store.getters['alert/alert'] ? this.TITLE_MAP[this.$store.getters['alert/alert'].type] : ''
     }
+  },
+  methods: {
+    close() {
+      this.$store.commit('alert/setMessage', null)
+    }
   }
 }
 </script>
@@ -50,6 +55,7 @@ div.alert {
   }
 
   span.alert-close {
+    cursor: pointer;
     position: absolute;
     top: 0;
     right: 0;

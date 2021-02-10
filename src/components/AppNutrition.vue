@@ -23,9 +23,8 @@ import NutritionDaily from '@/components/nutrition/NutritionDaily'
 import NutritionAddDish from '@/components/nutrition/NutritionAddDish'
 
 export default {
-  async mounted() {
-    await this.$store.dispatch('nutrition/loadNutrition')
-    this.food = await this.$store.getters['nutrition/nutrition']
+  mounted() {
+    this.food = this.$store.getters['nutrition/nutrition']
   },
   data() {
     return {

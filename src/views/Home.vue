@@ -17,7 +17,7 @@
     </div>
     <home-sidebar></home-sidebar>
     <teleport to="#app">
-    <modal v-if="firstVisit"></modal>
+    <app-modal v-if="firstVisit"></app-modal>
     </teleport>
   </div>
 </template>
@@ -33,12 +33,13 @@ import AppLoader from '@/components/ui/AppLoader'
 import AppCalories from '@/components/AppCalories'
 import AppMain from '@/components/AppMain'
 import AppNutrition from '@/components/AppNutrition'
-import Modal from '@/views/Modal'
+import AppModal from '@/components/AppModal'
 
 export default {
   async mounted() {
     this.loading = true
     await this.$store.dispatch('load')
+    await this.$store.dispatch('nutrition/loadNutrition')
     this.loading = false
   },
   data() {
@@ -56,15 +57,13 @@ export default {
       return !this.isLoading && !this.isEmpty
     }
   },
-  updated() {
-  },
   components: {
     HomeBar,
     HomeSidebar,
     HomeLogo,
     HomeMain,
     HomeNav,
-    Modal,
+    AppModal,
     AppMain,
     AppCalories,
     AppLoader,

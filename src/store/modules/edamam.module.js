@@ -36,11 +36,18 @@ export default {
   },
   actions: {
     async searchEdamam({ commit }, payload) {
-      const query = [payload].join('%20').trim()
-      const encoded = query ? `ingr=${encodeURI(query)}` : 'ingr=food'
-      const url = `/parser?${encoded}&app_id=${process.env.VUE_APP_EDAMAM_APP_ID}&app_key=${process.env.VUE_APP_EDAMAM_APP_KEY}`
-      const { data } = await edamamAxios.get(url)
-      commit('setResult', data.hints)
+      try {
+        const query = [payload].join('%20').trim()
+        const encoded = query ? `ingr=${encodeURI(query)}` : 'ingr=food'
+        const url = `/parser?${encoded}&app_id=${process.env.VUE_APP_EDAMAM_APP_ID}&app_key=${process.env.VUE_APP_EDAMAM_APP_KEY}`
+        const { data } = await edamamAxios.get(url)
+        if (!data.hints.length) {
+          throw new Error('No matches defined')
+        }
+        commit('setResult', data.hints)
+      } catch (e) {
+        console.log(e.message)
+      }
     }
   }
 }
