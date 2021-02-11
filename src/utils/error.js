@@ -1,9 +1,9 @@
 const ERROR_CODES = {
-  EMAIL_NOT_FOUND: 'Пользователь с данным Email не найден. Повторите попытку!',
-  INVALID_PASSWORD: 'Неверный пароль. Повторите попытку!',
-  EMAIL_EXISTS: 'Пользователь с данным Email уже зарегистрирован',
-  auth: 'Пожалуйста войдите в систему',
-  smallPassword: 'Пароль не может быть меньше 6 символов'
+  EMAIL_NOT_FOUND: 'User with exact email wasn\'t find. Try again!',
+  INVALID_PASSWORD: 'Wrong password. Try again!',
+  EMAIL_EXISTS: 'User with this email already registered',
+  auth: 'Please log in to system',
+  smallPassword: 'Password length can\'t be less then 6 symbols'
 }
 
 export function error(message) {
