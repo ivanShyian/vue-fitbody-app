@@ -15,7 +15,7 @@
         <input id="newGoal"
                type="text"
                v-model="desiredWeight"
-               maxlength="3"
+               maxlength="4"
                placeholder="Desired weight">
         <button class="btn"
                 @click="addNewGoal"

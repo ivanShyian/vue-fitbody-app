@@ -7,7 +7,7 @@ export default {
         { id: 1, name: 'Nutrition', path: 'nutrition' },
         { id: 2, name: 'Activities', path: '' },
         { id: 3, name: 'Calories', path: 'calories' },
-        { id: 4, name: 'Motivation', path: '' },
+        { id: 4, name: 'Water balance', path: '' },
         { id: 5, name: 'Statistic', path: '' }
       ],
       counter: 0

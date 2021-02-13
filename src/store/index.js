@@ -84,7 +84,6 @@ export default createStore({
         commit('updateData', payload)
         if (payload.goals) {
           Object.keys(payload.goals).map(el => {
-            console.log(el)
             commit('goals/updateGoal', payload.goals[el])
           })
         }

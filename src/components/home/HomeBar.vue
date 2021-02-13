@@ -14,10 +14,10 @@
         <i class="fas fa-edit" @click.prevent="changeStatus"></i>
       </div>
     </div>
-    <div class="home-bar__bottom bar-bottom">
+    <div class="home-bar__bottom bar-bottom" v-if="currentGoal">
       <div class="bar-bottom__pointers">
-        <span class="bar-bottom__pointers-title">ROAD</span>
-        <div class="bar-bottom__pointers-inner" v-if="currentGoal">
+        <span class="bar-bottom__pointers-title">{{ modeNaming[currentGoal.mode] }}</span>
+        <div class="bar-bottom__pointers-inner">
           <span><small>FROM </small>{{currentGoal.weight}}kg</span>
           <span><small>TO </small>{{currentGoal['desired-weight']}}kg</span>
         </div>
@@ -34,6 +34,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { modeNaming } from '@/utils/constants'
 export default {
   props: {
     uStatus: {
@@ -44,6 +45,7 @@ export default {
   },
   data() {
     return {
+      modeNaming,
       statusMessage: this.uStatus,
       editing: false
     }

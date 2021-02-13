@@ -71,8 +71,6 @@ export default {
           state.goalList = [data]
           state.activeGoal = data.id
         } else {
-          console.log(state.goalList)
-          console.log(data)
           state.goalList = data
         }
       }

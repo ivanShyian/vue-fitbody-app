@@ -33,6 +33,7 @@ export default {
     },
     setMode(idx) {
       this.$store.commit('goals/setActive', idx)
+      this.$store.dispatch('update', { activeGoal: idx })
     }
   }
 }

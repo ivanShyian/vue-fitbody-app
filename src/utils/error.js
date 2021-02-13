@@ -7,5 +7,5 @@ const ERROR_CODES = {
 }
 
 export function error(message) {
-  return ERROR_CODES[message] ? ERROR_CODES[message] : 'Неизвестная ошибка'
+  return ERROR_CODES[message] ? ERROR_CODES[message] : 'Unknown error'
 }
