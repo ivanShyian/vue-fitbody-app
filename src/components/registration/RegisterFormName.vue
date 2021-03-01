@@ -1,31 +1,39 @@
 <template>
   <div class="form-group col-md-12">
     <div>
-      <label for="inputName">What is your name?</label>
-      <input type="text"
-             class="form-control"
-             id="inputName"
+      <span>What is your name?</span>
+      <Field name="name"
              placeholder="Name"
-             :value="value"
-             @input="setField"
-             v-focus>
+             type="text"
+             v-focus
+             :class="['form-control', {invalid: errors.name}]">
+      </Field>
     </div>
   </div>
 </template>
 
 <script>
-import { registerMixin } from '@/mixins/register.mixin'
+import focusDirective from '@/directives/focusDirective'
+import { Field } from 'vee-validate'
 
 export default {
-  mixins: [registerMixin]
+  directives: {
+    focus: focusDirective
+  },
+  props: {
+    errors: Object
+  },
+  components: {
+    Field
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 @import "../../template";
 @include buttonStyling
-
-div.form-group div:first-child label {
+span {
+  display: block;
   margin: 0 0 1.5rem 0;
   @include registerTitle
 

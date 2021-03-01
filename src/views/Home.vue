@@ -34,6 +34,8 @@ import AppCalories from '@/components/AppCalories'
 import AppMain from '@/components/AppMain'
 import AppNutrition from '@/components/AppNutrition'
 import AppModal from '@/components/AppModal'
+import AppWater from '@/components/AppWater'
+import AppActivities from '@/components/AppActivities'
 
 export default {
   async mounted() {
@@ -70,7 +72,9 @@ export default {
     AppMain,
     AppCalories,
     AppLoader,
-    AppNutrition
+    AppNutrition,
+    AppWater,
+    AppActivities
   }
 }
 </script>

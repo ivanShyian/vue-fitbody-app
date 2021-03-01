@@ -1,25 +1,22 @@
 <template>
   <div class="login-form">
     <VeeForm v-slot="{ handleSubmit, submitCount, isSubmitting, errors }"
-             :validation-schema="schema">
+             :validation-schema="schema"
+             as="div">
       <form @submit="handleSubmit($event, onSubmit)">
-        <span>Sign in to your account</span>
+        <span class="login-title">Sign in to your account</span>
         <div>
-          <Field name="email" v-slot="{ field }">
-            <input type="text"
-                   :class="['form-control', {invalid: errors.email}]"
-                   autocomplete
-                   placeholder="Login"
-                   v-bind="field">
-          </Field>
+          <Field name="email"
+                 type="text"
+                 autocomplete
+                 placeholder="Email"
+                 :class="['form-control', {invalid: errors.email}]"/>
           <ErrorMessage name="email" as="small"/>
-          <Field name="password" v-slot="{ field }">
-            <input type="password"
-                   :class="['form-control', {invalid: errors.password}]"
-                   autocomplete
-                   placeholder="Password"
-                   v-bind="field">
-          </Field>
+          <Field name="password"
+                 type="password"
+                 autocomplete
+                 placeholder="Password"
+                 :class="['form-control', {invalid: errors.password}]"/>
           <ErrorMessage name="password" as="small"/>
         </div>
         <button class="btn"
@@ -37,14 +34,15 @@
 </template>
 
 <script>
+import { markRaw } from 'vue'
 import { error } from '@/utils/error'
 import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
-import { schemaValidator } from '@/utils/login-validator'
+import { schemaValidatorLogin } from '@/utils/auth-validators'
 
 export default {
   data() {
     return {
-      schema: schemaValidator
+      schema: markRaw(schemaValidatorLogin)
     }
   },
   mounted() {
@@ -61,6 +59,7 @@ export default {
         await this.$store.dispatch('auth/login', values)
         this.$router.push('/')
       } catch (e) {
+        console.warn(e)
       }
     }
   },

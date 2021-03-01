@@ -1,105 +1,116 @@
 <template>
   <AppLoader v-if="loading"/>
-  <form class="d-flex flex-column align-items-center register-form"
-        v-else
-        @submit.prevent="submitRegister"
-        @keypress.prevent.enter>
+  <VeeForm v-slot="{ handleSubmit, submitCount, isSubmitting, errors, meta, values }"
+           :validation-schema="schemaRegister"
+           v-else
+           as="div">
+    <form class="d-flex flex-column align-items-center register-form"
+          @submit="handleSubmit($event, submitRegister)"
+          @keypress.prevent.enter>
     <span class="register-form__counter"
-    >Step: {{ $store.getters['register/spanCounter'] }}</span>
-      <component :is="'the-register-form-' + isTab"
-                 v-model:password="password"
-      ></component>
-    <div>
-      <button class="btn"
-              @click.prevent="previous"
-      >Back
-      </button>
-      <button
-        class="btn"
-        :disabled="isEmpty"
-        @click.prevent="next"
-        v-if="!lastPage"
-      >Next
-      </button>
-      <button class="btn"
-              type="submit"
-              v-if="lastPage"
-              :disabled="!hasValues"
-      >Register
-      </button>
-    </div>
-  </form>
-
+    >Step: {{ spanCounter }}</span>
+      <keep-alive>
+        <component :is="'the-register-form-' + currentTab"
+                   :errors="errors"/>
+      </keep-alive>
+      {{ meta }}
+      {{ values }}
+      <div>
+        <button class="btn"
+                @click.prevent="prevPage(values)">Back
+        </button>
+        <button class="btn"
+                @click.prevent="nextPage(meta)"
+                v-if="!lastPage">Next
+        </button>
+        <button class="btn"
+                type="submit"
+                v-if="lastPage"
+                :disabled="submitCount > 3 || isSubmitting">Register
+        </button>
+      </div>
+    </form>
+  </VeeForm>
 </template>
 <script>
+import { markRaw } from 'vue'
+import { Form as VeeForm } from 'vee-validate'
+import { registerValidator } from '@/utils/auth-validators'
 import TheRegisterFormGender from '../components/registration/RegisterFormGender'
 import TheRegisterFormName from '../components/registration/RegisterFormName'
 import TheRegisterFormDateOfBirth from '../components/registration/RegisterFormDateOfBirth'
 import TheRegisterFormEmail from '../components/registration/RegisterFormEmail'
 import TheRegisterFormPassword from '../components/registration/RegisterFormPassword'
 import AppLoader from '../components/ui/AppLoader'
-import { mapGetters } from 'vuex'
 
 export default {
-  unmounted() {
-    this.password = ''
-    this.$store.commit('register/clear')
-  },
   data() {
     return {
+      schemaRegister: markRaw(registerValidator),
       loading: false,
-      password: ''
+      counter: 0,
+      tabs: ['gender', 'name', 'date-of-birth', 'email', 'password']
     }
   },
   computed: {
-    ...mapGetters('register', [
-      'isTab',
-      'isEmpty',
-      'lastPage',
-      'firstPage',
-      'userPassword'
-    ]),
-    hasValues() {
-      return this.password.length && this.$store.state.register.password
+    currentTab() {
+      return this.tabs[this.counter]
+    },
+    firstPage() {
+      return this.counter === 0
+    },
+    lastPage() {
+      return this.counter + 1 === this.tabs.length
+    },
+    spanCounter() {
+      return `${this.counter + 1} / ${this.tabs.length}`
     }
   },
   methods: {
-    next() {
-      if (!this.lastPage) {
-        this.$store.commit('register/nextPage')
-        this.$store.commit('register/isEmpty')
+    nextPage({ valid }) {
+      if (valid) {
+        this.counter++
       }
     },
-    previous() {
+    prevPage(values) {
       if (!this.firstPage) {
-        this.$store.commit('register/prevPage')
-        this.$store.commit('register/notEmpty')
+        this.counter--
       } else {
         this.$router.push('/auth')
       }
     },
-    async submitRegister() {
-      if (this.password !== this.userPassword) {
+    async submitRegister(values) {
+      if (values.password !== values.passwordCheck) {
         this.$store.dispatch('alert/setAlert', {
-          value: 'Пароли не совпадают',
-          type: 'warning'
-        })
-      } else if (this.userPassword.length < 6) {
-        this.$store.dispatch('alert/setAlert', {
-          value: 'Слишком маленький пароль',
+          value: 'Password mismatch',
           type: 'warning'
         })
       } else {
         this.loading = true
-        await this.$store.dispatch('register/register')
-        if (this.$store.state.register.correctEmail) {
+        const { email, password, ...data } = values
+        delete data.passwordCheck
+
+        const firebaseUser = {
+          email,
+          password
+        }
+        const databaseUser = {
+          ...data,
+          email
+        }
+
+        await this.$store.dispatch('register/register', { firebaseUser, databaseUser })
+        if (this.$store.state.register.isValid) {
           this.$router.push('/registered')
+        } else {
+          this.counter = 0
         }
         this.loading = false
       }
     }
   },
   components: {
+    VeeForm,
     AppLoader,
     TheRegisterFormGender,
     TheRegisterFormName,

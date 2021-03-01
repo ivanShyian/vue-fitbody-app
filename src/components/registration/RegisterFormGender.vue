@@ -1,45 +1,32 @@
 <template>
   <div class="form-group col-md-12">
     <div>
-      <label for="inputGender">Who are you?</label>
-      <select
-        v-focus
-        id="inputGender"
-        :value="value"
-        @input="setField"
-        class="form-control"
-      >
-        <option>Choose...</option>
+      <span>Who are you?</span>
+      <Field name="gender"
+             v-focus
+             as="select"
+             :class="['form-control', {invalid: errors.gender}]">
+        <option value="" disabled>Choose...</option>
         <option value="man">Man</option>
         <option value="woman">Woman</option>
-      </select>
+      </Field>
     </div>
   </div>
 </template>
 
 <script>
 import focusDirective from '../../directives/focusDirective'
-import { mapGetters } from 'vuex'
+import { Field } from 'vee-validate'
 
 export default {
+  props: {
+    errors: Object
+  },
   directives: {
     focus: focusDirective
   },
-  data() {
-    return {}
-  },
-  computed: {
-    ...mapGetters('register', { value: 'currentText' })
-  },
-  methods: {
-    setField(event) {
-      if (event.target.value !== 'Choose...') {
-        this.$store.commit('register/setText', event.target.value)
-        this.$store.commit('register/notEmpty')
-      } else {
-        this.$store.commit('register/isEmpty')
-      }
-    }
+  components: {
+    Field
   }
 }
 </script>
@@ -57,7 +44,7 @@ div.form-group {
     align-items: center;
     width: 100%;
 
-    label {
+    span {
       margin: 0 0 1.5rem 0;
       font-family: "Quicksand", sans-serif;
       color: #000063;

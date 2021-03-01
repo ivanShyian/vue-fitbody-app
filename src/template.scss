@@ -1,37 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Jost&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
 
-html {
-  height: 100vh;
-  font-size: 15px;
-  font-family: "Jost", sans-serif;
-}
-body {
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-}
-#app {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  height: 100vh;
+
+$grey-font: rgba(0, 0, 0, .4);
+
+@mixin blackFont($font, $opacity) {
+  color: rgba(0, 0, 0, $opacity);
+  font-family: $font, sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-
-h1, h2, h3, h4, h5, h6, ul, li, p, hr {
-  margin: 0;
-  padding: 0;
-}
-li {
-  list-style: none;
-}
 @mixin inputStyling {
   input {
     width: 50%;
@@ -79,15 +56,12 @@ li {
     outline: none;
   }
 }
-.invalid {
-  border: 2px solid rgba(255, 0, 0, .5);
-}
+
 @mixin registerTitle {
   font-family: "Quicksand", sans-serif;
   color: #000063;
   font-size: 1.5rem;
 }
-
 .white-text {
   color: #f5f0e1;
 }
@@ -106,4 +80,43 @@ li {
   max-width: 1450px;
   padding: 0;
   margin: 0;
+}
+
+.invalid {
+  border: 2px solid rgba(255, 0, 0, .5);
+}
+
+html {
+  height: 100vh;
+  font-size: 15px;
+  font-family: "Jost", sans-serif;
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+h1, h2, h3, h4, h5, h6, ul, li, p, hr {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
 }
