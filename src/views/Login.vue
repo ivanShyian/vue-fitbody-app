@@ -5,7 +5,7 @@
              as="div">
       <form @submit="handleSubmit($event, onSubmit)">
         <span class="login-title">Sign in to your account</span>
-        <div>
+        <div class="login-inputs">
           <Field name="email"
                  type="text"
                  autocomplete
@@ -26,7 +26,7 @@
         </button>
       </form>
     </VeeForm>
-    <div>
+    <div class="register-message">
       <span>Or if you don't have an account</span>
       <router-link :to="{name: 'register'}">Sign up.</router-link>
     </div>
@@ -87,6 +87,10 @@ export default {
   form {
     margin: 0 0 .2rem 0;
 
+    span {
+      font-size: 1.5rem;
+      font-family: "Quicksand", sans-serif;
+    }
     button {
       margin: .5rem 0 0 0;
       background: #d1273f;
@@ -103,44 +107,36 @@ export default {
       color: #ffffe3;
       background: #d1273f;
     }
+  }
+}
+.login-inputs {
+  display: flex;
+  flex-direction: column;
 
-    span {
-      display: block;
-      font-size: 1.5rem;
-      margin: 0 0 .5rem 0;
-    }
-
-    div {
-      display: flex;
-      flex-direction: column;
-
-      input {
-        border-radius: .5rem;
-        margin: .5rem 0 .2rem 0;
-        padding: .2rem .5rem;
-        background-color: rgba(255, 255, 227, .7);
-      }
-
-      small {
-        color: red;
-      }
-    }
+  input {
+    border-radius: .5rem;
+    margin: .5rem 0 .2rem 0;
+    padding: .2rem .5rem;
+    background-color: rgba(255, 255, 227, .7);
   }
 
-  div {
-    span {
-      font-size: .9rem;
-      margin: 0 .3rem 0 0;
-    }
+  small {
+    color: red;
+  }
+}
+.register-message {
+  span {
+    font-size: .9rem;
+    margin: 0 .3rem 0 0;
+  }
 
-    a {
-      transition: all ease 0.5s;
-    }
+  a {
+    transition: all ease 0.5s;
+  }
 
-    a:hover {
-      color: #000063;
-      transition: all ease 0.5s;
-    }
+  a:hover {
+    color: #000063;
+    transition: all ease 0.5s;
   }
 }
 </style>

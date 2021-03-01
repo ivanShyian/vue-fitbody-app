@@ -1,6 +1,6 @@
 <template>
   <AppLoader v-if="loading"/>
-  <VeeForm v-slot="{ handleSubmit, submitCount, isSubmitting, errors, meta, values }"
+  <VeeForm v-slot="{ handleSubmit, submitCount, isSubmitting, errors, meta }"
            :validation-schema="schemaRegister"
            v-else
            as="div">
@@ -13,11 +13,9 @@
         <component :is="'the-register-form-' + currentTab"
                    :errors="errors"/>
       </keep-alive>
-      {{ meta }}
-      {{ values }}
       <div>
         <button class="btn"
-                @click.prevent="prevPage(values)">Back
+                @click.prevent="prevPage">To Login
         </button>
         <button class="btn"
                 @click.prevent="nextPage(meta)"
@@ -38,7 +36,7 @@ import { Form as VeeForm } from 'vee-validate'
 import { registerValidator } from '@/utils/auth-validators'
 import TheRegisterFormGender from '../components/registration/RegisterFormGender'
 import TheRegisterFormName from '../components/registration/RegisterFormName'
-import TheRegisterFormDateOfBirth from '../components/registration/RegisterFormDateOfBirth'
+import TheRegisterFormBirth from '../components/registration/RegisterFormBirth'
 import TheRegisterFormEmail from '../components/registration/RegisterFormEmail'
 import TheRegisterFormPassword from '../components/registration/RegisterFormPassword'
 import AppLoader from '../components/ui/AppLoader'
@@ -49,7 +47,7 @@ export default {
       schemaRegister: markRaw(registerValidator),
       loading: false,
       counter: 0,
-      tabs: ['gender', 'name', 'date-of-birth', 'email', 'password']
+      tabs: ['gender', 'name', 'birth', 'email', 'password']
     }
   },
   computed: {
@@ -67,17 +65,13 @@ export default {
     }
   },
   methods: {
-    nextPage({ valid }) {
-      if (valid) {
+    nextPage({ valid, dirty }) {
+      if (valid && dirty) {
         this.counter++
       }
     },
-    prevPage(values) {
-      if (!this.firstPage) {
-        this.counter--
-      } else {
-        this.$router.push('/auth')
-      }
+    prevPage() {
+      this.$router.push('/auth')
     },
     async submitRegister(values) {
       if (values.password !== values.passwordCheck) {
@@ -114,7 +108,7 @@ export default {
     AppLoader,
     TheRegisterFormGender,
     TheRegisterFormName,
-    TheRegisterFormDateOfBirth,
+    TheRegisterFormBirth,
     TheRegisterFormEmail,
     TheRegisterFormPassword
   }

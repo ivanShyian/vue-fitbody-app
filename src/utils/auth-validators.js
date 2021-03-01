@@ -15,15 +15,18 @@ export const registerValidator = yup.object({
   name: yup.string().required('Type your name or nickname'),
   birth: yup.object({
     day: yup.number()
-      .required()
+      .typeError('Day must be a number')
+      .required('You must choose day of your birth')
       .positive('Day can\'t be less than 0')
       .max(31, 'Max count of days in month is 31, bro :D'),
     month: yup.number()
-      .required('You must choose one month from the list')
+      .typeError('Choose month please')
+      .required('You must choose your month of birth from the list')
       .positive()
       .max(12),
     year: yup.number()
-      .required()
+      .typeError('Year must be a number')
+      .required('You must choose year of your birth')
       .min(1935, 'If you are over 85 years old - we didn\'t recommend to use our app')
       .max(2021, 'Are you from future?')
   }),

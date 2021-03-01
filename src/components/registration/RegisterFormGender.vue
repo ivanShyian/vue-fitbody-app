@@ -10,13 +10,14 @@
         <option value="man">Man</option>
         <option value="woman">Woman</option>
       </Field>
+      <ErrorMessage name="gender" as="small"/>
     </div>
   </div>
 </template>
 
 <script>
 import focusDirective from '../../directives/focusDirective'
-import { Field } from 'vee-validate'
+import { Field, ErrorMessage } from 'vee-validate'
 
 export default {
   props: {
@@ -26,6 +27,7 @@ export default {
     focus: focusDirective
   },
   components: {
+    ErrorMessage,
     Field
   }
 }
@@ -35,6 +37,7 @@ export default {
 @import '../../template';
 
 @include buttonStyling;
+@include smallError;
 div.form-group {
   width: 100%;
 
@@ -50,19 +53,8 @@ div.form-group {
       color: #000063;
       font-size: 1.5rem;
     }
-
     select {
       width: 100%;
-    }
-  }
-
-  div:last-child {
-    display: flex;
-    justify-content: space-evenly;
-
-    button.btn:first-child {
-      border: 1px solid rgba(0, 0, 0, .2);
-      background-color: snow;
     }
   }
 }

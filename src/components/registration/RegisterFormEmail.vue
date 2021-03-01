@@ -8,6 +8,7 @@
              v-focus
              :class="['form-control', {invalid: errors.email}]">
       </Field>
+      <ErrorMessage name="email" as="small"/>
     </div>
   </div>
 </template>
@@ -15,7 +16,7 @@
 <script>
 
 import focusDirective from '@/directives/focusDirective'
-import { Field } from 'vee-validate'
+import { Field, ErrorMessage } from 'vee-validate'
 
 export default {
   directives: {
@@ -25,7 +26,8 @@ export default {
     errors: Object
   },
   components: {
-    Field
+    Field,
+    ErrorMessage
   }
 }
 </script>
@@ -33,7 +35,8 @@ export default {
 <style lang="scss" scoped>
 @import "../../template";
 
-@include buttonStyling
+@include buttonStyling;
+@include smallError;
 div.form-group {
   div:first-child {
   }

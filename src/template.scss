@@ -3,7 +3,12 @@
 
 
 $grey-font: rgba(0, 0, 0, .4);
-
+@mixin smallError() {
+  small {
+    margin-top: .2rem;
+    color: red;
+  }
+}
 @mixin blackFont($font, $opacity) {
   color: rgba(0, 0, 0, $opacity);
   font-family: $font, sans-serif;

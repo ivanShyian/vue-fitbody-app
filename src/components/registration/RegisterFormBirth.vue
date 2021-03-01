@@ -38,6 +38,11 @@
           </Field>
         </div>
       </div>
+      <p v-if="errors" class="birth-errors">
+        <small>{{ errors['birth.day'] }}</small>
+        <small>{{ errors['birth.month'] }}</small>
+        <small>{{ errors['birth.year'] }}</small>
+      </p>
     </div>
   </div>
 </template>
@@ -62,7 +67,8 @@ export default {
 <style lang="scss" scoped>
 @import "../../template";
 
-@include buttonStyling
+@include buttonStyling;
+@include smallError();
 div.control-group {
   span {
     display: block;
@@ -74,5 +80,9 @@ div.control-group {
   .col1 {
     padding: 0;
   }
+}
+.birth-errors {
+  display: flex;
+  flex-direction: column;
 }
 </style>

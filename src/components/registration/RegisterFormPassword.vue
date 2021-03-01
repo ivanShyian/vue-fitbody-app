@@ -7,18 +7,20 @@
              autocomplete
              placeholder="Password"
              :class="['form-control', {invalid: errors.password}]"/>
+      <ErrorMessage name="password" as="small"/>
       <Field name="passwordCheck"
              type="password"
              autocomplete
              placeholder="Confirm password"
              :class="['form-control', {invalid: errors.passwordCheck}]"/>
+      <ErrorMessage name="passwordCheck" as="small"/>
     </div>
   </div>
 </template>
 
 <script>
 import focusDirective from '../../directives/focusDirective'
-import { Field } from 'vee-validate'
+import { Field, ErrorMessage } from 'vee-validate'
 
 export default {
   props: {
@@ -28,7 +30,8 @@ export default {
     focus: focusDirective
   },
   components: {
-    Field
+    Field,
+    ErrorMessage
   }
 }
 </script>
@@ -36,7 +39,8 @@ export default {
 <style lang="scss" scoped>
 @import "../../template";
 
-@include buttonStyling
+@include buttonStyling;
+@include smallError;
 div.form-group.col-md-12 {
   div {
     span {
