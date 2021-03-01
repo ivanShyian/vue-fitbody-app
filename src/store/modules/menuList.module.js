@@ -5,9 +5,9 @@ export default {
       tabs: [
         { id: 0, name: 'Main', path: 'main' },
         { id: 1, name: 'Nutrition', path: 'nutrition' },
-        { id: 2, name: 'Activities', path: 'activities' },
+        { id: 2, name: 'Activities', path: '' },
         { id: 3, name: 'Calories', path: 'calories' },
-        { id: 4, name: 'Water', path: 'water' },
+        { id: 4, name: 'Water', path: '' },
         { id: 5, name: 'Statistic', path: '' }
       ],
       counter: 0

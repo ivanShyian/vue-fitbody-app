@@ -134,8 +134,6 @@ export default {
         store.commit('updateData', { nutrition: { calories: getters.result } })
         commit('clear')
         store.commit('menuList/setActiveTab', 0)
-        console.log(store.getters.userData)
-        console.log('here')
       } catch (e) {
         console.warn(e.message)
       }

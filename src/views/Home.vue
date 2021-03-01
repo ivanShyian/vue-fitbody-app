@@ -44,6 +44,10 @@ export default {
     await this.$store.dispatch('nutrition/loadNutrition')
     this.loading = false
   },
+  unmounted() {
+    this.$store.commit('clearData')
+    this.$store.commit('goals/clear')
+  },
   data() {
     return {
       loading: false

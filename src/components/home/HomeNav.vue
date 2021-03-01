@@ -7,6 +7,7 @@
           :key="tab.id">
         <button
            @click="$store.commit('menuList/setActiveTab', idx)"
+           :disabled="tab.path === ''"
         >{{ tab.name }}</button>
       </li>
     </ul>

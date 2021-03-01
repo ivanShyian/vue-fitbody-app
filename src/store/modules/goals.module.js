@@ -14,7 +14,7 @@ export default {
       return state.activeGoal
     },
     currentGoal(state, getters) {
-      return state.goalList.find(el => el.id === getters.activeId)
+      return state.goalList.length ? state.goalList.find(el => el.id === getters.activeId) : null
     },
     goals(state) {
       return state.goalList
@@ -88,6 +88,10 @@ export default {
     },
     pushNewGoal(state, data) {
       state.goalList.push(data)
+    },
+    clear(state) {
+      state.activeGoal = null
+      state.goalList = []
     }
   },
   actions: {

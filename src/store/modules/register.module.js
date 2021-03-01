@@ -19,8 +19,8 @@ export default {
       try {
         const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.VUE_APP_FB_KEY}`
         const { data } = await axios.post(url, { ...payload.firebaseUser, returnSecureToken: true })
-        dispatch('registerToDatabase', { data, user: payload.databaseUser })
         commit('validEmail', true)
+        dispatch('registerToDatabase', { data, user: payload.databaseUser })
       } catch (e) {
         dispatch('alert/setAlert', {
           value: error(e.response.data.error.message),
@@ -32,7 +32,8 @@ export default {
     async registerToDatabase(_, payload) {
       try {
         await fitbodyAxios.put(`/users/${payload.data.localId}.json?auth=${payload.data.idToken}`, {
-          ...payload.user
+          ...payload.user,
+          registerDate: Date.now()
         })
       } catch (e) {
         console.warn(e)
