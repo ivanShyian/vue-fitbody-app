@@ -47,7 +47,7 @@ export default {}
 </script>
 
 <style scoped lang="scss">
-@import "../template";
+@import "../../template";
 @include buttonStyling;
 @include inputStyling;
 .activities__table {

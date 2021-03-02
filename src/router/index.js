@@ -5,6 +5,8 @@ import NotFound from '../views/NotFound'
 
 const router = createRouter({
   history: createWebHistory(),
+  linkActiveClass: 'active',
+  linkExactActiveClass: 'active',
   routes: [
     {
       path: '/auth',
@@ -27,17 +29,7 @@ const router = createRouter({
     {
       path: '/calories',
       name: 'calories',
-      component: () => import('../components/AppCalories'),
-      meta: {
-        layout: 'main',
-        auth: true
-      }
-    },
-    {
-      path: '/home',
-      name: 'home',
-      component: () => import('../views/Home'),
-      alias: '/',
+      component: () => import('../views/home/HomeCalories'),
       meta: {
         layout: 'main',
         auth: true
@@ -60,6 +52,54 @@ const router = createRouter({
         layout: 'auth',
         auth: false
       }
+    },
+    {
+      path: '/',
+      name: 'home',
+      component: () => import('../views/Home'),
+      alias: '/home',
+      redirect: '/home/main',
+      meta: {
+        layout: 'main',
+        auth: true
+      },
+      children: [
+        {
+          path: '/home/main',
+          name: 'main',
+          component: () => import('../views/home/HomeMain'),
+          meta: {
+            layout: 'main',
+            auth: true
+          }
+        },
+        {
+          path: '/home/nutrition',
+          name: 'nutrition',
+          component: () => import('../views/home/HomeNutrition'),
+          meta: {
+            layout: 'main',
+            auth: true
+          }
+        },
+        {
+          path: '/activities',
+          name: 'activities', // comp /home/activities
+          meta: {
+            layout: 'main',
+            auth: true
+          }
+        },
+        {
+          path: '/home/calories',
+          name: 'calories',
+          component: () => import('../views/home/HomeCalories'),
+          meta: {
+            layout: 'main',
+            auth: true
+          }
+        }
+      ]
     }]
 })
 router.beforeEach((to, from, next) => {

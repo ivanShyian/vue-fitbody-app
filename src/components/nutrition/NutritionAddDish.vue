@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import NutritionDishItem from '@/components/ui/NutritionDishItem'
+import NutritionDishItem from '@/components/nutrition/NutritionDishItem'
 import AppLoader from '@/components/ui/AppLoader'
 
 export default {
@@ -153,7 +153,7 @@ export default {
   ul {
     width: 90%;
     margin-top: .5rem;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
     li {
       width: 100%;
       padding: 0 1rem;

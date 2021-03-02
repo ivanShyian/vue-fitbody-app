@@ -60,7 +60,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-@import '../template';
+@import '../../template';
 .calories {
   display: flex;
   flex-direction: column;

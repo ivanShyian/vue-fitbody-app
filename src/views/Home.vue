@@ -7,12 +7,10 @@
         <home-bar :uStatus="userStatus"></home-bar>
       </div>
       <div class="home__wrapper-main">
-        <home-nav :tabs="tabList"
-                  :id="getCounter"
-        ></home-nav>
-        <home-main>
-          <component :is="'app-' + currentTab"></component>
-        </home-main>
+        <home-nav></home-nav>
+        <div class="home__main-wrapper card">
+            <router-view></router-view>
+        </div>
       </div>
     </div>
     <home-sidebar></home-sidebar>
@@ -25,17 +23,11 @@
 <script>
 import { mapGetters } from 'vuex'
 import HomeLogo from '@/components/home/HomeLogo'
-import HomeMain from '@/components/home/HomeMain'
 import HomeNav from '@/components/home/HomeNav'
 import HomeBar from '@/components/home/HomeBar'
 import HomeSidebar from '@/components/home/HomeSidebar'
-import AppLoader from '@/components/ui/AppLoader'
-import AppCalories from '@/components/AppCalories'
-import AppMain from '@/components/AppMain'
-import AppNutrition from '@/components/AppNutrition'
 import AppModal from '@/components/AppModal'
-import AppWater from '@/components/AppWater'
-import AppActivities from '@/components/AppActivities'
+import AppLoader from '@/components/ui/AppLoader'
 
 export default {
   async mounted() {
@@ -55,7 +47,6 @@ export default {
   },
   computed: {
     ...mapGetters(['userData', 'isEmpty', 'firstVisit']),
-    ...mapGetters('menuList', ['tabList', 'currentTab', 'getCounter']),
     isLoading() {
       return this.loading
     },
@@ -70,15 +61,9 @@ export default {
     HomeBar,
     HomeSidebar,
     HomeLogo,
-    HomeMain,
     HomeNav,
     AppModal,
-    AppMain,
-    AppCalories,
-    AppLoader,
-    AppNutrition,
-    AppWater,
-    AppActivities
+    AppLoader
   }
 }
 </script>
@@ -113,6 +98,26 @@ export default {
   background-color: #e1b16a;
   border-radius: 1rem;
   box-shadow: rgba(0, 0, 0, 0.25) 0 14px 28px, rgba(0, 0, 0, 0.22) 0 10px 10px;
+}
+.home__main-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 1 auto;
+  height: auto;
+  margin: 0;
+  background-color: rgba(248, 248, 199, 0.7);
+  border-radius: .5rem 1rem 1rem .5rem;
+  border: 0;
+  z-index: 25;
+  h1 {
+    color: rgba(45, 32, 58, .8);
+    text-align: center;
+    max-width: 25rem;
+  }
+  .btn:focus {
+    box-shadow: none;
+  }
 }
 
 </style>

@@ -1,14 +1,14 @@
 <template>
   <nav class="home-nav">
     <ul>
-      <li class="card"
-          v-for="(tab, idx) in tabs"
-          :class="['', {active: id === tab.id}]"
-          :key="tab.id">
-        <button
-           @click="$store.commit('menuList/setActiveTab', idx)"
-           :disabled="tab.path === ''"
-        >{{ tab.name }}</button>
+      <li class="card" v-for="tab in tabs" :key="tab.name">
+        <router-link :to="'/home/' + tab.path"
+                     v-slot="{ navigate }">
+          <button class="btn" @click="navigate"
+                  :disabled="tab.path === ''"
+          >{{ tab.name }}
+          </button>
+        </router-link>
       </li>
     </ul>
   </nav>
@@ -17,7 +17,18 @@
 <script>
 
 export default {
-  props: ['tabs', 'id']
+  data() {
+    return {
+      tabs: [
+        { name: 'Main', path: 'main' },
+        { name: 'Nutrition', path: 'nutrition' },
+        { name: 'Activities', path: '' },
+        { name: 'Calories', path: 'calories' },
+        { name: 'Water', path: '' },
+        { name: 'Statistic', path: '' }
+      ]
+    }
+  }
 }
 </script>
 
@@ -40,6 +51,7 @@ export default {
       border-bottom: 1px solid rgba(45, 32, 58, .2);
 
       button {
+        width: 100%;
         background-color: transparent;
         border: 0;
         font-family: "Quicksand", sans-serif;
@@ -60,7 +72,7 @@ export default {
         text-decoration: none;
       }
     }
-    li.card.active {
+    a.active {
       background-color: rgba(248, 248, 199, 0.7);
       width: 110%;
     }

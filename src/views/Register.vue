@@ -6,7 +6,7 @@
            as="div">
     <form class="d-flex flex-column align-items-center register-form"
           @submit="handleSubmit($event, submitRegister)"
-          @keypress.prevent.enter>
+          @keydown.enter.prevent>
     <span class="register-form__counter"
     >Step: {{ spanCounter }}</span>
       <keep-alive>
@@ -15,7 +15,7 @@
       </keep-alive>
       <div>
         <button class="btn"
-                @click.prevent="prevPage">To Login
+                @click.prevent="toLogin()">To Login
         </button>
         <button class="btn"
                 @click.prevent="nextPage(meta)"
@@ -70,7 +70,7 @@ export default {
         this.counter++
       }
     },
-    prevPage() {
+    toLogin() {
       this.$router.push('/auth')
     },
     async submitRegister(values) {

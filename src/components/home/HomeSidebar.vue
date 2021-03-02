@@ -4,7 +4,7 @@
     <div class="home__sidebar-message" v-if="!calories">
       <span>Calculate calories limit</span>
       <button class="btn"
-              @click.prevent="$store.commit('menuList/setActiveTab', 3)"
+              @click.prevent="$router.replace('/home/calories')"
       >Click
       </button>
     </div>

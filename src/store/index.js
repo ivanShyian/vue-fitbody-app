@@ -3,7 +3,6 @@ import fitbodyAxios from '@/axios/fitbody-requests'
 import auth from './modules/auth.module'
 import alert from './modules/alert.module'
 import register from './modules/register.module'
-import menuList from './modules/menuList.module'
 import calories from './modules/calories.module'
 import goals from './modules/goals.module'
 import edamam from './modules/edamam.module'
@@ -97,7 +96,6 @@ export default createStore({
     auth,
     alert,
     register,
-    menuList,
     calories,
     goals,
     edamam,

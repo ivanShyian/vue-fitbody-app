@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import NutritionItem from '@/components/ui/NutritionItem'
+import NutritionItem from '@/components/nutrition/NutritionItem'
 export default {
   emits: {
     'add-dish': {
