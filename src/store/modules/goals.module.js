@@ -1,5 +1,6 @@
 import fitbodyAxios from '@/axios/fitbody-requests'
 import { modeNaming } from '@/utils/constants'
+import { progress } from '@/utils/goal-progress'
 
 export default {
   namespaced: true,
@@ -18,39 +19,8 @@ export default {
     },
     progressValue(state, getters) {
       const goal = getters.currentGoal
-      const now = goal.currentWeight
-      if (goal.mode === 250) {
-        const dif = 100 / (goal['desired-weight'] - goal.weight)
-        const current = now - goal.weight
-        let result = dif * current
-        if (result > 100) {
-          result = 100
-        } else if (result < 0) {
-          result = 0
-        }
-        return Math.round(result)
-      } else if (goal.mode === -100) {
-        const dif = 100 / (goal.weight - goal['desired-weight'])
-        const current = goal.weight - now
-        let result = dif * current
-        if (result > 100) {
-          result = 100
-        } else if (result < 0) {
-          result = 0
-        }
-        return Math.round(result)
-      } else {
-        const max = +now + 10
-        const min = now - 10
-        if (now < goal.weight) {
-          return Math.round((100 / goal.weight) * min)
-        } else if (now > goal.weight) {
-          console.log(max)
-          return Math.round((100 / max) * goal.weight)
-        } else {
-          return 100
-        }
-      }
+      const currentWeight = goal.currentWeight
+      return progress(goal, currentWeight)
     },
     modeName(state, getters) {
       return getters.currentGoal.mode ? modeNaming[getters.currentGoal.mode] : 'Not set'

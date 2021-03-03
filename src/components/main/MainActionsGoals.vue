@@ -18,7 +18,7 @@
                maxlength="4"
                placeholder="Desired weight">
         <button class="btn"
-                :disabled="!desiredWeight.length"
+                :disabled="!desiredWeight"
                 @click="addNewGoal">Add</button>
       </div>
     </div>
@@ -39,7 +39,7 @@
                  placeholder="To...">
         </div>
         <button class="btn"
-                :disabled="!changeFrom.length || !changeTo.length"
+                :disabled="!changeFrom || !changeTo"
                 @click="change"
         >Change</button>
       </div>
