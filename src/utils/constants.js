@@ -1,5 +1,5 @@
 export const modeNaming = {
-  0: 'Gain weight',
-  1: 'Lose weight',
-  2: 'Keep weight'
+  250: 'Gain weight',
+  '-100': 'Lose weight',
+  75: 'Keep weight'
 }

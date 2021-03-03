@@ -29,12 +29,12 @@
         </select>
         <select>
           <option selected>Time spent..</option>
-          <option value="walk">15 min</option>
-          <option value="jog">30 min</option>
-          <option value="swim">45 min</option>
-          <option value="swim">60 min</option>
-          <option value="swim">90 min</option>
-          <option value="swim">120 min</option>
+          <option value="15">15 min</option>
+          <option value="30">30 min</option>
+          <option value="45">45 min</option>
+          <option value="60">60 min</option>
+          <option value="90">90 min</option>
+          <option value="120">120 min</option>
         </select>
       </div>
       <button>Commit</button>

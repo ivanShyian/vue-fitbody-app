@@ -2,7 +2,7 @@
   <div class="card home-bar">
     <div class="home-bar__upper bar-upper">
       <div class="bar-upper__nickname">
-        <h2>{{userData.name}}</h2>
+        <h2>{{ userData.name }}</h2>
       </div>
       <div class="bar-upper__status">
         <input v-if="editing"

@@ -14,8 +14,8 @@
       </div>
     </div>
     <home-sidebar></home-sidebar>
-    <teleport to="#app">
-    <app-modal v-if="firstVisit"></app-modal>
+    <teleport to="body">
+      <app-modal v-if="firstVisit"></app-modal>
     </teleport>
   </div>
 </template>
@@ -26,7 +26,7 @@ import HomeLogo from '@/components/home/HomeLogo'
 import HomeNav from '@/components/home/HomeNav'
 import HomeBar from '@/components/home/HomeBar'
 import HomeSidebar from '@/components/home/HomeSidebar'
-import AppModal from '@/components/AppModal'
+import AppModal from '@/components/ui/AppModal'
 import AppLoader from '@/components/ui/AppLoader'
 
 export default {

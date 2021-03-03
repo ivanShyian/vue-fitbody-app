@@ -76,17 +76,12 @@ export default createStore({
         console.log(e.message)
       }
     },
-    async update({ state, getters, commit, rootGetters }, payload) {
+    async updateParams({ state, getters, commit, rootGetters }, payload) {
       try {
         const token = rootGetters['auth/token']
         const uid = rootGetters['auth/userId']
-        commit('updateData', payload)
-        if (payload.goals) {
-          Object.keys(payload.goals).map(el => {
-            commit('goals/updateGoal', payload.goals[el])
-          })
-        }
-        await fitbodyAxios.put(`/users/${uid}.json?auth=${token}`, getters.userData)
+        commit('updateData', { params: payload })
+        await fitbodyAxios.put(`/users/${uid}/params.json?auth=${token}`, payload)
       } catch (e) {
         console.log(e.message)
       }

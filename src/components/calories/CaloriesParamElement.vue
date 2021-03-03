@@ -18,8 +18,7 @@ export default {
   props: {
     param: {
       type: String,
-      required: false,
-      default: ''
+      required: false
     },
     text: {
       type: String,
@@ -28,7 +27,7 @@ export default {
     },
     inputId: {
       type: String,
-      required: true
+      required: false
     }
   },
   emits: {

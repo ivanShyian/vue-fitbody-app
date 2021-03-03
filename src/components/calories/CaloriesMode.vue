@@ -4,9 +4,9 @@
     <small>Mode is like general point to usage this app</small>
     <div class="btn-group">
     <button type="button"
-            :class="['btn', 'danger', {'active': idx === currentMode}]"
-            @click="$store.commit('calories/setMode', idx)"
-            v-for="(btn, idx) in modeButtons"
+            v-for="btn in modeButtons"
+            :class="['btn', 'danger', {'active': btn.value === mode}]"
+            @click="$emit('update:mode', btn.value)"
             :key="btn.id"> {{ btn.name }}
     </button>
     </div>
@@ -14,11 +14,27 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 
 export default {
-  computed: {
-    ...mapState('calories', ['currentMode', 'modeButtons'])
+  props: {
+    mode: {
+      type: Number,
+      required: true
+    }
+  },
+  emits: {
+    'update:mode': {
+      type: Number,
+      required: true
+    }
+  },
+  data() {
+    return {
+      modeButtons: [
+        { id: 0, name: 'Gain weight', value: 250 },
+        { id: 1, name: 'Lose weight', value: -100 },
+        { id: 2, name: 'Keep weight', value: 75 }]
+    }
   }
 }
 </script>

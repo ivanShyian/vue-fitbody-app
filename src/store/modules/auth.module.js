@@ -23,13 +23,11 @@ export default {
     }
   },
   mutations: {
-    setToken(state, token) {
-      state.token = token
-      localStorage.setItem(TOKEN_KEY, token)
-    },
-    setLocalId(state, uid) {
-      state.uid = uid
-      localStorage.setItem(UID, uid)
+    setToken(state, payload) {
+      state.token = payload.token
+      state.uid = payload.uid
+      localStorage.setItem(TOKEN_KEY, payload.token)
+      localStorage.setItem(UID, payload.uid)
     },
     logout(state) {
       state.token = null
@@ -43,8 +41,7 @@ export default {
       try {
         const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.VUE_APP_FB_KEY}`
         const { data } = await axios.post(url, { ...payload, returnSecureToken: true })
-        commit('setToken', data.idToken)
-        commit('setLocalId', data.localId)
+        commit('setToken', { token: data.idToken, uid: data.localId })
       } catch (e) {
         dispatch('alert/setAlert', {
           value: error(e.response.data.error.message),

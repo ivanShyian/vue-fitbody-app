@@ -6,15 +6,12 @@ export default {
   state() {
     return {
       goalList: [],
-      activeGoal: null
+      activeGoal: ''
     }
   },
   getters: {
-    activeId(state) {
-      return state.activeGoal
-    },
-    currentGoal(state, getters) {
-      return state.goalList.length ? state.goalList.find(el => el.id === getters.activeId) : null
+    currentGoal(state) {
+      return state.goalList ? state.goalList.find(el => el.id === state.activeGoal) : null
     },
     goals(state) {
       return state.goalList
@@ -22,7 +19,7 @@ export default {
     progressValue(state, getters) {
       const goal = getters.currentGoal
       const now = goal.currentWeight
-      if (goal.mode === 0) {
+      if (goal.mode === 250) {
         const dif = 100 / (goal['desired-weight'] - goal.weight)
         const current = now - goal.weight
         let result = dif * current
@@ -32,7 +29,7 @@ export default {
           result = 0
         }
         return Math.round(result)
-      } else if (goal.mode === 1) {
+      } else if (goal.mode === -100) {
         const dif = 100 / (goal.weight - goal['desired-weight'])
         const current = goal.weight - now
         let result = dif * current
@@ -56,12 +53,7 @@ export default {
       }
     },
     modeName(state, getters) {
-      if (getters.currentGoal) {
-        if (getters.currentGoal.mode === 0) {
-          return modeNaming[getters.currentGoal.mode]
-        }
-        return getters.currentGoal.mode ? modeNaming[getters.currentGoal.mode] : 'Not set'
-      }
+      return getters.currentGoal.mode ? modeNaming[getters.currentGoal.mode] : 'Not set'
     }
   },
   mutations: {
@@ -69,7 +61,6 @@ export default {
       if (data) {
         if (!state.goalList.length) {
           state.goalList = [data]
-          state.activeGoal = data.id
         } else {
           state.goalList = data
         }
@@ -86,28 +77,40 @@ export default {
     setActive(state, id) {
       state.activeGoal = id
     },
-    pushNewGoal(state, data) {
-      state.goalList.push(data)
-    },
     clear(state) {
       state.activeGoal = null
       state.goalList = []
     }
   },
   actions: {
-    async updateGoal({
-      state,
-      getters,
-      commit,
-      rootGetters
-    }, data) {
+    async updateGoal({ state, getters, commit, rootGetters }, data) {
       const token = rootGetters['auth/token']
       const uid = rootGetters['auth/userId']
-      await commit('updateGoal', data)
+      commit('updateGoal', data)
       await getters.goals.map(el => {
         fitbodyAxios.put(`/users/${uid}/goals/${el.id}.json?auth=${token}`, el)
-        return console.log(el)
       })
+    },
+    async addGoal({ rootGetters, commit, dispatch }, goal) {
+      try {
+        const token = rootGetters['auth/token']
+        const uid = rootGetters['auth/userId']
+        const { data } = await fitbodyAxios.post(`/users/${uid}/goals.json?auth=${token}`, goal)
+        commit('updateGoal', { ...goal, id: data.name })
+        await dispatch('setActiveGoal', data.name)
+      } catch (e) {
+        console.warn(e)
+      }
+    },
+    async setActiveGoal({ rootGetters, commit }, activeGoal) {
+      try {
+        const token = rootGetters['auth/token']
+        const uid = rootGetters['auth/userId']
+        await fitbodyAxios.patch(`/users/${uid}.json?auth=${token}`, { activeGoal })
+        commit('setActive', activeGoal)
+      } catch (e) {
+        console.warn(e)
+      }
     }
   }
 }

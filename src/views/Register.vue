@@ -95,7 +95,7 @@ export default {
 
         await this.$store.dispatch('register/register', { firebaseUser, databaseUser })
         if (this.$store.state.register.isValid) {
-          this.$router.push('/registered')
+          await this.$router.push('/registered')
         } else {
           this.counter = 0
         }

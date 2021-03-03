@@ -4,9 +4,9 @@
     <small>Also your daily activity effects of formula index</small>
     <div class="btn-group">
       <button type="button"
-              :class="['btn', {'active': idx === currentDaily}]"
-              @click="$store.commit('calories/setDaily', idx)"
-              v-for="(btn, idx) in dailyButtons"
+              v-for="btn in activityButtons"
+              :class="['btn', {'active': activity === btn.value}]"
+              @click="$emit('update:activity', btn.value)"
               :key="btn.id">{{ btn.name }} activity
       </button>
     </div>
@@ -14,11 +14,27 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
-  computed: {
-    ...mapState('calories', ['currentDaily', 'dailyButtons'])
+  props: {
+    activity: {
+      type: Number,
+      required: true
+    }
+  },
+  emits: {
+    'update:activity': {
+      type: Number,
+      required: true
+    }
+  },
+  data() {
+    return {
+      activityButtons: [
+        { id: 0, name: 'Without', value: 1.2 },
+        { id: 1, name: 'Low', value: 1.375 },
+        { id: 2, name: 'Normal', value: 1.55 },
+        { id: 3, name: 'High', value: 1.725 }]
+    }
   }
 }
 </script>

@@ -9,21 +9,21 @@
       <calories-param-element
         text="Your weight in kg"
         input-id="calWeight"
-        :param="$store.getters['calories/weight']"
-        @input-param="$store.commit('calories/setWeight', $event)"
+        :param="weight"
+        @input-param="$emit('update:weight', $event)"
       ></calories-param-element>
       <calories-param-element
         v-if="firstVisit"
         text="Desired weight"
         input-id="calDesWeight"
-        :param="$store.getters['calories/desiredWeight']"
-        @input-param="$store.commit('calories/setDesWeight', $event)">
+        :param="desiredWeight"
+        @input-param="$emit('update:desired-weight', $event)">
       </calories-param-element>
       <calories-param-element
         text="Your height in cm"
         input-id="calHeight"
-        :param="$store.getters['calories/height']"
-        @input-param="$store.commit('calories/setHeight', $event)">
+        :param="height"
+        @input-param="$emit('update:height', $event)">
       </calories-param-element>
     </div>
   </div>
@@ -33,6 +33,37 @@
 import CaloriesParamElement from '@/components/calories/CaloriesParamElement'
 
 export default {
+  props: {
+    weight: {
+      type: String,
+      required: true
+    },
+    height: {
+      type: String,
+      required: true
+    },
+    'desired-weight': {
+      type: String,
+      required: true
+    }
+  },
+  emits: {
+    'update:weight': {
+      type: String,
+      required: true
+    },
+    'update:height': {
+      type: String,
+      required: true
+    },
+    'update:desired-weight': {
+      type: String,
+      required: true
+    }
+  },
+  data() {
+    return {}
+  },
   computed: {
     firstVisit() {
       return this.$store.getters.firstVisit
