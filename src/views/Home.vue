@@ -40,6 +40,7 @@ export default {
   unmounted() {
     this.$store.commit('clearData')
     this.$store.commit('goals/clear')
+    this.$store.commit('nutrition/clearNutrition')
   },
   data() {
     return {
@@ -48,11 +49,8 @@ export default {
   },
   computed: {
     ...mapGetters(['userData', 'isEmpty', 'firstVisit']),
-    isLoading() {
-      return this.loading
-    },
     hasData() {
-      return !this.isLoading && !this.isEmpty
+      return !this.loading && !this.isEmpty
     },
     userStatus() {
       return this.userData.userStatus ? this.userData.userStatus : 'Change Status...'

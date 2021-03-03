@@ -1,6 +1,5 @@
 <template>
   <app-header></app-header>
-  <app-message></app-message>
   <main class="main">
     <div class="main__wrapper">
       <router-view></router-view>
@@ -12,10 +11,9 @@
 <script>
 import AppHeader from '../components/AppHeader'
 import AppFooter from '@/components/AppFooter'
-import AppMessage from '@/components/ui/AppMessage'
 
 export default {
-  components: { AppMessage, AppFooter, AppHeader }
+  components: { AppFooter, AppHeader }
 }
 </script>
 

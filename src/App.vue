@@ -1,9 +1,16 @@
 <template>
+  <transition name="registration"
+              mode="out-in"
+              enter-active-class="animate__animated animate__slideInDown"
+              leave-active-class="animate__animated animate__slideOutUp">
+    <app-message></app-message>
+  </transition>
   <component :is="layout + '-layout'"></component>
 </template>
 <script>
 import AuthLayout from '@/layouts/AuthLayout'
 import MainLayout from '@/layouts/MainLayout'
+import AppMessage from '@/components/ui/AppMessage'
 
 export default {
   computed: {
@@ -13,7 +20,8 @@ export default {
   },
   components: {
     AuthLayout,
-    MainLayout
+    MainLayout,
+    AppMessage
   }
 }
 </script>

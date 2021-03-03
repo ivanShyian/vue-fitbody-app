@@ -18,7 +18,6 @@ export default {
   },
   mutations: {
     setResult(state, result) {
-      console.log(result)
       if (result.length) {
         state.searchResult = []
         state.empty = false
@@ -42,7 +41,6 @@ export default {
       } else {
         state.empty = true
       }
-      console.log(state.empty)
     }
   },
   actions: {

@@ -7,12 +7,17 @@
     <form class="d-flex flex-column align-items-center register-form"
           @submit="handleSubmit($event, submitRegister)"
           @keydown.enter.prevent>
-    <span class="register-form__counter"
-    >Step: {{ spanCounter }}</span>
-      <keep-alive>
-        <component :is="'the-register-form-' + currentTab"
-                   :errors="errors"/>
-      </keep-alive>
+      <span class="register-form__counter">Step: {{ stepCounter }}</span>
+      <transition name="registration"
+                  mode="out-in"
+                  :duration="500"
+                  enter-active-class="animate__animated animate__fadeIn"
+                  leave-active-class="animate__animated animate__fadeOut">
+        <keep-alive>
+            <component :is="'the-register-form-' + currentTab"
+                       :errors="errors"/>
+        </keep-alive>
+      </transition>
       <div>
         <button class="btn"
                 @click.prevent="toLogin()">To Login
@@ -60,12 +65,15 @@ export default {
     lastPage() {
       return this.counter + 1 === this.tabs.length
     },
-    spanCounter() {
+    stepCounter() {
       return `${this.counter + 1} / ${this.tabs.length}`
     }
   },
   methods: {
-    nextPage({ valid, dirty }) {
+    nextPage({
+      valid,
+      dirty
+    }) {
       if (valid && dirty) {
         this.counter++
       }
@@ -81,7 +89,11 @@ export default {
         })
       } else {
         this.loading = true
-        const { email, password, ...data } = values
+        const {
+          email,
+          password,
+          ...data
+        } = values
         delete data.passwordCheck
 
         const firebaseUser = {
@@ -93,7 +105,10 @@ export default {
           email
         }
 
-        await this.$store.dispatch('register/register', { firebaseUser, databaseUser })
+        await this.$store.dispatch('register/register', {
+          firebaseUser,
+          databaseUser
+        })
         if (this.$store.state.register.isValid) {
           await this.$router.push('/registered')
         } else {
