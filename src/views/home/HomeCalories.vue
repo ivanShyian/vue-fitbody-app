@@ -145,4 +145,10 @@ export default {
   margin-top: 2rem;
   max-width: 15rem;
 }
+.calories__mode {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
 </style>

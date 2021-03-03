@@ -62,7 +62,7 @@ export default {
         if (!state.goalList.length) {
           state.goalList = [data]
         } else {
-          state.goalList = data
+          state.goalList.push(data)
         }
       }
     },
@@ -88,14 +88,14 @@ export default {
       const uid = rootGetters['auth/userId']
       commit('updateGoal', data)
       await getters.goals.map(el => {
-        fitbodyAxios.put(`/users/${uid}/goals/${el.id}.json?auth=${token}`, el)
+        fitbodyAxios.put(`/users/${uid}/goals/list/${el.id}.json?auth=${token}`, el)
       })
     },
     async addGoal({ rootGetters, commit, dispatch }, goal) {
       try {
         const token = rootGetters['auth/token']
         const uid = rootGetters['auth/userId']
-        const { data } = await fitbodyAxios.post(`/users/${uid}/goals.json?auth=${token}`, goal)
+        const { data } = await fitbodyAxios.post(`/users/${uid}/goals/list.json?auth=${token}`, goal)
         commit('updateGoal', { ...goal, id: data.name })
         await dispatch('setActiveGoal', data.name)
       } catch (e) {
@@ -106,8 +106,21 @@ export default {
       try {
         const token = rootGetters['auth/token']
         const uid = rootGetters['auth/userId']
-        await fitbodyAxios.patch(`/users/${uid}.json?auth=${token}`, { activeGoal })
+        await fitbodyAxios.patch(`/users/${uid}/goals.json?auth=${token}`, { activeGoal })
         commit('setActive', activeGoal)
+      } catch (e) {
+        console.warn(e)
+      }
+    },
+    async loadGoals({ rootGetters, commit }) {
+      try {
+        const token = rootGetters['auth/token']
+        const uid = rootGetters['auth/userId']
+        const { data } = await fitbodyAxios.get(`/users/${uid}/goals.json?auth=${token}`)
+        if (data) {
+          commit('loadGoal', data.list)
+          commit('setActive', data.activeGoal)
+        }
       } catch (e) {
         console.warn(e)
       }

@@ -5,7 +5,11 @@ export default {
   namespaced: true,
   state() {
     return {
-      calculated: null
+      calculated: null,
+      modeButtons: [
+        { id: 0, name: 'Gain weight', value: 250 },
+        { id: 1, name: 'Lose weight', value: -100 },
+        { id: 2, name: 'Keep weight', value: 75 }]
     }
   },
   mutations: {

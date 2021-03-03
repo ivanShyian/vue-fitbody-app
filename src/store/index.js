@@ -68,10 +68,6 @@ export default createStore({
         const uid = rootGetters['auth/userId']
         const { data } = await fitbodyAxios.get(`/users/${uid}.json?auth=${token}`)
         commit('loadData', data)
-        if (data.goals) {
-          commit('goals/loadGoal', data.goals)
-          commit('goals/setActive', data.activeGoal)
-        }
       } catch (e) {
         console.log(e.message)
       }

@@ -33,6 +33,7 @@ export default {
   async mounted() {
     this.loading = true
     await this.$store.dispatch('load')
+    await this.$store.dispatch('goals/loadGoals')
     await this.$store.dispatch('nutrition/loadNutrition')
     this.loading = false
   },

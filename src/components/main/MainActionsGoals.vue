@@ -8,8 +8,8 @@
         <div class="main__actions-goal-new-mode">
           <span v-for="btn in modeButtons"
                 :key="btn.id"
-                @click="chooseActive(btn.id)"
-                :class='[{active: activeNewGoal === btn.id}]'
+                @click="chooseActive(btn.value)"
+                :class='[{active: activeNewGoal === btn.value}]'
           >{{ btn.name }}</span>
         </div>
         <input id="newGoal"
@@ -59,7 +59,7 @@ export default {
       desiredWeight: '',
       openNew: false,
       openChange: false,
-      activeNewGoal: 0,
+      activeNewGoal: 250,
       changeFrom: '',
       changeTo: '',
       changed: null
@@ -74,16 +74,14 @@ export default {
     },
     async addNewGoal() {
       const newItem = {
-        id: Date.now().toString(),
         mode: this.activeNewGoal,
         currentWeight: this.$store.getters.userData.params.weight,
         weight: this.$store.getters.userData.params.weight,
         finished: false,
         'desired-weight': this.desiredWeight
       }
-      await this.$store.commit('goals/pushNewGoal', newItem)
-      await this.$store.dispatch('goals/updateGoal')
-      this.activeNewGoal = 0
+      await this.$store.dispatch('goals/addGoal', newItem)
+      this.activeNewGoal = 250
       this.desiredWeight = ''
     },
     toggleGoal(link) {
