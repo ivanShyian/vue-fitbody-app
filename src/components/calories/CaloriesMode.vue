@@ -74,4 +74,17 @@ export default {
     }
   }
 }
+.calories__mode .btn-group {
+  margin: 0 auto;
+  button.btn {
+    border: 1px solid black;
+    font-size: 1.2rem;
+    @media (max-height: 700px) {
+      padding: .2rem;
+    }
+  }
+  button.btn.active {
+    background-color: #abbd81;
+  }
+}
 </style>

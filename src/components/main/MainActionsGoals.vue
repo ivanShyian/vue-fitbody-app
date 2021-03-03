@@ -8,18 +8,18 @@
         <div class="main__actions-goal-new-mode">
           <span v-for="btn in modeButtons"
                 :key="btn.id"
-                @click="chooseActive(btn.value)"
+                @click="activeNewGoal = btn.value"
                 :class='[{active: activeNewGoal === btn.value}]'
           >{{ btn.name }}</span>
         </div>
-        <input id="newGoal"
+        <input v-model.number="desiredWeight"
                type="text"
-               v-model="desiredWeight"
+               id="newGoal"
                maxlength="4"
                placeholder="Desired weight">
         <button class="btn"
-                @click="addNewGoal"
-        >Add</button>
+                :disabled="!desiredWeight.length"
+                @click="addNewGoal">Add</button>
       </div>
     </div>
     <div class="main__actions-goal-change">
@@ -39,6 +39,7 @@
                  placeholder="To...">
         </div>
         <button class="btn"
+                :disabled="!changeFrom.length || !changeTo.length"
                 @click="change"
         >Change</button>
       </div>
@@ -69,9 +70,6 @@ export default {
     ...mapState('calories', ['modeButtons'])
   },
   methods: {
-    chooseActive(id) {
-      this.activeNewGoal = id
-    },
     async addNewGoal() {
       const newItem = {
         mode: this.activeNewGoal,
@@ -102,17 +100,12 @@ export default {
       }
     },
     async change() {
-      this.changed = Object.assign({}, this.$store.getters['goals/currentGoal'], {
+      this.changed = {
+        ...this.$store.getters['goals/currentGoal'],
         weight: this.changeFrom,
         'desired-weight': this.changeTo
-      })
-      const changedGoal = this.$store.getters['goals/goals'].map(el => {
-        if (el.id === this.changed.id) {
-          return this.changed
-        }
-        return el
-      })
-      await this.$store.dispatch('goals/updateGoal', changedGoal)
+      }
+      await this.$store.dispatch('goals/updateGoal', this.changed)
       this.changeFrom = ''
       this.changeTo = ''
       this.changed = null

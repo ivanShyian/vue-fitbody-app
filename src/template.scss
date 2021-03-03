@@ -125,18 +125,3 @@ h1, h2, h3, h4, h5, h6, ul, li, p, hr {
 li {
   list-style: none;
 }
-// mode styles
-.calories__mode .btn-group {
-  width: 50%;
-  margin: 0 auto;
-  button.btn {
-    border: 1px solid black;
-    font-size: 1.2rem;
-    @media (max-height: 700px) {
-      padding: .2rem;
-    }
-  }
-  button.btn.active {
-    background-color: #abbd81;
-  }
-}

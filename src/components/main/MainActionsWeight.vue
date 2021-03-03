@@ -1,8 +1,14 @@
 <template>
   <div class="main__actions-weight">
     <label for="newWeight">New weight?</label>
-    <input id="newWeight" v-model="newWeight" type="text" maxlength="4" placeholder="Time to weight yourself">
-    <button class="btn" :disabled="newWeight === ''" @click="submitNewWeight">Update</button>
+    <input id="newWeight"
+           v-model="newWeight"
+           type="text"
+           maxlength="4"
+           placeholder="Time to weight yourself">
+    <button class="btn"
+            :disabled="newWeight === ''"
+            @click="submitNewWeight">Update</button>
   </div>
 </template>
 
@@ -19,10 +25,9 @@ export default {
         ...el,
         currentWeight: this.newWeight
       }))
-      await this.$store.dispatch('goals/updateGoal', modified)
-      this.$store.commit('updateGoals', modified)
-      const currentParams = await this.$store.getters.userData.params
-      await this.$store.dispatch('update', { params: { ...currentParams, currentWeight: this.newWeight } })
+      const currentParams = this.$store.getters.userData.params
+      await this.$store.dispatch('goals/updateWeight', modified)
+      await this.$store.dispatch('updateParams', { ...currentParams, currentWeight: this.newWeight })
       this.newWeight = ''
     }
   }

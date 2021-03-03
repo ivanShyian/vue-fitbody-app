@@ -76,8 +76,8 @@ export default createStore({
       try {
         const token = rootGetters['auth/token']
         const uid = rootGetters['auth/userId']
-        commit('updateData', { params: payload })
         await fitbodyAxios.put(`/users/${uid}/params.json?auth=${token}`, payload)
+        commit('updateData', { params: payload })
       } catch (e) {
         console.log(e.message)
       }

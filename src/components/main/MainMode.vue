@@ -32,8 +32,7 @@ export default {
       this.active = !this.active
     },
     setMode(idx) {
-      this.$store.commit('goals/setActive', idx)
-      this.$store.dispatch('update', { activeGoal: idx })
+      this.$store.dispatch('goals/setActiveGoal', idx)
     }
   }
 }
