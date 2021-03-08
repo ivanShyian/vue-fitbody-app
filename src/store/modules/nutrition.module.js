@@ -36,9 +36,8 @@ export default {
   actions: {
     async loadNutrition({ commit, rootGetters }) {
       try {
-        const token = rootGetters['auth/token']
         const uid = rootGetters['auth/userId']
-        const { data } = await fitbodyAxios.get(`/users/${uid}/nutrition.json?auth=${token}`)
+        const { data } = await fitbodyAxios.get(`/users/${uid}/nutrition.json`)
         if (!data) {
           throw new Error('List is empty')
         }
@@ -49,13 +48,12 @@ export default {
     },
     async updateNutrition({ commit, rootGetters, getters }, { source, item }) {
       try {
-        const token = rootGetters['auth/token']
         const uid = rootGetters['auth/userId']
         commit('updateList', {
           source,
           item
         })
-        await fitbodyAxios.put(`/users/${uid}/nutrition/${source}.json?auth=${token}`, {
+        await fitbodyAxios.put(`/users/${uid}/nutrition/${source}.json`, {
           ...getters.nutrition[source], ...{ [item.unicId]: item }
         })
       } catch (e) {

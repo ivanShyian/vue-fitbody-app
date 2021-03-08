@@ -27,8 +27,8 @@ export const registerValidator = yup.object({
     year: yup.number()
       .typeError('Year must be a number')
       .required('You must choose year of your birth')
-      .min(1935, 'If you are over 85 years old - we didn\'t recommend to use our app')
-      .max(2021, 'Are you from future?')
+      .min(1935, 'If you are over 85 years old - we didn\'t recommend you to use our app')
+      .max(2015, 'Come back when you gonna be older :)')
   }),
   email: yup.string()
     .required('Enter email')

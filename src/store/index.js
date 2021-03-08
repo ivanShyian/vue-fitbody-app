@@ -64,9 +64,8 @@ export default createStore({
   actions: {
     async load({ rootGetters, commit }) {
       try {
-        const token = rootGetters['auth/token']
         const uid = rootGetters['auth/userId']
-        const { data } = await fitbodyAxios.get(`/users/${uid}.json?auth=${token}`)
+        const { data } = await fitbodyAxios.get(`/users/${uid}.json`)
         commit('loadData', data)
       } catch (e) {
         console.log(e.message)
@@ -74,10 +73,18 @@ export default createStore({
     },
     async updateParams({ state, getters, commit, rootGetters }, payload) {
       try {
-        const token = rootGetters['auth/token']
         const uid = rootGetters['auth/userId']
-        await fitbodyAxios.put(`/users/${uid}/params.json?auth=${token}`, payload)
+        await fitbodyAxios.put(`/users/${uid}/params.json`, payload)
         commit('updateData', { params: payload })
+      } catch (e) {
+        console.log(e.message)
+      }
+    },
+    async updateStatus({ rootGetters, commit }, status) {
+      try {
+        const uid = rootGetters['auth/userId']
+        await fitbodyAxios.patch(`/users/${uid}/.json`, status)
+        commit('updateData', status)
       } catch (e) {
         console.log(e.message)
       }

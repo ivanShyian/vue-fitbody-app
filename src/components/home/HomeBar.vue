@@ -62,11 +62,11 @@ export default {
       if (!this.statusMessage) {
         this.statusMessage = 'Change status...'
         if (userMss !== this.statusMessage) {
-          await this.$store.dispatch('update', { userStatus: this.statusMessage })
+          await this.$store.dispatch('updateStatus', { userStatus: this.statusMessage })
         }
       } else {
         if (userMss !== this.statusMessage) {
-          await this.$store.dispatch('update', { userStatus: this.statusMessage })
+          await this.$store.dispatch('updateStatus', { userStatus: this.statusMessage })
         }
       }
       this.editing = !this.editing

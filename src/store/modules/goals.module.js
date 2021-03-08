@@ -67,20 +67,18 @@ export default {
     async updateGoal({ rootGetters, commit }, goal) {
       try {
         const { id, ...data } = goal
-        const token = rootGetters['auth/token']
         const uid = rootGetters['auth/userId']
-        await fitbodyAxios.patch(`/users/${uid}/goals/list/${id}.json?auth=${token}`, data)
+        await fitbodyAxios.patch(`/users/${uid}/goals/list/${id}.json`, data)
         commit('updateCurrentGoal', goal)
       } catch (e) {
       }
     },
     async updateWeight({ state, getters, commit, rootGetters }, data) {
       try {
-        const token = rootGetters['auth/token']
         const uid = rootGetters['auth/userId']
         await data.map(g => {
           const { id, ...data } = g
-          fitbodyAxios.put(`/users/${uid}/goals/list/${id}.json?auth=${token}`, data)
+          fitbodyAxios.put(`/users/${uid}/goals/list/${id}.json`, data)
         })
         commit('updateWeight', data)
       } catch (e) {
@@ -89,9 +87,8 @@ export default {
     },
     async addGoal({ rootGetters, commit, dispatch }, goal) {
       try {
-        const token = rootGetters['auth/token']
         const uid = rootGetters['auth/userId']
-        const { data } = await fitbodyAxios.post(`/users/${uid}/goals/list.json?auth=${token}`, goal)
+        const { data } = await fitbodyAxios.post(`/users/${uid}/goals/list.json`, goal)
         commit('addGoal', { ...goal, id: data.name })
         await dispatch('setActiveGoal', data.name)
       } catch (e) {
@@ -100,9 +97,8 @@ export default {
     },
     async setActiveGoal({ rootGetters, commit }, activeGoal) {
       try {
-        const token = rootGetters['auth/token']
         const uid = rootGetters['auth/userId']
-        await fitbodyAxios.patch(`/users/${uid}/goals.json?auth=${token}`, { activeGoal })
+        await fitbodyAxios.patch(`/users/${uid}/goals.json`, { activeGoal })
         commit('setActive', activeGoal)
       } catch (e) {
         console.warn(e)
@@ -110,9 +106,8 @@ export default {
     },
     async loadGoals({ rootGetters, commit }) {
       try {
-        const token = rootGetters['auth/token']
         const uid = rootGetters['auth/userId']
-        const { data } = await fitbodyAxios.get(`/users/${uid}/goals.json?auth=${token}`)
+        const { data } = await fitbodyAxios.get(`/users/${uid}/goals.json`)
         if (data) {
           commit('loadGoal', data.list)
           commit('setActive', data.activeGoal)
